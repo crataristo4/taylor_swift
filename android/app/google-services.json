@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "136890749992",
+    "project_id": "taylorswiftapp-ghana",
+    "storage_bucket": "taylorswiftapp-ghana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136890749992:android:8b076c08a4e3149dec911d",
+        "android_client_info": {
+          "package_name": "com.taylor.swift.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136890749992-fre2umjsv1s31s9s9mppls6eha2qvaup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkdN7pBBL1BzVXg3_u7jiP6LxsglFcJcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136890749992-fre2umjsv1s31s9s9mppls6eha2qvaup.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
