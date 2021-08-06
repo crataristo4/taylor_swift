@@ -18,18 +18,19 @@ class Dialogs {
                       child: Column(children: [
                         Text(title,
                             style: TextStyle(
-                                color: Colors.pinkAccent,
+                                color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700)),
                         SizedBox(
-                          height: 15,
+                          height: sixteenDp,
                         ),
                         CircularProgressIndicator(),
                         SizedBox(
-                          height: 15,
+                          height: sixteenDp,
                         ),
                         Text(
                           pleaseWait,
-                          style: TextStyle(color: Colors.pinkAccent),
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
                         )
                       ]),
                     )
