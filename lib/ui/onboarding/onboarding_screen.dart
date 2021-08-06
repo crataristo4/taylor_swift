@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/service/admob_service.dart';
 import 'package:taylor_swift/ui/auth/config_page.dart';
-import 'package:taylor_swift/ui/auth/registration_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static const routeName = '/onboarding';
@@ -20,7 +19,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen>
     with SingleTickerProviderStateMixin {
   bool? isShowing;
-  double? _scale;
 
   AdmobService admobService = AdmobService();
 
@@ -93,10 +91,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             TypewriterAnimatedText(trackProgress),
                             TypewriterAnimatedText(getNotified),
                           ],
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(RegistrationPage.routeName);
-                          },
                         ),
                       )),
                     ),
