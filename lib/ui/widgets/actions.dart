@@ -18,6 +18,24 @@ class ShowAction {
         fontSize: sixteenDp);
   }
 
+  void showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(anErrorOccurred),
+        content: Text(message),
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text(OK),
+          )
+        ],
+      ),
+    );
+  }
+
   static void showAlertDialog(String title, String content,
       BuildContext context, Widget widgetA, Widget widgetB) {
     var alertDialog = AlertDialog(
