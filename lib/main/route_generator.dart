@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taylor_swift/ui/auth/config_page.dart';
 import 'package:taylor_swift/ui/auth/registration_page.dart';
 import 'package:taylor_swift/ui/auth/verification_page.dart';
+import 'package:taylor_swift/ui/home/home.dart';
 import 'package:taylor_swift/ui/onboarding/onboarding_screen.dart';
 
 class RouteGenerator {
@@ -8,6 +10,14 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      //config page
+      case ConfigurationPage.routeName:
+        return MaterialPageRoute(builder: (_) => ConfigurationPage());
+
+      //home page
+      case HomePage.routeName:
+        return MaterialPageRoute(builder: (_) => HomePage());
+
       //shows when user newly installs the application
       case OnboardingScreen.routeName:
         return MaterialPageRoute(builder: (_) => OnboardingScreen());
