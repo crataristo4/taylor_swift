@@ -10,7 +10,7 @@ class AuthProvider with ChangeNotifier {
     final PhoneCodeSent smsOTPSent = (String verId, [int? forceCodeResend]) {
       this.verificationId = verId;
     };
-    /*try {
+    try {
       await _firebaseAuth.verifyPhoneNumber(
           phoneNumber: mobileToSend,
           codeAutoRetrievalTimeout: (String verId) {
@@ -28,7 +28,7 @@ class AuthProvider with ChangeNotifier {
           });
     } catch (e) {
       throw e;
-    }*/
+    }
   }
 
   Future<void> verifyOTP(String otp) async {
