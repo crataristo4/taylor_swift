@@ -18,14 +18,13 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
 
   @override
   void initState() {
-    var user = Provider.of<User?>(context, listen: false);
-    isLoggedIn = user != null;
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<User?>(context);
+    isLoggedIn = user != null;
     print(" ?? --- $isLoggedIn");
     return WillPopScope(
       onWillPop: () async => true,
