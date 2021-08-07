@@ -25,7 +25,7 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
   Widget build(BuildContext context) {
     var user = Provider.of<User?>(context);
     isLoggedIn = user != null;
-    print(" ?? --- $isLoggedIn");
+
     return WillPopScope(
       onWillPop: () async => true,
       child: Container(

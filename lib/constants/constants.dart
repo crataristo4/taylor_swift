@@ -16,21 +16,42 @@ const colorizeTextStyle = TextStyle(
   fontFamily: 'Horizon',
 );
 
+//............MONTHS............................................................................................
+const JAN = 'JAN';
+const FEB = 'FEB';
+const MAR = 'MAR';
+const APR = 'APR';
+const MAY = 'MAY';
+const JUN = 'JUN';
+const JULY = 'JULY';
+const AUG = 'AUG';
+const SEP = 'SEP';
+const OCT = 'OCT';
+const NOV = 'NOV';
+const DEC = 'DEC';
+
 //---------------------------------------------------------------------------------------------------------------
 const help = 'Help';
+const add = 'Add';
+const searchCustomer = 'Search for customer';
 const name = 'Name';
 const home = 'Home';
 const price = 'Price';
+const send = 'Send';
 const continuE = 'Continue';
+const next = 'Next';
 const fewSteps = 'Just a few steps to get you started';
 const manageWorks = 'Manage all your work here';
 const trackProgress = 'Track your work progress from schedules';
 const getNotified = 'Get notified when a work scheduled is due';
+const valuePrivacy = 'We value your privacy';
+const thereFore = 'Therefore we require you to create an account';
+const almostDone = 'We are almost done!';
+const verifyRobot = 'Verify you are not a ROBOT';
+const enterPIN = 'Enter code sent to you';
 
-const account = 'My Account';
-const orders = 'My Orders';
 const successful = 'Successful';
-const userNameUpdated = 'User name updated';
+
 const confirmed = 'Confirmed';
 const approve = 'Approve';
 const viewAll = 'View All';
@@ -43,10 +64,6 @@ const tapImageToAdd = 'tap to add image';
 const mustSelectImage = "Must select an image";
 const done = 'Done';
 
-const categoryRequired = 'Category required';
-const selectAType = 'Select a type';
-const specialOffer = 'Special Offers';
-const viewedYourProfile = 'Viewed your profile';
 const goodMorning = 'Good Morning';
 const goodAfternoon = 'Good Afternoon';
 const goodEvening = 'Good Evening';
@@ -82,12 +99,7 @@ const DistanceDes =
     'This app uses your location to find the distance between you and an Artisan';
 const photoLibrary = 'Photo Library';
 const camera = 'Camera';
-const viewLocation = 'View user\'s location';
-const setDeliveryFee = 'Set Delivery Fee';
-const abtToSetDeliveryFee =
-    'You are about to set the delivery fee for this order';
-const setPaymentStatus = 'Set Payment Status';
-const youAreAbtTpSetPaymentStatus = 'Are you sure you want to proceed ?';
+
 const chooseImage = 'Choose Image';
 const changeImage = 'Choose Photo';
 const couldNotLaunch = "Could not launch";
@@ -107,12 +119,7 @@ const pleaseWait = 'Please wait...';
 const completingProfile = 'Completing your profile';
 const updatingProfilePicture = 'Updating profile picture...';
 const deletingOrder = 'Deleting order...';
-const followUs = "Follow us";
-const reviews = "Reviews ";
-const writeAReview = "Write a review";
-const aboutUs = "About Gelic Hub";
-const updatingName = 'Updating name...';
-const updated = 'Updated';
+
 const customerCare = 'Customer care';
 const register = 'Register';
 
@@ -137,16 +144,15 @@ const rate = 'Rate';
 const ratingUser = "rating user";
 const rated = 'Rated';
 const rateNow = 'Rate Now';
-const enterPhoneToLogin = "Enter your phone number to Log in";
+const enterNumberToVerify = "Enter your phone number to verify";
 const confirmNumber = 'Confirm number';
 const sendCodeTo = 'Send verification code to ';
 const invalidPhone = 'Invalid phone number';
+const invalidCode = 'Invalid code';
 const code = 'Code';
 const category = 'Category';
 const setQuantity = "Set quantity";
-const quantityOrdered = "Quantity Ordered";
 const toTAL = "Total";
-const deliveryFee = "Delivery fee";
 const SubTotal = "Subtotal";
 const enterItemDescription = 'Enter the description';
 const description = 'Description';
