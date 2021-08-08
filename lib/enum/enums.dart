@@ -1,4 +1,4 @@
-enum DRESS_TYPE {
+enum DressType {
   MENS_TOP,
   MENS_TROUSER,
   MENS_SHORTS,
