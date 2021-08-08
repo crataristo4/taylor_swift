@@ -4,6 +4,7 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
+import 'package:taylor_swift/ui/widgets/item_rows.dart';
 
 class LadiesDress extends StatefulWidget {
   const LadiesDress({Key? key}) : super(key: key);
@@ -66,14 +67,14 @@ class _LadiesDressState extends State<LadiesDress> {
               )),
 
               //first row fow measurement
-              itemRows(
-                CustomerInputs(
+              ItemRows(
+                widgetA: CustomerInputs(
                   valueController: waistController,
                   imageSource: 'assets/images/waist.png',
                   name: waist,
                   textColor: CustomColors.c1,
                 ),
-                CustomerInputs(
+                widgetB: CustomerInputs(
                   valueController: bustController,
                   imageSource: 'assets/images/bust.png',
                   name: bust,
@@ -82,14 +83,14 @@ class _LadiesDressState extends State<LadiesDress> {
               ),
 
               //second row for measurement
-              itemRows(
-                CustomerInputs(
+              ItemRows(
+                widgetA: CustomerInputs(
                   valueController: hipController,
                   imageSource: 'assets/images/hip.png',
                   name: hip,
                   textColor: CustomColors.c2,
                 ),
-                CustomerInputs(
+                widgetB: CustomerInputs(
                   valueController: shoulderController,
                   imageSource: 'assets/images/shoda.png',
                   name: shoulder,
@@ -97,14 +98,14 @@ class _LadiesDressState extends State<LadiesDress> {
                 ),
               ),
               //third row .
-              itemRows(
-                CustomerInputs(
+              ItemRows(
+                widgetA: CustomerInputs(
                   valueController: nipToNipController,
                   imageSource: 'assets/images/nipple.png',
                   name: nippleToNipple,
                   textColor: CustomColors.c7,
                 ),
-                CustomerInputs(
+                widgetB: CustomerInputs(
                   valueController: shoToNipController,
                   imageSource: 'assets/images/shoToNip.png',
                   name: shoulderToNipple,
@@ -112,14 +113,14 @@ class _LadiesDressState extends State<LadiesDress> {
                 ),
               ),
               //fourth row .
-              itemRows(
-                CustomerInputs(
+              ItemRows(
+                widgetA: CustomerInputs(
                   valueController: shoToWaistController,
                   imageSource: 'assets/images/shoToWaist.png',
                   name: shoulderToWaist,
                   textColor: CustomColors.c4,
                 ),
-                CustomerInputs(
+                widgetB: CustomerInputs(
                   valueController: kneeController,
                   imageSource: 'assets/images/knee.png',
                   name: knee,
@@ -127,14 +128,14 @@ class _LadiesDressState extends State<LadiesDress> {
                 ),
               ),
               //fifth row .
-              itemRows(
-                CustomerInputs(
+              ItemRows(
+                widgetA: CustomerInputs(
                   valueController: dressLengthController,
                   imageSource: 'assets/images/dress.png',
                   name: dressLength,
                   textColor: CustomColors.c1,
                 ),
-                CustomerInputs(
+                widgetB: CustomerInputs(
                   valueController: sleeveLengthController,
                   imageSource: 'assets/images/sleeve.png',
                   name: sleeveLength,
@@ -142,14 +143,14 @@ class _LadiesDressState extends State<LadiesDress> {
                 ),
               ),
 
-              itemRows(
-                  CustomerInputs(
+              ItemRows(
+                  widgetA: CustomerInputs(
                     valueController: aroundArmController,
                     imageSource: 'assets/images/arm.png',
                     name: aroundArm,
                     textColor: CustomColors.c6,
                   ),
-                  Container(
+                  widgetB: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                     child: FloatingActionButton.extended(
                       onPressed: () {
@@ -167,11 +168,11 @@ class _LadiesDressState extends State<LadiesDress> {
     );
   }
 
-  Row itemRows(Widget widgetA, Widget widgetB) {
+/*  Row ItemRows(Widget widgetA, Widget widgetB) {
     return Row(
       //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [widgetA, widgetB],
     );
-  }
+  }*/
 }
