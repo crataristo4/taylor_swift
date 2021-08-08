@@ -30,6 +30,16 @@ const OCT = 'OCT';
 const NOV = 'NOV';
 const DEC = 'DEC';
 
+//.........................MENU..................................................................//
+const ld = 'Ladies Dress';
+const ls = 'Ladies Skirt';
+const lt = 'Ladies Top';
+const ltr = 'Ladies Trouser';
+const md = 'Men\'s Dress';
+const ms = 'Men\'s Shorts';
+const mt = 'Men\'s Top';
+const mtr = 'Men\'s Trouser';
+
 //---------------------------------------------------------------------------------------------------------------
 const help = 'Help';
 const add = 'Add';
