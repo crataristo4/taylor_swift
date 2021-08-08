@@ -6,10 +6,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/provider/auth_provider.dart';
 import 'package:taylor_swift/ui/onboarding/onboarding_screen.dart';
 
 import 'main/route_generator.dart';
+import 'model/menu_info.dart';
 import 'ui/auth/config_page.dart';
 
 int? onboardingPrefs;
@@ -50,13 +52,15 @@ void main() async {
 }
 
 class TaylorSwift extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         //authentication
         ChangeNotifierProvider.value(value: AuthProvider()),
+
+        ChangeNotifierProvider<MenuInfo>(
+            create: (context) => MenuInfo(DressType.LADIES_DRESS)),
 
         StreamProvider<User?>.value(
           value: FirebaseAuth.instance.authStateChanges(),
