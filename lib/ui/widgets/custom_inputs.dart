@@ -48,7 +48,7 @@ class CustomerInputs extends StatelessWidget {
                       return value!.trim().isEmpty ? "*" : null;
                     },
                     decoration: InputDecoration(
-                      labelText: 'Value',
+                      labelText: 'Size',
                       labelStyle: TextStyle(color: Colors.black),
                       hintStyle: TextStyle(color: Colors.black),
                       fillColor: Color(0xFFF5F5F5),
@@ -72,7 +72,10 @@ class CustomerInputs extends StatelessWidget {
           ),
           Text(
             name,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(
+                color: textColor,
+                fontSize: twelveDp,
+                fontWeight: FontWeight.w500),
           )
         ],
       ),
