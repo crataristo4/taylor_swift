@@ -41,6 +41,19 @@ const mt = 'Men\'s Top';
 const mtr = 'Men\'s Trouser';
 
 //---------------------------------------------------------------------------------------------------------------
+const waist = 'Waist';
+const bust = 'Bust';
+const hip = 'Hip';
+const shoulder = 'Shoulder';
+const nippleToNipple = 'Nipple to Nipple';
+const shoulderToNipple = 'Shoulder to Nipple';
+const shoulderToWaist = 'Shoulder to Waist';
+const knee = 'Knee';
+const dressLength = 'Dress Length';
+const sleeveLength = 'Sleeve Length';
+const aroundArm = 'Around arm';
+const cm = ' cm';
+//....................................................................................................//
 const help = 'Help';
 const add = 'Add';
 const searchCustomer = 'Search for customer';
@@ -50,6 +63,7 @@ const price = 'Price';
 const send = 'Send';
 const continuE = 'Continue';
 const next = 'Next';
+const cstMeasurement = 'Customer\'s measurement';
 const fewSteps = 'Just a few steps to get you started';
 const manageWorks = 'Manage all your work here';
 const trackProgress = 'Track your work progress from schedules';
