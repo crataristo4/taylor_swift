@@ -44,6 +44,7 @@ const mtr = 'Men\'s Trouser';
 const waist = 'Waist';
 const bust = 'Bust';
 const hip = 'Hip';
+const skirtLength = 'Skirt Length';
 const shoulder = 'Shoulder';
 const nippleToNipple = 'Nipple to Nipple';
 const shoulderToNipple = 'Shoulder to Nipple';
