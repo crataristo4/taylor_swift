@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taylor_swift/ui/add_customer/add_customer.dart';
 import 'package:taylor_swift/ui/auth/config_page.dart';
 import 'package:taylor_swift/ui/auth/registration_page.dart';
 import 'package:taylor_swift/ui/auth/verification_page.dart';
@@ -33,6 +34,10 @@ class RouteGenerator {
             builder: (_) => VerificationPage(
                   phoneNumber: data,
                 ));
+
+      //add customer with measurements
+      case AddCustomer.routeName:
+        return MaterialPageRoute(builder: (_) => AddCustomer());
 
       default:
         return _errorRoute();
