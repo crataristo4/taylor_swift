@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:taylor_swift/constants/constants.dart';
+import 'package:taylor_swift/ui/add_customer/add_customer.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).pushNamed(AddCustomer.routeName),
         label: Text(add),
         icon: Icon(Icons.person),
       ),
