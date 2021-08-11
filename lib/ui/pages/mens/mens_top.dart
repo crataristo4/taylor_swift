@@ -60,7 +60,8 @@ class _MensTopState extends State<MensTop> {
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TypewriterAnimatedText(menTopMeasurement,
-                        textStyle: TextStyle(color: Colors.indigo)),
+                        textStyle: TextStyle(
+                            color: Colors.indigo, fontSize: fourteenDp)),
                   ],
                 ),
               )),
@@ -75,7 +76,7 @@ class _MensTopState extends State<MensTop> {
                 ),
                 widgetB: CustomerInputs(
                   valueController: backController,
-                  imageSource: 'assets/images/mbk.png',
+                  imageSource: 'assets/images/back.png',
                   name: back,
                   textColor: CustomColors.c4,
                 ),
