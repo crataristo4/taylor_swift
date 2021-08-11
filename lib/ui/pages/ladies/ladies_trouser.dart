@@ -59,7 +59,8 @@ class _LadiesTrouserState extends State<LadiesTrouser> {
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TypewriterAnimatedText(ladiesTrouserMeasurement,
-                        textStyle: TextStyle(color: Colors.indigo)),
+                        textStyle: TextStyle(
+                            color: Colors.indigo, fontSize: fourteenDp)),
                   ],
                 ),
               )),
