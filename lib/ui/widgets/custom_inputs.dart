@@ -35,9 +35,9 @@ class CustomerInputs extends StatelessWidget {
                 width: eightDp,
               ),
               Container(
-                width: sixtyDp,
+                width: eightyDp,
                 child: TextFormField(
-                    maxLength: 5,
+                    maxLength: 10,
                     maxLines: 1,
                     keyboardType: TextInputType.numberWithOptions(
                       decimal: false,
