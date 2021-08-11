@@ -63,7 +63,8 @@ class _LadiesTopState extends State<LadiesTop> {
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TypewriterAnimatedText(ladiesTopMeasurement,
-                        textStyle: TextStyle(color: Colors.indigo)),
+                        textStyle: TextStyle(
+                            color: Colors.indigo, fontSize: fourteenDp)),
                   ],
                 ),
               )),
