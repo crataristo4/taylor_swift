@@ -66,7 +66,8 @@ class _LadiesDressState extends State<LadiesDress> {
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TypewriterAnimatedText(dressMeasurement,
-                        textStyle: TextStyle(color: Colors.indigo)),
+                        textStyle: TextStyle(
+                            color: Colors.indigo, fontSize: fourteenDp)),
                   ],
                 ),
               )),
