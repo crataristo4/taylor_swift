@@ -59,8 +59,9 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                 child: AnimatedTextKit(
                   totalRepeatCount: 1,
                   animatedTexts: [
-                    TypewriterAnimatedText(mtr,
-                        textStyle: TextStyle(color: Colors.indigo)),
+                    TypewriterAnimatedText(mTrouserOrShorts,
+                        textStyle: TextStyle(
+                            color: Colors.indigo, fontSize: fourteenDp)),
                   ],
                 ),
               )),
