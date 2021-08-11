@@ -61,9 +61,9 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
                 return value!.trim().isEmpty ? "required" : null;
               },
               decoration: InputDecoration(
-                labelText: 'Payment',
+                labelText: payment,
                 labelStyle: TextStyle(color: Colors.black),
-                helperText: "Enter 0 if user has not paid",
+                helperText: enterZero,
                 hintStyle: TextStyle(color: Colors.black),
                 fillColor: Color(0xFFF5F5F5),
                 filled: true,
@@ -97,12 +97,12 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
                 });
               },
               validator: (value) {
-                return value!.trim().length < 3 ? "due date required" : null;
+                return value!.trim().length < 3 ? dueDateRequired : null;
               },
               decoration: InputDecoration(
-                labelText: 'Due date',
+                labelText: dueDate,
                 labelStyle: TextStyle(color: Colors.black),
-                helperText: "Time to complete work",
+                helperText: timeToComplete,
                 hintStyle: TextStyle(color: Colors.black),
                 fillColor: Color(0xFFF5F5F5),
                 filled: true,
