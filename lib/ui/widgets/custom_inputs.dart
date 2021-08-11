@@ -25,7 +25,7 @@ class CustomerInputs extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 "$imageSource",
@@ -35,9 +35,9 @@ class CustomerInputs extends StatelessWidget {
                 width: eightDp,
               ),
               Container(
-                width: 60,
+                width: sixtyDp,
                 child: TextFormField(
-                    maxLength: 4,
+                    maxLength: 5,
                     maxLines: 1,
                     keyboardType: TextInputType.numberWithOptions(
                       decimal: false,
@@ -61,13 +61,13 @@ class CustomerInputs extends StatelessWidget {
                           borderSide: BorderSide(color: Color(0xFFF5F5F5))),
                     )),
               ),
-              Column(
+              /* Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(cm),
                 ],
-              )
+              )*/
             ],
           ),
           Text(
