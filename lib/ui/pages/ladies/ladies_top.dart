@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
+import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
@@ -15,6 +16,7 @@ class LadiesTop extends StatefulWidget {
 
 class _LadiesTopState extends State<LadiesTop> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController waistController = TextEditingController();
   TextEditingController bustController = TextEditingController();
   TextEditingController hipController = TextEditingController();
@@ -43,8 +45,9 @@ class _LadiesTopState extends State<LadiesTop> {
               SizedBox(
                 height: tenDp,
               ),
-              CustomerName(
+              CustomNameAndNumber(
                 nameController: nameController,
+                phoneNumberController: phoneNumberController,
               ),
               SizedBox(
                 height: tenDp,
@@ -134,17 +137,23 @@ class _LadiesTopState extends State<LadiesTop> {
                     name: topLength,
                     textColor: CustomColors.c1,
                   ),
-                  widgetB: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                    child: FloatingActionButton.extended(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          print('good to goo');
-                        }
-                      },
-                      label: Text(save),
-                    ),
-                  )),
+                  widgetB: Container()),
+
+              CustomDtPmt(),
+
+              Center(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        print('good to goo');
+                      }
+                    },
+                    label: Text(save),
+                  ),
+                ),
+              )
             ],
           ),
         ),
