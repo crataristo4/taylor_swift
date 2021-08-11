@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
+import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
@@ -15,6 +16,7 @@ class LadiesSkirt extends StatefulWidget {
 
 class _LadiesSkirtState extends State<LadiesSkirt> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController waistController = TextEditingController();
   TextEditingController hipController = TextEditingController();
   TextEditingController kneeController = TextEditingController();
@@ -37,8 +39,9 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
               SizedBox(
                 height: tenDp,
               ),
-              CustomerName(
+              CustomNameAndNumber(
                 nameController: nameController,
+                phoneNumberController: phoneNumberController,
               ),
               SizedBox(
                 height: tenDp,
@@ -53,7 +56,7 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                 child: AnimatedTextKit(
                   totalRepeatCount: 1,
                   animatedTexts: [
-                    TypewriterAnimatedText(cstMeasurement,
+                    TypewriterAnimatedText(skirtMeasurement,
                         textStyle: TextStyle(color: Colors.indigo)),
                   ],
                 ),
@@ -91,20 +94,24 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                 ),
               ),
 
-              ItemRows(
-                  widgetA: Container(),
-                  widgetB: Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: twentyDp, vertical: thirtyDp),
-                    child: FloatingActionButton.extended(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          print('good to goo');
-                        }
-                      },
-                      label: Text(save),
-                    ),
-                  ))
+              ItemRows(widgetA: Container(), widgetB: Container()),
+
+              CustomDtPmt(),
+
+              Center(
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: twentyDp, vertical: thirtyDp),
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        print('good to goo');
+                      }
+                    },
+                    label: Text(save),
+                  ),
+                ),
+              )
             ],
           ),
         ),
