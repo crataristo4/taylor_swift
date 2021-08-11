@@ -57,7 +57,8 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TypewriterAnimatedText(skirtMeasurement,
-                        textStyle: TextStyle(color: Colors.indigo)),
+                        textStyle: TextStyle(
+                            color: Colors.indigo, fontSize: fourteenDp)),
                   ],
                 ),
               )),
