@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
+import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
@@ -15,6 +16,7 @@ class LadiesDress extends StatefulWidget {
 
 class _LadiesDressState extends State<LadiesDress> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController waistController = TextEditingController();
   TextEditingController bustController = TextEditingController();
   TextEditingController hipController = TextEditingController();
@@ -26,6 +28,8 @@ class _LadiesDressState extends State<LadiesDress> {
   TextEditingController dressLengthController = TextEditingController();
   TextEditingController sleeveLengthController = TextEditingController();
   TextEditingController aroundArmController = TextEditingController();
+  TextEditingController dtController = TextEditingController();
+  TextEditingController paymentController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -44,8 +48,9 @@ class _LadiesDressState extends State<LadiesDress> {
               SizedBox(
                 height: tenDp,
               ),
-              CustomerName(
+              CustomNameAndNumber(
                 nameController: nameController,
+                phoneNumberController: phoneNumberController,
               ),
               SizedBox(
                 height: tenDp,
@@ -60,7 +65,7 @@ class _LadiesDressState extends State<LadiesDress> {
                 child: AnimatedTextKit(
                   totalRepeatCount: 1,
                   animatedTexts: [
-                    TypewriterAnimatedText(cstMeasurement,
+                    TypewriterAnimatedText(dressMeasurement,
                         textStyle: TextStyle(color: Colors.indigo)),
                   ],
                 ),
@@ -150,21 +155,28 @@ class _LadiesDressState extends State<LadiesDress> {
                     name: aroundArm,
                     textColor: CustomColors.c6,
                   ),
-                  widgetB: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                    child: FloatingActionButton.extended(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          print('good to goo');
-                        }
-                      },
-                      label: Text(save),
-                    ),
-                  ))
+                  widgetB: Container()),
+
+              CustomDtPmt(),
+
+              Center(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        print('good to goo');
+                      }
+                    },
+                    label: Text(save),
+                  ),
+                ),
+              )
             ],
           ),
         ),
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
