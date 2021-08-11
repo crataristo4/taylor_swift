@@ -18,27 +18,33 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen>
     with SingleTickerProviderStateMixin {
-  bool? isShowing;
+  bool isShowing = false;
 
   AdmobService admobService = AdmobService();
 
   @override
   void initState() {
-    isShowing = false;
-
     admobService.createInterstitialAd();
+    Timer.periodic(Duration(seconds: 20), (timer) {
+      setState(() {
+        isShowing = true;
+      });
+      timer.cancel();
+      //  admobService.showInterstitialAd();
+    });
+
     super.initState();
   }
 
-  _OnboardingScreenState() {
+  /*_OnboardingScreenState() {
     Timer.periodic(Duration(seconds: 20), (timer) {
-      admobService.showInterstitialAd();
+    //  admobService.showInterstitialAd();
       setState(() {
         isShowing = true;
       });
       timer.cancel();
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +95,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             ),
                             TypewriterAnimatedText(manageWorks),
                             TypewriterAnimatedText(trackProgress),
+                            TypewriterAnimatedText(allMeasurementInInches),
                             TypewriterAnimatedText(getNotified),
                           ],
                         ),
@@ -106,7 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   }
 
   buildNextButton() {
-    return isShowing!
+    return isShowing
         ? Container(
             margin: EdgeInsets.only(bottom: thirtyDp),
             child: GestureDetector(

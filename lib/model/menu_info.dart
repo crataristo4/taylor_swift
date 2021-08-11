@@ -30,8 +30,8 @@ List<MenuInfo> menuItems = [
       title: ltr, imageSource: 'assets/images/lt.png'),
   MenuInfo(DressType.MENS_DRESS,
       title: md, imageSource: 'assets/images/md.png'),
-  MenuInfo(DressType.MENS_SHORTS,
-      title: ms, imageSource: 'assets/images/mshots.png'),
+/*  MenuInfo(DressType.MENS_SHORTS,
+      title: ms, imageSource: 'assets/images/mshots.png'),*/
   MenuInfo(DressType.MENS_TOP,
       title: mt, imageSource: 'assets/images/mshirt.png'),
   MenuInfo(DressType.MENS_TROUSER,

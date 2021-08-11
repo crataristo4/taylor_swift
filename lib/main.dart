@@ -70,8 +70,7 @@ class TaylorSwift extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          primaryColor: Colors.blue,
+          primaryColor: Colors.blueAccent,
         ),
         initialRoute: onboardingPrefs == 0 || onboardingPrefs == null
             ? OnboardingScreen

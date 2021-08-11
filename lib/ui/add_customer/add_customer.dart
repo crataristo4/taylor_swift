@@ -9,9 +9,8 @@ import 'package:taylor_swift/ui/pages/ladies/ladies_skirt.dart';
 import 'package:taylor_swift/ui/pages/ladies/ladies_top.dart';
 import 'package:taylor_swift/ui/pages/ladies/ladies_trouser.dart';
 import 'package:taylor_swift/ui/pages/mens/mens_dress.dart';
-import 'package:taylor_swift/ui/pages/mens/mens_shorts.dart';
 import 'package:taylor_swift/ui/pages/mens/mens_top.dart';
-import 'package:taylor_swift/ui/pages/mens/mens_trouser.dart';
+import 'package:taylor_swift/ui/pages/mens/mens_trouser_shorts.dart';
 
 class AddCustomer extends StatefulWidget {
   static const routeName = '/addCustomer';
@@ -59,13 +58,13 @@ class _AddCustomerState extends State<AddCustomer> {
 
                   case DressType.MENS_DRESS:
                     return MensDress();
-                  case DressType.MENS_SHORTS:
-                    return MensShorts();
+                  /*  case DressType.MENS_SHORTS:
+                    return MensShorts();*/
                   case DressType.MENS_TOP:
                     return MensTop();
 
                   case DressType.MENS_TROUSER:
-                    return MensTrouser();
+                    return MensTrouserOrShorts();
 
                   default:
                     return Container(
@@ -84,20 +83,6 @@ class _AddCustomerState extends State<AddCustomer> {
                     );
                 }
 
-                return Container(
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(fontSize: 20),
-                      children: <TextSpan>[
-                        TextSpan(text: 'not found\n'),
-                        TextSpan(
-                          text: value.title,
-                          style: TextStyle(fontSize: 48),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
               },
             ),
           ),
