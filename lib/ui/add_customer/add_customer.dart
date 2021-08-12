@@ -15,7 +15,9 @@ import 'package:taylor_swift/ui/pages/mens/mens_trouser_shorts.dart';
 class AddCustomer extends StatefulWidget {
   static const routeName = '/addCustomer';
 
-  const AddCustomer({Key? key}) : super(key: key);
+  final selectedMonth;
+
+  const AddCustomer({Key? key, this.selectedMonth}) : super(key: key);
 
   @override
   _AddCustomerState createState() => _AddCustomerState();
@@ -50,7 +52,7 @@ class _AddCustomerState extends State<AddCustomer> {
                   case DressType.LADIES_DRESS:
                     return LadiesDress();
                   case DressType.LADIES_SKIRT:
-                    return LadiesSkirt();
+                    return LadiesSkirt(month: widget.selectedMonth);
                   case DressType.LADIES_TOP:
                     return LadiesTop();
                   case DressType.LADIES_TROUSER:
