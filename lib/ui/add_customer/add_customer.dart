@@ -50,16 +50,22 @@ class _AddCustomerState extends State<AddCustomer> {
               builder: (BuildContext context, MenuInfo? value, Widget? child) {
                 switch (value!.dressType) {
                   case DressType.LADIES_DRESS:
-                    return LadiesDress();
+                    return LadiesDress(
+                      month: widget.selectedMonth,
+                    );
                   case DressType.LADIES_SKIRT:
                     return LadiesSkirt(month: widget.selectedMonth);
                   case DressType.LADIES_TOP:
-                    return LadiesTop();
+                    return LadiesTop(
+                      month: widget.selectedMonth,
+                    );
                   case DressType.LADIES_TROUSER:
-                    return LadiesTrouser();
+                    return LadiesTrouser(month: widget.selectedMonth);
 
                   case DressType.MENS_DRESS:
-                    return MensDress();
+                    return MensDress(
+                      month: widget.selectedMonth,
+                    );
                   /*  case DressType.MENS_SHORTS:
                     return MensShorts();*/
                   case DressType.MENS_TOP:
@@ -68,7 +74,7 @@ class _AddCustomerState extends State<AddCustomer> {
                     );
 
                   case DressType.MENS_TROUSER:
-                    return MensTrouserOrShorts();
+                    return MensTrouserOrShorts(month: widget.selectedMonth);
 
                   default:
                     return Container(
@@ -86,7 +92,6 @@ class _AddCustomerState extends State<AddCustomer> {
                       ),
                     );
                 }
-
               },
             ),
           ),
