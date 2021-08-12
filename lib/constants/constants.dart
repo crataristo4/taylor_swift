@@ -5,6 +5,7 @@ const welcomeToApp = 'Welcome to Taylor Swift';
 const kGhanaCedi = 'GH¢';
 //.........db name
 const dbDress = 'Dress';
+const dbShop = 'Shop';
 
 const colorizeColors = [
   Colors.purple,
