@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 const appTitle = 'Taylor Swift';
 const welcomeToApp = 'Welcome to Taylor Swift';
 const kGhanaCedi = 'GH¢';
+//.........db name
+const dbDress = 'Dress';
 
 const colorizeColors = [
   Colors.purple,
@@ -32,6 +34,9 @@ const DEC = 'DEC';
 const partPayment = 'Part payment';
 const fullPayment = 'Full payment';
 const notPaid = 'Not paid';
+const error = 'error';
+const payGreaterThanCharge =
+    'Payment made is greater than charge please correct it';
 
 //.........................MENU..................................................................//
 const ld = 'Ladies Dress';
@@ -125,10 +130,12 @@ const profileCreatedSuccessfully = "Profile created successfully";
 const email = 'Email';
 const emailUx = 'Email us';
 const dueDate = 'Due date';
-const payment = 'Payment';
+const payment = 'Payment made';
 const dueDateRequired = "due date required";
 const timeToComplete = "Time to complete work";
 const enterZero = "Enter 0 if customer has not paid";
+const serviceCharge = "Service Charge";
+const serviceChargeDes = "The amount charged";
 const call = 'Call';
 const chatUx = 'Chat Us';
 const callUx = 'Call Us';
