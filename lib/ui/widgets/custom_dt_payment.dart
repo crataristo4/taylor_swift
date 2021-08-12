@@ -22,9 +22,6 @@ class CustomDtPmt extends StatefulWidget {
 
 class _CustomDtPmtState extends State<CustomDtPmt> {
   String? selectedPayment;
-
-/*  TextEditingController dateTimeController = TextEditingController();
-  TextEditingController paymentController = TextEditingController();*/
   DressProvider _dressProvider = DressProvider();
 
   //date format
@@ -58,15 +55,13 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
 
   @override
   Widget build(BuildContext context) {
-    print("Null aware ${LadiesSkirt.paymentStatus} ?? $selectedPayment");
     _dressProvider.setPaymentStatus(selectedPayment);
-    //   _dressProvider.createNewDress(context, DressType.LADIES_SKIRT);
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      margin: EdgeInsets.symmetric(vertical: eightDp, horizontal: eightDp),
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(4),
+            padding: EdgeInsets.all(fourDp),
             margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
             child: TextFormField(
                 maxLength: 10,
@@ -222,7 +217,6 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
             LadiesSkirt.paymentStatus = selectedPayment!;
           });
           _dressProvider.setPaymentStatus(selectedPayment);
-          print('hith ${LadiesSkirt.paymentStatus}');
         },
       ),
     );
