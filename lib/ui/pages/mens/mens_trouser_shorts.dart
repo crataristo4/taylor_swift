@@ -2,13 +2,19 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
+import 'package:taylor_swift/enum/enums.dart';
+import 'package:taylor_swift/model/dress.dart';
+import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
 
 class MensTrouserOrShorts extends StatefulWidget {
-  const MensTrouserOrShorts({Key? key}) : super(key: key);
+  final month;
+
+  const MensTrouserOrShorts({Key? key, this.month}) : super(key: key);
 
   @override
   _MensTrouserOrShortsState createState() => _MensTrouserOrShortsState();
@@ -24,8 +30,13 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
   TextEditingController kneeController = TextEditingController();
   TextEditingController lengthController = TextEditingController();
   TextEditingController flapController = TextEditingController();
+  TextEditingController dtController = TextEditingController();
+  TextEditingController initialPaymentController = TextEditingController();
+  TextEditingController serviceChargeController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  DressProvider _dressProvider = DressProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -121,19 +132,47 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                     textColor: CustomColors.c4,
                   ),
                   widgetB: Container()),
-              //fifth row .
-              CustomDtPmt(),
+              CustomDtPmt(
+                dateTimeController: dtController,
+                paymentController: initialPaymentController,
+                serviceChargeController: serviceChargeController,
+              ),
 
               Center(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                   child: FloatingActionButton.extended(
+                    label: Text(save),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('good to goo');
+                        var status = Dress().checkPaymentStatus(
+                            int.parse(serviceChargeController.text),
+                            int.parse(initialPaymentController.text));
+
+                        if (status.contains(error)) {
+                          ShowAction().showSnackbar(context);
+                        } else {
+                          _dressProvider.setMensTrouserData(
+                              nameController.text,
+                              phoneNumberController.text,
+                              lengthController.text,
+                              waistController.text,
+                              thighsController.text,
+                              barController.text,
+                              seatController.text,
+                              kneeController.text,
+                              flapController.text,
+                              widget.month,
+                              int.parse(serviceChargeController.text),
+                              int.parse(initialPaymentController.text),
+                              dtController.text,
+                              status);
+
+                          _dressProvider.createNewDress(
+                              context, DressType.MENS_TROUSER);
+                        }
                       }
                     },
-                    label: Text(save),
                   ),
                 ),
               )
