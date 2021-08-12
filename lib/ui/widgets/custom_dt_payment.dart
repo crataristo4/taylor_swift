@@ -8,12 +8,14 @@ import 'package:taylor_swift/ui/pages/ladies/ladies_skirt.dart';
 class CustomDtPmt extends StatefulWidget {
   final dateTimeController;
   final paymentController;
+  final Function? onTap;
 
 //  static String? selectedPayment;
   const CustomDtPmt(
       {Key? key,
       required this.dateTimeController,
-      required this.paymentController})
+      required this.paymentController,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -143,27 +145,7 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
                 maxLines: 1,
                 keyboardType: TextInputType.number,
                 controller: widget.dateTimeController,
-                onTap: () async {
-                  final selectedDate = await _selectDate(context);
-                  if (selectedDate == null) return;
-
-                  final selectedTime = await _selectedTime(context);
-                  if (selectedTime == null) return;
-
-                  setState(() {
-                    _dateTime = DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedTime.hour,
-                        selectedTime.minute);
-
-                    widget.dateTimeController.text =
-                        _dateFormat.format(_dateTime);
-                  });
-
-                  //  _dressProvider.setDueDate(_dateTime.toString());
-                },
+                onTap: () async => widget.onTap,
                 validator: (value) {
                   return value!.trim().length < 3 ? dueDateRequired : null;
                 },
