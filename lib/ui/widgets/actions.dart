@@ -7,21 +7,6 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ShowAction {
-  //get date
-  Future<DateTime?> _selectDate(BuildContext context) => showDatePicker(
-      context: context,
-      initialDate: DateTime.now().add(Duration(seconds: 1)),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2100));
-
-  //get time
-  Future<TimeOfDay?> _selectedTime(BuildContext context) {
-    final timeNow = DateTime.now();
-    return showTimePicker(
-        context: context,
-        cancelText: "",
-        initialTime: TimeOfDay(hour: timeNow.hour, minute: timeNow.minute));
-  }
 
   void showToast(message, Color color) {
     Fluttertoast.showToast(
