@@ -85,6 +85,22 @@ class DressProvider with ChangeNotifier {
 
   get getFlap => _flap;
 
+  get getAnkle => _ankle;
+
+  get getCrotch => _crotch;
+
+  get getShoulder => _shoulder;
+
+  get getBust => _bust;
+
+  get getNipToNip => _nippleToNipple;
+
+  get getShoToNip => _shoulderToNipple;
+
+  get getShoToWaist => _shoulderToWaist;
+
+  get getTopLength => _topLength;
+
   //ladies skirt
   setLsData(String name, String phoneNumber, waist, hip, knee, skirtLength,
       month, serviceCharge, initialPayment, dueDate, status) {
@@ -94,6 +110,64 @@ class DressProvider with ChangeNotifier {
     _hip = hip;
     _knee = knee;
     _skirtLength = skirtLength;
+    _month = month;
+    _serviceCharge = serviceCharge;
+    _initialPayment = initialPayment;
+    _dueDate = dueDate;
+    _paymentStatus = status;
+
+    notifyListeners();
+  }
+
+  //ladies top
+  setLadiesTopData(
+    String name,
+    String phoneNumber,
+    shoulder,
+    bust,
+    nipToNip,
+    shoToNip,
+    waist,
+    hip,
+    shoToWaist,
+    aroundArm,
+    topLength,
+    month,
+    serviceCharge,
+    initialPayment,
+    dueDate,
+    status,
+  ) {
+    _name = name;
+    _phoneNumber = phoneNumber;
+    _shoulder = shoulder;
+    _bust = bust;
+    _nippleToNipple = nipToNip;
+    _shoulderToNipple = shoToNip;
+    _waist = waist;
+    _hip = hip;
+    _shoulderToWaist = shoToWaist;
+    _aroundArm = aroundArm;
+    _month = month;
+    _serviceCharge = serviceCharge;
+    _initialPayment = initialPayment;
+    _dueDate = dueDate;
+    _paymentStatus = status;
+
+    notifyListeners();
+  }
+
+  //ladies trouser
+  setLtrData(String name, String phoneNumber, trouserLength, waist, hip, knee,
+      ankle, crotch, month, serviceCharge, initialPayment, dueDate, status) {
+    _name = name;
+    _phoneNumber = phoneNumber;
+    _trouserLength = trouserLength;
+    _waist = waist;
+    _hip = hip;
+    _knee = knee;
+    _ankle = ankle;
+    _crotch = crotch;
     _month = month;
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
@@ -204,7 +278,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: 'ls',
+            type: 'lsk',
             month: getMonth);
 
         break;
@@ -212,10 +286,43 @@ class DressProvider with ChangeNotifier {
         // TODO: Handle this case.
         break;
       case DressType.LADIES_TOP:
-        // TODO: Handle this case.
+        dress = Dress(
+            name: getName,
+            phoneNumber: getNumber,
+            shoulder: getShoulder,
+            bust: getBust,
+            nippleToNipple: getNipToNip,
+            shoulderToNipple: getShoToNip,
+            waist: getWaist,
+            hip: getHip,
+            shoulderToWaist: getShoToWaist,
+            aroundArm: getAroundArm,
+            topLength: getTopLength,
+            initialPayment: getInitialPayment,
+            paymentStatus: getPaymentStatus,
+            serviceCharge: getServiceCharge,
+            dueDate: getDueDate,
+            timestamp: timestamp,
+            type: 'ltop',
+            month: getMonth);
         break;
       case DressType.LADIES_TROUSER:
-        // TODO: Handle this case.
+        dress = Dress(
+            name: getName,
+            phoneNumber: getNumber,
+            trouserLength: getTrouserLength,
+            waist: getWaist,
+            hip: getHip,
+            ankle: getAnkle,
+            knee: getKnee,
+            crotch: getCrotch,
+            initialPayment: getInitialPayment,
+            paymentStatus: getPaymentStatus,
+            serviceCharge: getServiceCharge,
+            dueDate: getDueDate,
+            timestamp: timestamp,
+            type: 'ltr',
+            month: getMonth);
         break;
       case DressType.MENS_DRESS:
         // TODO: Handle this case.
@@ -237,7 +344,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: 'mt',
+            type: 'mtop',
             month: getMonth);
         break;
       case DressType.MENS_TROUSER:
@@ -263,8 +370,8 @@ class DressProvider with ChangeNotifier {
     }
 
     print(
-        "values ?? -- $getWaist '-' $getSeat '-' $getInitialPayment $getPaymentStatus ? $getAroundArm ");
+        "values ?? -- $getWaist '-' $getBust '-' $getInitialPayment $getPaymentStatus ? $getAroundArm ");
 
-    // _dressService.createNewDress(dress!, context);
+    _dressService.createNewDress(dress!, context);
   }
 }
