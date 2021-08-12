@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/enum/enums.dart';
+import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
 import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
@@ -10,8 +11,6 @@ import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
 
 class LadiesSkirt extends StatefulWidget {
-  static String? paymentStatus;
-
   final month;
 
   const LadiesSkirt({Key? key, this.month}) : super(key: key);
@@ -28,14 +27,14 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
   TextEditingController kneeController = TextEditingController();
   TextEditingController skirtLengthController = TextEditingController();
   TextEditingController dtController = TextEditingController();
-  TextEditingController paymentController = TextEditingController();
+  TextEditingController initialPaymentController = TextEditingController();
+  TextEditingController serviceChargeController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   DressProvider _dressProvider = DressProvider();
 
   @override
   Widget build(BuildContext context) {
-    print(" ... ${LadiesSkirt.paymentStatus}");
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -58,20 +57,20 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
               ),
               Center(
                   child: DefaultTextStyle(
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: twentyDp,
-                        fontFamily: 'Agne',
-                        color: Colors.black),
-                    child: AnimatedTextKit(
-                      totalRepeatCount: 1,
-                      animatedTexts: [
-                        TypewriterAnimatedText(skirtMeasurement,
-                            textStyle: TextStyle(
-                                color: Colors.indigo, fontSize: fourteenDp)),
-                      ],
-                    ),
-                  )),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: twentyDp,
+                    fontFamily: 'Agne',
+                    color: Colors.black),
+                child: AnimatedTextKit(
+                  totalRepeatCount: 1,
+                  animatedTexts: [
+                    TypewriterAnimatedText(skirtMeasurement,
+                        textStyle: TextStyle(
+                            color: Colors.indigo, fontSize: fourteenDp)),
+                  ],
+                ),
+              )),
 
               //first row fow measurement
               ItemRows(
@@ -109,8 +108,8 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
 
               CustomDtPmt(
                 dateTimeController: dtController,
-                paymentController: paymentController,
-                onTap: () {},
+                paymentController: initialPaymentController,
+                serviceChargeController: serviceChargeController,
               ),
 
               Center(
@@ -120,21 +119,31 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                   child: FloatingActionButton.extended(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        _dressProvider.setLsData(
-                            nameController.text,
-                            phoneNumberController.text,
-                            waistController.text,
-                            hipController.text,
-                            kneeController.text,
-                            skirtLengthController.text,
-                            widget.month);
-                        _dressProvider
-                            .setPayment(int.parse(paymentController.text));
-                        // _dressProvider.setPaymentStatus(pa);
-                        _dressProvider
-                            .setPaymentStatus(LadiesSkirt.paymentStatus);
-                        _dressProvider.createNewDress(
-                            context, DressType.LADIES_SKIRT);
+                        var status = Dress().checkPaymentStatus(
+                            int.parse(serviceChargeController.text),
+                            int.parse(initialPaymentController.text));
+
+                        if (status.contains(error)) {
+                          SnackBar snackBar =
+                              SnackBar(content: Text(payGreaterThanCharge));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else {
+                          _dressProvider.setLsData(
+                              nameController.text,
+                              phoneNumberController.text,
+                              waistController.text,
+                              hipController.text,
+                              kneeController.text,
+                              skirtLengthController.text,
+                              widget.month,
+                              int.parse(serviceChargeController.text),
+                              int.parse(initialPaymentController.text),
+                              dtController.text,
+                              status);
+
+                          _dressProvider.createNewDress(
+                              context, DressType.LADIES_SKIRT);
+                        }
                       }
                     },
                     label: Text(save),
