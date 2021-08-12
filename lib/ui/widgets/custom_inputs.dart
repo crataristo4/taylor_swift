@@ -39,9 +39,7 @@ class CustomerInputs extends StatelessWidget {
                 child: TextFormField(
                     maxLength: 10,
                     maxLines: 1,
-                    keyboardType: TextInputType.numberWithOptions(
-                      decimal: false,
-                    ),
+                    keyboardType: TextInputType.text,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     controller: valueController,
                     validator: (value) {
