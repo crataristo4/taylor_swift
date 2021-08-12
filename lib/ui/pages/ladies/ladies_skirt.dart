@@ -5,6 +5,7 @@ import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
@@ -124,9 +125,7 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                             int.parse(initialPaymentController.text));
 
                         if (status.contains(error)) {
-                          SnackBar snackBar =
-                              SnackBar(content: Text(payGreaterThanCharge));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          ShowAction().showSnackbar(context);
                         } else {
                           _dressProvider.setLsData(
                               nameController.text,
