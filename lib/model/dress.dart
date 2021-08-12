@@ -33,6 +33,7 @@ class Dress with ChangeNotifier {
   int? initialPayment;
   String? phoneNumber;
   String? name;
+  String? back;
 
   String? type;
   String? month;
@@ -68,6 +69,7 @@ class Dress with ChangeNotifier {
       this.serviceCharge,
       this.phoneNumber,
       this.name,
+      this.back,
       this.type,
       this.month,
       this.timestamp});
@@ -77,6 +79,7 @@ class Dress with ChangeNotifier {
       'bust': bust ?? '',
       'waist': waist ?? '',
       'hip': hip ?? '',
+      'back': back ?? '',
       'shoulder': shoulder ?? '',
       'shoulderToWaist': shoulderToWaist ?? '',
       'nippleToNipple': nippleToNipple ?? '',
@@ -114,6 +117,7 @@ class Dress with ChangeNotifier {
         bust: ds['bust'],
         waist: ds['waist'],
         hip: ds['hip'],
+        back: ds['back'],
         shoulder: ds['shoulder'],
         shoulderToWaist: ds['shoulderToWaist'],
         nippleToNipple: ds['nippleToNipple'],
