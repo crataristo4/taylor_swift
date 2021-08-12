@@ -65,7 +65,13 @@ class DressProvider with ChangeNotifier {
 
   get getDressLength => _dressLength;
 
+  get getTrouserLength => _trouserLength;
+
   get getSleeveLength => _sleeveLength;
+
+  get getThigh => _thigh;
+
+  get getBar => _bar;
 
   get getCollar => _collar;
 
@@ -74,6 +80,10 @@ class DressProvider with ChangeNotifier {
   get getCuff => _cuff;
 
   get getAroundArm => _aroundArm;
+
+  get getSeat => _seat;
+
+  get getFlap => _flap;
 
   //ladies skirt
   setLsData(String name, String phoneNumber, waist, hip, knee, skirtLength,
@@ -119,6 +129,41 @@ class DressProvider with ChangeNotifier {
     _chest = chest;
     _aroundArm = aroundArm;
     _cuff = cuff;
+    _month = month;
+    _serviceCharge = serviceCharge;
+    _initialPayment = initialPayment;
+    _dueDate = dueDate;
+    _paymentStatus = status;
+
+    notifyListeners();
+  }
+
+  //men's trouser
+  setMensTrouserData(
+    String name,
+    String phoneNumber,
+    trouserLength,
+    waist,
+    thigh,
+    bar,
+    seat,
+    knee,
+    flap,
+    month,
+    serviceCharge,
+    initialPayment,
+    dueDate,
+    status,
+  ) {
+    _name = name;
+    _phoneNumber = phoneNumber;
+    _trouserLength = trouserLength;
+    _waist = waist;
+    _thigh = thigh;
+    _bar = bar;
+    _seat = seat;
+    _knee = knee;
+    _flap = flap;
     _month = month;
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
@@ -185,6 +230,7 @@ class DressProvider with ChangeNotifier {
             collar: getCollar,
             cuff: getCuff,
             chest: getChest,
+            waist: getWaist,
             aroundArm: getAroundArm,
             initialPayment: getInitialPayment,
             paymentStatus: getPaymentStatus,
@@ -195,13 +241,30 @@ class DressProvider with ChangeNotifier {
             month: getMonth);
         break;
       case DressType.MENS_TROUSER:
-        // TODO: Handle this case.
+        dress = Dress(
+            name: getName,
+            phoneNumber: getNumber,
+            dressLength: getDressLength,
+            trouserLength: getTrouserLength,
+            waist: getWaist,
+            thigh: getThigh,
+            bar: getBar,
+            seat: getSeat,
+            knee: getKnee,
+            flap: getFlap,
+            initialPayment: getInitialPayment,
+            paymentStatus: getPaymentStatus,
+            serviceCharge: getServiceCharge,
+            dueDate: getDueDate,
+            timestamp: timestamp,
+            type: 'mtr',
+            month: getMonth);
         break;
     }
 
     print(
-        "values ?? -- $getCollar '-' $getCuff '-' $getInitialPayment $getPaymentStatus ? $getAroundArm ");
+        "values ?? -- $getWaist '-' $getSeat '-' $getInitialPayment $getPaymentStatus ? $getAroundArm ");
 
-    _dressService.createNewDress(dress!, context);
+    // _dressService.createNewDress(dress!, context);
   }
 }
