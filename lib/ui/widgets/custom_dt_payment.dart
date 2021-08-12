@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:taylor_swift/constants/constants.dart';
+import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/ui/pages/ladies/ladies_skirt.dart';
 
 class CustomDtPmt extends StatefulWidget {
-  const CustomDtPmt({
-    Key? key,
-  }) : super(key: key);
+  final dateTimeController;
+  final paymentController;
+
+//  static String? selectedPayment;
+  const CustomDtPmt(
+      {Key? key,
+      required this.dateTimeController,
+      required this.paymentController})
+      : super(key: key);
 
   @override
   _CustomDtPmtState createState() => _CustomDtPmtState();
@@ -14,8 +22,10 @@ class CustomDtPmt extends StatefulWidget {
 
 class _CustomDtPmtState extends State<CustomDtPmt> {
   String? selectedPayment;
-  TextEditingController dateTimeController = TextEditingController();
-  TextEditingController paymentController = TextEditingController();
+
+/*  TextEditingController dateTimeController = TextEditingController();
+  TextEditingController paymentController = TextEditingController();*/
+  DressProvider _dressProvider = DressProvider();
 
   //date format
   DateFormat _dateFormat = DateFormat.yMMMMd('en_US').add_jm();
@@ -42,77 +52,141 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
     setState(() {
       selectedPayment = notPaid;
     });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Null aware ${LadiesSkirt.paymentStatus} ?? $selectedPayment");
+    _dressProvider.setPaymentStatus(selectedPayment);
+    //   _dressProvider.createNewDress(context, DressType.LADIES_SKIRT);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Column(
         children: [
-          TextFormField(
-              maxLength: 10,
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              controller: paymentController,
-              validator: (value) {
-                return value!.trim().isEmpty ? "required" : null;
-              },
-              decoration: InputDecoration(
-                labelText: payment,
-                labelStyle: TextStyle(color: Colors.black),
-                helperText: enterZero,
-                hintStyle: TextStyle(color: Colors.black),
-                fillColor: Color(0xFFF5F5F5),
-                filled: true,
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFF5F5F5))),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFF5F5F5))),
-              )),
+          Container(
+            padding: EdgeInsets.all(4),
+            margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+            child: TextFormField(
+                maxLength: 10,
+                maxLines: 1,
+                keyboardType: TextInputType.number,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                controller: widget.paymentController,
+                onChanged: (value) {
+                  /* setState(() {
+                    _dressProvider.setPayment(int.parse(value));
+
+                  });*/
+                },
+                validator: (value) {
+                  return value!.trim().isEmpty ? "required" : null;
+                },
+                decoration: InputDecoration(
+                  labelText: serviceCharge,
+                  labelStyle: TextStyle(color: Colors.black),
+                  helperText: serviceChargeDes,
+                  hintStyle: TextStyle(color: Colors.black),
+                  fillColor: Color(0xFFF5F5F5),
+                  filled: true,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                )),
+          ),
+          SizedBox(
+            height: twentyDp,
+          ),
+          Container(
+            padding: EdgeInsets.all(4),
+            margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+            child: TextFormField(
+                maxLength: 10,
+                maxLines: 1,
+                keyboardType: TextInputType.number,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                controller: widget.paymentController,
+                onChanged: (value) {
+                  /* setState(() {
+                    _dressProvider.setPayment(int.parse(value));
+
+                  });*/
+                },
+                validator: (value) {
+                  return value!.trim().isEmpty ? "required" : null;
+                },
+                decoration: InputDecoration(
+                  labelText: payment,
+                  labelStyle: TextStyle(color: Colors.black),
+                  helperText: enterZero,
+                  hintStyle: TextStyle(color: Colors.black),
+                  fillColor: Color(0xFFF5F5F5),
+                  filled: true,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                )),
+          ),
+          SizedBox(
+            height: twentyDp,
+          ),
           buildPaymentMode(),
           SizedBox(
             height: eightDp,
           ),
-          TextFormField(
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              controller: dateTimeController,
-              onTap: () async {
-                final selectedDate = await _selectDate(context);
-                if (selectedDate == null) return;
+          Container(
+            padding: EdgeInsets.all(4),
+            margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+            child: TextFormField(
+                maxLines: 1,
+                keyboardType: TextInputType.number,
+                controller: widget.dateTimeController,
+                onTap: () async {
+                  final selectedDate = await _selectDate(context);
+                  if (selectedDate == null) return;
 
-                final selectedTime = await _selectedTime(context);
-                if (selectedTime == null) return;
+                  final selectedTime = await _selectedTime(context);
+                  if (selectedTime == null) return;
 
-                setState(() {
-                  _dateTime = DateTime(selectedDate.year, selectedDate.month,
-                      selectedDate.day, selectedTime.hour, selectedTime.minute);
+                  setState(() {
+                    _dateTime = DateTime(
+                        selectedDate.year,
+                        selectedDate.month,
+                        selectedDate.day,
+                        selectedTime.hour,
+                        selectedTime.minute);
 
-                  dateTimeController.text = _dateFormat.format(_dateTime);
-                });
-              },
-              validator: (value) {
-                return value!.trim().length < 3 ? dueDateRequired : null;
-              },
-              decoration: InputDecoration(
-                labelText: dueDate,
-                labelStyle: TextStyle(color: Colors.black),
-                helperText: timeToComplete,
-                hintStyle: TextStyle(color: Colors.black),
-                fillColor: Color(0xFFF5F5F5),
-                filled: true,
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFF5F5F5))),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFF5F5F5))),
-              )),
+                    widget.dateTimeController.text =
+                        _dateFormat.format(_dateTime);
+                  });
+
+                  //  _dressProvider.setDueDate(_dateTime.toString());
+                },
+                validator: (value) {
+                  return value!.trim().length < 3 ? dueDateRequired : null;
+                },
+                decoration: InputDecoration(
+                  labelText: dueDate,
+                  labelStyle: TextStyle(color: Colors.black),
+                  helperText: timeToComplete,
+                  hintStyle: TextStyle(color: Colors.black),
+                  fillColor: Color(0xFFF5F5F5),
+                  filled: true,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                )),
+          ),
         ],
       ),
     );
@@ -145,7 +219,10 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
         onChanged: (String? value) {
           setState(() {
             selectedPayment = value;
+            LadiesSkirt.paymentStatus = selectedPayment!;
           });
+          _dressProvider.setPaymentStatus(selectedPayment);
+          print('hith ${LadiesSkirt.paymentStatus}');
         },
       ),
     );
