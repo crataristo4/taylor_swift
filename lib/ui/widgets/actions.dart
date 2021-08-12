@@ -7,6 +7,10 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ShowAction {
+  void showSnackbar(BuildContext context) {
+    SnackBar snackBar = SnackBar(content: Text(payGreaterThanCharge));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   void showToast(message, Color color) {
     Fluttertoast.showToast(
