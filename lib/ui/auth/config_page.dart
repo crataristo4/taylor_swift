@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:taylor_swift/ui/auth/registration_page.dart';
 import 'package:taylor_swift/ui/home/home.dart';
 
+String? uid;
+
 class ConfigurationPage extends StatefulWidget {
   static const routeName = '/';
 
@@ -18,13 +20,15 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
 
   @override
   void initState() {
+    var user = Provider.of<User?>(context, listen: false);
+    isLoggedIn = user != null;
+    uid = user!.uid;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<User?>(context);
-    isLoggedIn = user != null;
+    print("id ?? $uid");
 
     return WillPopScope(
       onWillPop: () async => true,
