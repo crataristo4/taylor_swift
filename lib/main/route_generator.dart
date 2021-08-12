@@ -37,7 +37,11 @@ class RouteGenerator {
 
       //add customer with measurements
       case AddCustomer.routeName:
-        return MaterialPageRoute(builder: (_) => AddCustomer());
+        final data = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => AddCustomer(
+                  selectedMonth: data,
+                ));
 
       default:
         return _errorRoute();
