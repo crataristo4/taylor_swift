@@ -80,7 +80,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.of(context).pushNamed(AddCustomer.routeName),
+        onPressed: () => Navigator.of(context)
+            .pushNamed(AddCustomer.routeName, arguments: _selectedItem),
         label: Text(add),
         icon: Icon(Icons.person),
       ),
