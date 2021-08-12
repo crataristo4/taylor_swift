@@ -36,7 +36,7 @@ class DressProvider with ChangeNotifier {
   int? _serviceCharge;
   String? _phoneNumber;
   String? _name;
-  String? _type;
+  String? _back;
   String? _month;
 
   get getName => _name;
@@ -61,6 +61,20 @@ class DressProvider with ChangeNotifier {
 
   get getMonth => _month;
 
+  get getBack => _back;
+
+  get getDressLength => _dressLength;
+
+  get getSleeveLength => _sleeveLength;
+
+  get getCollar => _collar;
+
+  get getChest => _chest;
+
+  get getCuff => _cuff;
+
+  get getAroundArm => _aroundArm;
+
   //ladies skirt
   setLsData(String name, String phoneNumber, waist, hip, knee, skirtLength,
       month, serviceCharge, initialPayment, dueDate, status) {
@@ -70,6 +84,41 @@ class DressProvider with ChangeNotifier {
     _hip = hip;
     _knee = knee;
     _skirtLength = skirtLength;
+    _month = month;
+    _serviceCharge = serviceCharge;
+    _initialPayment = initialPayment;
+    _dueDate = dueDate;
+    _paymentStatus = status;
+
+    notifyListeners();
+  }
+
+  //men's top
+  setMensTopData(
+    String name,
+    String phoneNumber,
+    length,
+    back,
+    sleeve,
+    collar,
+    chest,
+    aroundArm,
+    cuff,
+    month,
+    serviceCharge,
+    initialPayment,
+    dueDate,
+    status,
+  ) {
+    _name = name;
+    _phoneNumber = phoneNumber;
+    _dressLength = length;
+    _back = back;
+    _sleeveLength = sleeve;
+    _collar = collar;
+    _chest = chest;
+    _aroundArm = aroundArm;
+    _cuff = cuff;
     _month = month;
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
@@ -127,7 +176,23 @@ class DressProvider with ChangeNotifier {
         // TODO: Handle this case.
         break;
       case DressType.MENS_TOP:
-        // TODO: Handle this case.
+        dress = Dress(
+            name: getName,
+            phoneNumber: getNumber,
+            dressLength: getDressLength,
+            back: getBack,
+            sleeveLength: getSleeveLength,
+            collar: getCollar,
+            cuff: getCuff,
+            chest: getChest,
+            aroundArm: getAroundArm,
+            initialPayment: getInitialPayment,
+            paymentStatus: getPaymentStatus,
+            serviceCharge: getServiceCharge,
+            dueDate: getDueDate,
+            timestamp: timestamp,
+            type: 'mt',
+            month: getMonth);
         break;
       case DressType.MENS_TROUSER:
         // TODO: Handle this case.
@@ -135,7 +200,7 @@ class DressProvider with ChangeNotifier {
     }
 
     print(
-        "values ?? -- $getName '-' $getDueDate '-' $getInitialPayment $getPaymentStatus ? $getKnee ");
+        "values ?? -- $getCollar '-' $getCuff '-' $getInitialPayment $getPaymentStatus ? $getAroundArm ");
 
     _dressService.createNewDress(dress!, context);
   }
