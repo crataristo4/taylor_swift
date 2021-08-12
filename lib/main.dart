@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/provider/auth_provider.dart';
+import 'package:taylor_swift/provider/dress_provider.dart';
 import 'package:taylor_swift/ui/onboarding/onboarding_screen.dart';
 
 import 'main/route_generator.dart';
@@ -18,6 +20,9 @@ int? onboardingPrefs;
 final GlobalKey<State> loadingKey = new GlobalKey<State>();
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+//date format
+DateFormat dateFormat = DateFormat.yMMMMd('en_US').add_jm();
+DateTime dateTime = DateTime.now();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +63,9 @@ class TaylorSwift extends StatelessWidget {
       providers: [
         //authentication
         ChangeNotifierProvider.value(value: AuthProvider()),
+
+        //dress
+        ChangeNotifierProvider.value(value: DressProvider()),
 
         ChangeNotifierProvider<MenuInfo>(
             create: (context) => MenuInfo(DressType.LADIES_DRESS)),
