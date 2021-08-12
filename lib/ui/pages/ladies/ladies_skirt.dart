@@ -2,13 +2,19 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
+import 'package:taylor_swift/enum/enums.dart';
+import 'package:taylor_swift/provider/dress_provider.dart';
 import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
 
 class LadiesSkirt extends StatefulWidget {
-  const LadiesSkirt({Key? key}) : super(key: key);
+  static String? paymentStatus;
+
+  final month;
+
+  const LadiesSkirt({Key? key, this.month}) : super(key: key);
 
   @override
   _LadiesSkirtState createState() => _LadiesSkirtState();
@@ -21,11 +27,15 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
   TextEditingController hipController = TextEditingController();
   TextEditingController kneeController = TextEditingController();
   TextEditingController skirtLengthController = TextEditingController();
+  TextEditingController dtController = TextEditingController();
+  TextEditingController paymentController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  DressProvider _dressProvider = DressProvider();
 
   @override
   Widget build(BuildContext context) {
+    print(" ... ${LadiesSkirt.paymentStatus}");
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -48,20 +58,20 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
               ),
               Center(
                   child: DefaultTextStyle(
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: twentyDp,
-                    fontFamily: 'Agne',
-                    color: Colors.black),
-                child: AnimatedTextKit(
-                  totalRepeatCount: 1,
-                  animatedTexts: [
-                    TypewriterAnimatedText(skirtMeasurement,
-                        textStyle: TextStyle(
-                            color: Colors.indigo, fontSize: fourteenDp)),
-                  ],
-                ),
-              )),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: twentyDp,
+                        fontFamily: 'Agne',
+                        color: Colors.black),
+                    child: AnimatedTextKit(
+                      totalRepeatCount: 1,
+                      animatedTexts: [
+                        TypewriterAnimatedText(skirtMeasurement,
+                            textStyle: TextStyle(
+                                color: Colors.indigo, fontSize: fourteenDp)),
+                      ],
+                    ),
+                  )),
 
               //first row fow measurement
               ItemRows(
@@ -84,7 +94,7 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                 widgetA: CustomerInputs(
                   valueController: kneeController,
                   imageSource: 'assets/images/knee.png',
-                  name: waist,
+                  name: knee,
                   textColor: CustomColors.c1,
                 ),
                 widgetB: CustomerInputs(
@@ -97,7 +107,11 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
 
               ItemRows(widgetA: Container(), widgetB: Container()),
 
-              CustomDtPmt(),
+              CustomDtPmt(
+                dateTimeController: dtController,
+                paymentController: paymentController,
+                onTap: () {},
+              ),
 
               Center(
                 child: Container(
@@ -106,7 +120,21 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                   child: FloatingActionButton.extended(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('good to goo');
+                        _dressProvider.setLsData(
+                            nameController.text,
+                            phoneNumberController.text,
+                            waistController.text,
+                            hipController.text,
+                            kneeController.text,
+                            skirtLengthController.text,
+                            widget.month);
+                        _dressProvider
+                            .setPayment(int.parse(paymentController.text));
+                        // _dressProvider.setPaymentStatus(pa);
+                        _dressProvider
+                            .setPaymentStatus(LadiesSkirt.paymentStatus);
+                        _dressProvider.createNewDress(
+                            context, DressType.LADIES_SKIRT);
                       }
                     },
                     label: Text(save),
