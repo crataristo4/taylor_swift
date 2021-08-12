@@ -63,7 +63,9 @@ class _AddCustomerState extends State<AddCustomer> {
                   /*  case DressType.MENS_SHORTS:
                     return MensShorts();*/
                   case DressType.MENS_TOP:
-                    return MensTop();
+                    return MensTop(
+                      month: widget.selectedMonth,
+                    );
 
                   case DressType.MENS_TROUSER:
                     return MensTrouserOrShorts();
