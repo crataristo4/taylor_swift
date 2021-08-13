@@ -37,6 +37,13 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
   final _formKey = GlobalKey<FormState>();
 
   DressProvider _dressProvider = DressProvider();
+  String? _selectedItem;
+
+  @override
+  void initState() {
+    _selectedItem = trouser;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +138,7 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                     name: flap,
                     textColor: CustomColors.c4,
                   ),
-                  widgetB: Container()),
+                  widgetB: buildType()),
               CustomDtPmt(
                 dateTimeController: dtController,
                 paymentController: initialPaymentController,
@@ -166,7 +173,8 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                               int.parse(serviceChargeController.text),
                               int.parse(initialPaymentController.text),
                               dtController.text,
-                              status);
+                              status,
+                              _selectedItem);
 
                           _dressProvider.createNewDress(
                               context, DressType.MENS_TROUSER);
@@ -178,6 +186,54 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildType() {
+    return SizedBox(
+      width: 150,
+      height: 80,
+      child: Container(
+        padding: EdgeInsets.all(4),
+        margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(eightDp),
+            border:
+                Border.all(width: 0.5, color: Colors.grey.withOpacity(0.5))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              pleaseSelectType,
+              style: TextStyle(fontSize: tenDp, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: DropdownButtonFormField<String>(
+                value: _selectedItem,
+                elevation: 1,
+                //isExpanded: true,
+                style: TextStyle(color: Color(0xFF424242)),
+                // underline: Container(),
+                items: [
+                  trouser,
+                  shorts,
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedItem = value;
+                  });
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
