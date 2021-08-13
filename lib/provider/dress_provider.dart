@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/service/dress_service.dart';
@@ -38,6 +39,7 @@ class DressProvider with ChangeNotifier {
   String? _name;
   String? _back;
   String? _month;
+  String? _type;
 
   get getName => _name;
 
@@ -48,6 +50,8 @@ class DressProvider with ChangeNotifier {
   get getHip => _hip;
 
   get getKnee => _knee;
+
+  get getType => _type;
 
   get getSkirtLength => _skirtLength;
 
@@ -228,6 +232,7 @@ class DressProvider with ChangeNotifier {
     initialPayment,
     dueDate,
     status,
+    type,
   ) {
     _name = name;
     _phoneNumber = phoneNumber;
@@ -243,6 +248,7 @@ class DressProvider with ChangeNotifier {
     _initialPayment = initialPayment;
     _dueDate = dueDate;
     _paymentStatus = status;
+    _type = type;
 
     notifyListeners();
   }
@@ -416,7 +422,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: 'mtop',
+            type: shirt,
             month: getMonth);
         break;
       case DressType.MENS_TROUSER:
@@ -425,24 +431,24 @@ class DressProvider with ChangeNotifier {
             phoneNumber: getNumber,
             trouserLength: getTrouserLength,
             waist: getWaist,
-            thigh: getThigh,
-            bar: getBar,
-            seat: getSeat,
-            knee: getKnee,
-            flap: getFlap,
-            initialPayment: getInitialPayment,
-            paymentStatus: getPaymentStatus,
-            serviceCharge: getServiceCharge,
-            dueDate: getDueDate,
-            timestamp: timestamp,
-            type: 'mtr',
-            month: getMonth);
+          thigh: getThigh,
+          bar: getBar,
+          seat: getSeat,
+          knee: getKnee,
+          flap: getFlap,
+          initialPayment: getInitialPayment,
+          paymentStatus: getPaymentStatus,
+          serviceCharge: getServiceCharge,
+          dueDate: getDueDate,
+          timestamp: timestamp,
+          type: getType,
+          month: getMonth,
+        );
         break;
     }
 
-    print(
-        "values ?? -- $getWaist '-' $getBust '-' $getInitialPayment $getPaymentStatus ? $getAroundArm ");
+    print("values ?? -- $getType ");
 
-    _dressService.createNewDress(dress!, context);
+    // _dressService.createNewDress(dress!, context);
   }
 }
