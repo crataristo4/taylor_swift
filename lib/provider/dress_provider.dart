@@ -358,7 +358,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: shirt,
+            type: shirtLadies,
             month: getMonth);
         break;
       case DressType.LADIES_TROUSER:
@@ -376,7 +376,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: trouser,
+            type: trouserLadies,
             month: getMonth);
         break;
       case DressType.MENS_DRESS:
@@ -422,7 +422,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: shirt,
+            type: shirtMen,
             month: getMonth);
         break;
       case DressType.MENS_TROUSER:
