@@ -247,7 +247,56 @@ class DressProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  setDueDate(String? dueDate) {
+  //men's dress
+  setMensDressData(
+    String name,
+    String phoneNumber,
+    topLength,
+    back,
+    sleeve,
+    collar,
+    chest,
+    aroundArm,
+    cuff,
+    waist,
+    thigh,
+    bar,
+    seat,
+    knee,
+    flap,
+    trouserLength,
+    month,
+    serviceCharge,
+    initialPayment,
+    dueDate,
+    status,
+  ) {
+    _name = name;
+    _phoneNumber = phoneNumber;
+    _topLength = topLength;
+    _back = back;
+    _sleeveLength = sleeve;
+    _collar = collar;
+    _chest = chest;
+    _aroundArm = aroundArm;
+    _cuff = cuff;
+    _waist = waist;
+    _thigh = thigh;
+    _bar = bar;
+    _seat = seat;
+    _knee = knee;
+    _flap = flap;
+    _trouserLength = trouserLength;
+    _month = month;
+    _serviceCharge = serviceCharge;
+    _initialPayment = initialPayment;
+    _dueDate = dueDate;
+    _paymentStatus = status;
+
+    notifyListeners();
+  }
+
+/*  setDueDate(String? dueDate) {
     _dueDate = dueDate;
     notifyListeners();
   }
@@ -261,7 +310,7 @@ class DressProvider with ChangeNotifier {
   setPaymentStatus(paymentStatus) {
     _paymentStatus = paymentStatus;
     notifyListeners();
-  }
+  }*/
 
   createNewDress(BuildContext context, DressType dressType) {
     switch (dressType) {
@@ -325,7 +374,30 @@ class DressProvider with ChangeNotifier {
             month: getMonth);
         break;
       case DressType.MENS_DRESS:
-        // TODO: Handle this case.
+        dress = Dress(
+            name: getName,
+            phoneNumber: getNumber,
+            topLength: getTopLength,
+            back: getBack,
+            sleeveLength: getSleeveLength,
+            collar: getCollar,
+            cuff: getCuff,
+            chest: getChest,
+            waist: getWaist,
+            aroundArm: getAroundArm,
+            trouserLength: getTrouserLength,
+            thigh: getThigh,
+            bar: getBar,
+            seat: getSeat,
+            knee: getKnee,
+            flap: getFlap,
+            initialPayment: getInitialPayment,
+            paymentStatus: getPaymentStatus,
+            serviceCharge: getServiceCharge,
+            dueDate: getDueDate,
+            timestamp: timestamp,
+            type: 'mdress',
+            month: getMonth);
         break;
       case DressType.MENS_TOP:
         dress = Dress(
@@ -351,7 +423,6 @@ class DressProvider with ChangeNotifier {
         dress = Dress(
             name: getName,
             phoneNumber: getNumber,
-            dressLength: getDressLength,
             trouserLength: getTrouserLength,
             waist: getWaist,
             thigh: getThigh,
