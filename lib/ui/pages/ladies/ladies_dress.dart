@@ -8,7 +8,9 @@ import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
 
 class LadiesDress extends StatefulWidget {
-  const LadiesDress({Key? key}) : super(key: key);
+  final month;
+
+  const LadiesDress({Key? key, required this.month}) : super(key: key);
 
   @override
   _LadiesDressState createState() => _LadiesDressState();
@@ -30,6 +32,7 @@ class _LadiesDressState extends State<LadiesDress> {
   TextEditingController aroundArmController = TextEditingController();
   TextEditingController dtController = TextEditingController();
   TextEditingController paymentController = TextEditingController();
+  TextEditingController serviceChargeController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -75,10 +78,10 @@ class _LadiesDressState extends State<LadiesDress> {
               //first row fow measurement
               ItemRows(
                 widgetA: CustomerInputs(
-                  valueController: waistController,
-                  imageSource: 'assets/images/waist.png',
-                  name: waist,
-                  textColor: CustomColors.c1,
+                  valueController: shoulderController,
+                  imageSource: 'assets/images/shoda.png',
+                  name: shoulder,
+                  textColor: CustomColors.c6,
                 ),
                 widgetB: CustomerInputs(
                   valueController: bustController,
@@ -91,21 +94,6 @@ class _LadiesDressState extends State<LadiesDress> {
               //second row for measurement
               ItemRows(
                 widgetA: CustomerInputs(
-                  valueController: hipController,
-                  imageSource: 'assets/images/hip.png',
-                  name: hip,
-                  textColor: CustomColors.c2,
-                ),
-                widgetB: CustomerInputs(
-                  valueController: shoulderController,
-                  imageSource: 'assets/images/shoda.png',
-                  name: shoulder,
-                  textColor: CustomColors.c6,
-                ),
-              ),
-              //third row .
-              ItemRows(
-                widgetA: CustomerInputs(
                   valueController: nipToNipController,
                   imageSource: 'assets/images/nipple.png',
                   name: nippleToNipple,
@@ -115,6 +103,22 @@ class _LadiesDressState extends State<LadiesDress> {
                   valueController: shoToNipController,
                   imageSource: 'assets/images/shoToNip.png',
                   name: shoulderToNipple,
+                  textColor: CustomColors.c1,
+                ),
+              ),
+
+              //third row .
+              ItemRows(
+                widgetA: CustomerInputs(
+                  valueController: hipController,
+                  imageSource: 'assets/images/hip.png',
+                  name: hip,
+                  textColor: CustomColors.c2,
+                ),
+                widgetB: CustomerInputs(
+                  valueController: waistController,
+                  imageSource: 'assets/images/waist.png',
+                  name: waist,
                   textColor: CustomColors.c1,
                 ),
               ),
@@ -158,7 +162,10 @@ class _LadiesDressState extends State<LadiesDress> {
                   ),
                   widgetB: Container()),
 
-              CustomDtPmt(),
+              CustomDtPmt(
+                dateTimeController: dtController,
+                paymentController: paymentController,
+              ),
 
               Center(
                 child: Container(

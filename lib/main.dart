@@ -10,9 +10,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/provider/auth_provider.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/service/dress_service.dart';
 import 'package:taylor_swift/ui/onboarding/onboarding_screen.dart';
 
 import 'main/route_generator.dart';
+import 'model/dress.dart';
 import 'model/menu_info.dart';
 import 'ui/auth/config_page.dart';
 
@@ -61,6 +63,12 @@ class TaylorSwift extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        StreamProvider<List<Dress>>.value(
+          value: DressService().fetchDress(),
+          initialData: [],
+          //lazy: false,
+        ),
+
         //authentication
         ChangeNotifierProvider.value(value: AuthProvider()),
 
@@ -73,7 +81,7 @@ class TaylorSwift extends StatelessWidget {
         StreamProvider<User?>.value(
           value: FirebaseAuth.instance.authStateChanges(),
           initialData: FirebaseAuth.instance.currentUser,
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
