@@ -333,7 +333,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: 'lsk',
+            type: skirt,
             month: getMonth);
 
         break;
@@ -358,7 +358,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: 'ltop',
+            type: shirt,
             month: getMonth);
         break;
       case DressType.LADIES_TROUSER:
@@ -376,7 +376,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: 'ltr',
+            type: trouser,
             month: getMonth);
         break;
       case DressType.MENS_DRESS:
@@ -402,7 +402,7 @@ class DressProvider with ChangeNotifier {
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
-            type: 'mdress',
+            type: topAndDown,
             month: getMonth);
         break;
       case DressType.MENS_TOP:
@@ -449,6 +449,6 @@ class DressProvider with ChangeNotifier {
 
     print("values ?? -- $getType ");
 
-    // _dressService.createNewDress(dress!, context);
+    _dressService.createNewDress(dress!, context);
   }
 }
