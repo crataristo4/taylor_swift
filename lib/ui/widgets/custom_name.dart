@@ -17,11 +17,10 @@ class CustomNameAndNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String selectedCountryCode = '+233';
+   // String selectedCountryCode = '+233';
     void _onCountryChange(CountryCode countryCode) {
-      selectedCountryCode = countryCode.toString();
+      //     selectedCountryCode = countryCode.toString();
       CustomNameAndNumber.cc = countryCode.toString();
-      print("?? cc ${CustomNameAndNumber.cc}");
     }
 
     return Container(
@@ -75,7 +74,7 @@ class CustomNameAndNumber extends StatelessWidget {
                 prefix: CountryCodePicker(
                   onChanged: _onCountryChange,
                   showFlag: true,
-                  initialSelection: selectedCountryCode,
+                  initialSelection: CustomNameAndNumber.cc,
                   showOnlyCountryWhenClosed: false,
                 ),
                 contentPadding:
