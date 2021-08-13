@@ -149,6 +149,43 @@ class Dress with ChangeNotifier {
         timestamp: ds['timestamp']);
   }
 
+  factory Dress.fromMap(Map<String, dynamic> ds) {
+    return Dress(
+        bust: ds['bust'],
+        waist: ds['waist'],
+        hip: ds['hip'],
+        back: ds['back'],
+        shoulder: ds['shoulder'],
+        shoulderToWaist: ds['shoulderToWaist'],
+        nippleToNipple: ds['nippleToNipple'],
+        shoulderToNipple: ds['shoulderToNipple'],
+        sleeveLength: ds['sleeveLength'],
+        aroundArm: ds['aroundArm'],
+        topLength: ds['topLength'],
+        knee: ds['knee'],
+        skirtLength: ds['skirtLength'],
+        dressLength: ds['dressLength'],
+        ankle: ds['ankle'],
+        trouserLength: ds['trouserLength'],
+        crotch: ds['crotch'],
+        collar: ds['collar'],
+        chest: ds['chest'],
+        cuff: ds['cuff'],
+        thigh: ds['thigh'],
+        bar: ds['bar'],
+        seat: ds['seat'],
+        flap: ds['flap'],
+        paymentStatus: ds['paymentStatus'],
+        dueDate: ds['dueDate'],
+        initialPayment: ds['initialPayment'],
+        serviceCharge: ds['serviceCharge'],
+        phoneNumber: ds['phoneNumber'],
+        name: ds['name'],
+        type: ds['type'],
+        month: ds['month'],
+        timestamp: ds['timestamp']);
+  }
+
   int getBalance() {
     return (serviceCharge! - initialPayment!);
   }
