@@ -3,10 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/ui/auth/config_page.dart';
+import 'package:taylor_swift/ui/home/home.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
 
 class DressService {
   final dressService = FirebaseFirestore.instance;
+
+  //get dress list
+  Stream<List<Dress>> fetchDress() {
+    return dressService
+        .collection(dbShop)
+        .doc(id)
+        .collection(dbDress)
+        .orderBy("timestamp", descending: true)
+        .snapshots()
+        .map((snapshots) => snapshots.docs
+            .map((document) => Dress.fromMap(document.data()))
+            .toList(growable: true))
+        .handleError((error) {
+      print(error);
+    });
+  }
 
   //create new dress item
   Future<void> createNewDress(Dress dress, BuildContext context) {
