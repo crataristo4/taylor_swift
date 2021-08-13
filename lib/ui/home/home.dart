@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:taylor_swift/constants/constants.dart';
@@ -182,7 +183,7 @@ class _HomePageState extends State<HomePage> {
           //Bottom Section of Card
           Container(
             margin:
-            EdgeInsets.symmetric(horizontal: twentyFourDp, vertical: tenDp),
+                EdgeInsets.symmetric(horizontal: twentyFourDp, vertical: tenDp),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(eightDp),
@@ -214,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                     //todo replace value in string with total budget from database
                     Text("$kGhanaCedi 453.25",
                         style:
-                        TextStyle(fontSize: twelveDp, color: Colors.white)),
+                            TextStyle(fontSize: twelveDp, color: Colors.white)),
                   ],
                 ),
               ),
@@ -296,7 +297,7 @@ class _HomePageState extends State<HomePage> {
               fillColor: Colors.white70,
               filled: true,
               contentPadding:
-              EdgeInsets.symmetric(vertical: tenDp, horizontal: tenDp),
+                  EdgeInsets.symmetric(vertical: tenDp, horizontal: tenDp),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFFF5F5F5)),
               ),
@@ -331,7 +332,11 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("${dress.name}"),
+            Text(
+              "${dress.name}",
+              style:
+                  TextStyle(fontWeight: FontWeight.w500, fontSize: sixteenDp),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,16 +355,28 @@ class _HomePageState extends State<HomePage> {
               endIndent: oneFiftyDp,
               indent: oneFiftyDp,
             ),
+            itemsList(dress),
+            SizedBox(
+              height: tenDp,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildItem(serviceCharge, '$kGhanaCedi 12', Colors.indigo),
-                buildItem(initialPayment, '$kGhanaCedi 10', Colors.green),
-                buildItem(balance, '$kGhanaCedi 2', Colors.red),
+                buildItem(serviceCharge, '$kGhanaCedi ${dress.serviceCharge}',
+                    Colors.indigo),
+                buildItem(initialPayment, '$kGhanaCedi ${dress.initialPayment}',
+                    Colors.green),
+                buildItem(
+                    balance,
+                    '$kGhanaCedi ${Dress().getBalance(dress.serviceCharge, dress.initialPayment)}',
+                    Colors.red),
               ],
             ),
             SizedBox(
               height: tenDp,
+            ),
+            Divider(
+              color: Colors.black45,
             ),
             Text(
               status,
@@ -370,7 +387,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Part payment",
+                  "${Dress().checkPaymentStatus(dress.serviceCharge, dress.initialPayment)}",
                   style: TextStyle(
                     fontSize: twelveDp,
                   ),
@@ -396,17 +413,93 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //groups all types of category
+  Widget itemsList(Dress dress) {
+    if (dress.type == skirt)
+      //display ladies skirt
+      return buildLadiesSkirt(dress); //todo
+    else if (dress.type == shirtLadies)
+      //display ladies shirt
+      return buildLadiesTop(dress);
+    else if (dress.type == trouserLadies) {
+      //display ladies trouser
+      return buildLadiesTrouser(dress);
+    } else if (dress.type == shirtMen) {
+      //display mens shirt
+      return buildMensTop(dress);
+    } else if (dress.type == trouser || dress.type == shorts) {
+      //display mens trouser or shorts
+      return buildMensTrouser(dress);
+    } else if (dress.type == topAndDown) {
+      //display mens top and down
+      return buildMensTopAndDown(dress);
+    }
+
+    return Container();
+  }
+
+  //returns a widget of data for only ladies top
   Widget buildLadiesTop(Dress dress) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.all(eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildItem(shoulder, '${dress.shoulder}', Colors.indigo),
+              buildItem(bust, '${dress.bust}', Colors.indigo),
+              buildItem(
+                  nippleToNipple, '${dress.nippleToNipple} ', Colors.green),
+              buildItem(waist, '${dress.waist} ', Colors.red),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  //returns a widget of data for only ladies skirt
+  Widget buildLadiesSkirt(Dress dress) {
+    return Column(
+      children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildItem(length, '${dress.shoulder}', Colors.indigo),
-            buildItem(back, '${dress.bust} ', Colors.green),
-            buildItem(sleeveLength, '${dress.nippleToNipple} ', Colors.red),
+            buildItem(waist, '${dress.waist}', Colors.indigo),
+            buildItem(hip, '${dress.hip}', Colors.indigo),
+            buildItem(skirtLength, '${dress.skirtLength} ', Colors.green),
+            buildItem(knee, '${dress.knee} ', Colors.red),
           ],
         ),
+      ],
+    );
+  }
+
+  //returns a widget of data for only ladies trouser
+  Widget buildLadiesTrouser(Dress dress) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildItem(trouserLength, '${dress.trouserLength} ', Colors.amber),
+            buildItem(waist, '${dress.waist}', Colors.indigo),
+            buildItem(hip, '${dress.hip}', Colors.blue),
+            buildItem(crotch, '${dress.crotch} ', Colors.green),
+            buildItem(knee, '${dress.knee}', Colors.black),
+            buildItem(ankle, '${dress.ankle}', Colors.indigo),
+          ],
+        ),
+/*
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildItem(knee, '${dress.knee}', Colors.indigo),
+            buildItem(ankle, '${dress.ankle}', Colors.indigo),
+            buildItem(trouserLength, '${dress.trouserLength} ', Colors.green),
+          ],
+        ),*/
       ],
     );
   }
@@ -415,35 +508,123 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             buildItem(length, '${dress.topLength}', Colors.indigo),
             buildItem(back, '${dress.back} ', Colors.green),
             buildItem(sleeveLength, '${dress.sleeveLength} ', Colors.red),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget buildMensTrouser(Dress dress) {
-    return Column(
-      children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildItem(length, '${dress.trouserLength}', Colors.indigo),
-            buildItem(back, '${dress.waist} ', Colors.green),
-            buildItem(sleeveLength, '${dress.thigh} ', Colors.red),
+            buildItem(collar, '${dress.collar}', Colors.indigo),
+            buildItem(back, '${dress.chest} ', Colors.green),
+            buildItem(aroundArm, '${dress.aroundArm} ', Colors.red),
           ],
         ),
       ],
     );
   }
 
+  Widget buildMensTopAndDown(Dress dress) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildItem(topLength, '${dress.topLength}', Colors.indigo),
+              buildItem(back, '${dress.back} ', Colors.green),
+              buildItem(sleeveLength, '${dress.sleeveLength} ', Colors.red),
+              buildItem(collar, '${dress.collar} ', Colors.amber),
+              buildItem(chest, '${dress.chest} ', Colors.red),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildItem(aroundArm, '${dress.aroundArm} ', Colors.indigo),
+              buildItem(cuff, '${dress.cuff} ', Colors.red),
+              buildItem(trouserLength, '${dress.trouserLength}', Colors.indigo),
+              buildItem(waist, '${dress.waist} ', Colors.green),
+              buildItem(thighs, '${dress.thigh} ', Colors.red),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildItem(seat, '${dress.seat} ', Colors.red),
+            buildItem(bar, '${dress.bar} ', Colors.purple),
+            buildItem(knee, '${dress.knee} ', Colors.blue),
+            buildItem(flap, '${dress.flap} ', Colors.red),
+          ],
+        ),
+        Divider(),
+      ],
+    );
+  }
+
+  //widget to display data for mens trouser or shorts
+  Widget buildMensTrouser(Dress dress) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildItem(length, '${dress.trouserLength}', Colors.indigo),
+              buildItem(waist, '${dress.waist} ', Colors.green),
+              buildItem(thighs, '${dress.thigh} ', Colors.red),
+              /*    buildItem(seat, '${dress.seat} ', Colors.blue),
+              buildItem(knee, '${dress.knee}', Colors.indigo),
+              buildItem(flap, '${dress.flap} ', Colors.purple),
+              buildItem(bar, '${dress.bar} ', Colors.orange),*/
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              /*    buildItem(length, '${dress.trouserLength}', Colors.indigo),
+              buildItem(waist, '${dress.waist} ', Colors.green),
+              buildItem(thighs, '${dress.thigh} ', Colors.red),*/
+              buildItem(seat, '${dress.seat} ', Colors.blue),
+              buildItem(knee, '${dress.knee}', Colors.indigo),
+              buildItem(flap, '${dress.flap} ', Colors.purple),
+              //  buildItem(bar, '${dress.bar} ', Colors.orange),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            /*  buildItem(length, '${dress.trouserLength}', Colors.indigo),
+            buildItem(waist, '${dress.waist} ', Colors.green),
+            buildItem(thighs, '${dress.thigh} ', Colors.red),
+            buildItem(seat, '${dress.seat} ', Colors.blue),
+            buildItem(knee, '${dress.knee}', Colors.indigo),
+            buildItem(flap, '${dress.flap} ', Colors.purple),*/
+            buildItem(bar, '${dress.bar} ', Colors.orange),
+          ],
+        ),
+        Divider(),
+      ],
+    );
+  }
+
   Widget buildItem(String item1, String item2, Color color) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           item1,
@@ -452,7 +633,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Text(
           item2,
-          style: TextStyle(fontSize: fourteenDp),
+          style: TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.w700),
         ),
       ],
     );
