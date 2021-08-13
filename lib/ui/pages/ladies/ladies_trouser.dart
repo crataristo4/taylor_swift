@@ -145,7 +145,7 @@ class _LadiesTrouserState extends State<LadiesTrouser> {
                         } else {
                           _dressProvider.setLtrData(
                               nameController.text,
-                              phoneNumberController.text,
+                              "${CustomNameAndNumber.cc}${phoneNumberController.text}",
                               trouserLengthController.text,
                               waistController.text,
                               hipController.text,
