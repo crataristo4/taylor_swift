@@ -3,8 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/ui/add_customer/add_customer.dart';
@@ -26,7 +30,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? _selectedItem;
   TextEditingController _searchController = TextEditingController();
-  int month = DateTime.now().month;
+  CountdownTimerController? countDownController;
+  dynamic endTime;
   List? dressList;
 
   @override
@@ -36,7 +41,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  //get month method
   getMonth() {
+    int month = DateTime.now().month;
     switch (month) {
       case 1:
         _selectedItem = JAN;
@@ -325,6 +332,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildItems(Dress dress) {
+    //get time from db
+    var dueDate = DateTime.parse(dress.dueDate!);
+    //convert time
+    endTime = dueDate.millisecondsSinceEpoch;
+    //assign time to controller
+    countDownController = CountdownTimerController(endTime: endTime);
+
     return Card(
       margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
       elevation: 4,
@@ -336,7 +350,7 @@ class _HomePageState extends State<HomePage> {
             Text(
               "${dress.name}",
               style:
-                  TextStyle(fontWeight: FontWeight.w500, fontSize: sixteenDp),
+              TextStyle(fontWeight: FontWeight.w500, fontSize: sixteenDp),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,9 +362,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Center(
                 child: Text(
-              measurement,
-              style: TextStyle(fontWeight: FontWeight.w500),
-            )),
+                  measurement,
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                )),
             Divider(
               color: Colors.blue,
               endIndent: oneFiftyDp,
@@ -382,7 +396,7 @@ class _HomePageState extends State<HomePage> {
             Text(
               status,
               style:
-                  TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.bold),
+              TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.bold),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -395,6 +409,54 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
+
+            //display count down timer
+            CountdownTimer(
+              endTime: endTime,
+              controller: countDownController,
+              widgetBuilder: (_, CurrentRemainingTime? time) {
+                if (time == null) {
+                  //  end(id);
+                  return Center(
+                    child: Text(
+                      'Due date elapsed',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: twentyFourDp),
+                    ),
+                  );
+                }
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Finish By',
+                      style: TextStyle(
+                          fontSize: tenDp,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.red),
+                    ),
+                    time.days == null
+                        ? Container()
+                        : buildCustomTimer(time.days!, Colors.black,
+                            time.days! > 1 ? 'days' : 'day'),
+                    time.hours == null
+                        ? Container()
+                        : buildCustomTimer(time.hours!, Colors.blue,
+                            time.hours! > 1 ? 'hrs' : 'hr'),
+                    time.min == null
+                        ? Container()
+                        : buildCustomTimer(time.min!, Colors.brown,
+                            time.min! > 1 ? 'mins' : 'min'),
+                    time.sec == null
+                        ? Container()
+                        : buildCustomTimer(time.sec!, Colors.red, "sec"),
+                  ],
+                );
+              },
+            ),
+
+            //display call button
             Align(
               alignment: Alignment.bottomCenter,
               child: FloatingActionButton(
@@ -655,5 +717,41 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
+  }
+
+  //custom timer widget
+  buildCustomTimer(int time, Color bgColor, String timeType) {
+    return Container(
+      margin: EdgeInsets.only(bottom: eightDp),
+      width: eightyDp,
+      height: fiftyDp,
+      decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(eightDp),
+          border: Border.all(color: Colors.grey, width: 1)),
+      child: Shimmer.fromColors(
+        baseColor: Colors.white,
+        highlightColor: Colors.grey,
+        direction: ShimmerDirection.ltr,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "$time ",
+              style: TextStyle(color: Colors.white, fontSize: sixteenDp),
+            ),
+            Text(
+              timeType,
+              style: TextStyle(color: Colors.white, fontSize: sixteenDp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  end(String promoId) {
+    print('Ended');
   }
 }
