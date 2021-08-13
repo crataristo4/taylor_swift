@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/ui/add_customer/add_customer.dart';
+import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/loading.dart';
 import 'package:timeago/timeago.dart' as timeAgo;
 
@@ -326,7 +327,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildItems(Dress dress) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
-      elevation: 0,
+      elevation: 4,
       child: Container(
         padding: EdgeInsets.all(eightDp),
         child: Column(
@@ -400,7 +401,24 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.white,
                 splashColor: Colors.indigo,
                 mini: true,
-                onPressed: () {},
+                onPressed: () {
+                  SnackBar snackBar = SnackBar(
+                      padding: EdgeInsets.all(tenDp),
+                      duration: Duration(seconds: 5),
+                      action: SnackBarAction(
+                        label: yes,
+                        onPressed: () {
+                          ShowAction.makePhoneCall('tel:${dress.phoneNumber}');
+                        },
+                        textColor: Colors.white,
+                      ),
+                      backgroundColor: Colors.indigo,
+                      content: Text(
+                        'Do you want to Call ${dress.name} now ?',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                },
                 child: Icon(
                   Icons.call,
                   color: Colors.green,
