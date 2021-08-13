@@ -154,7 +154,7 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                         } else {
                           _dressProvider.setMensTrouserData(
                               nameController.text,
-                              phoneNumberController.text,
+                              "${CustomNameAndNumber.cc}${phoneNumberController.text}",
                               lengthController.text,
                               waistController.text,
                               thighsController.text,
