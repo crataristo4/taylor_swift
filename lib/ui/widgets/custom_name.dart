@@ -1,3 +1,5 @@
+import 'package:country_code_picker/country_code.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:taylor_swift/constants/constants.dart';
@@ -5,6 +7,7 @@ import 'package:taylor_swift/constants/constants.dart';
 class CustomNameAndNumber extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController phoneNumberController;
+  static String? cc = '+233';
 
   const CustomNameAndNumber(
       {Key? key,
@@ -14,6 +17,13 @@ class CustomNameAndNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String selectedCountryCode = '+233';
+    void _onCountryChange(CountryCode countryCode) {
+      selectedCountryCode = countryCode.toString();
+      CustomNameAndNumber.cc = countryCode.toString();
+      print("?? cc ${CustomNameAndNumber.cc}");
+    }
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Column(
@@ -35,7 +45,7 @@ class CustomNameAndNumber extends StatelessWidget {
                 fillColor: Color(0xFFF5F5F5),
                 filled: true,
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
+                EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFFF5F5F5))),
                 border: OutlineInputBorder(
@@ -62,6 +72,12 @@ class CustomNameAndNumber extends StatelessWidget {
                 hintStyle: TextStyle(color: Colors.black),
                 fillColor: Color(0xFFF5F5F5),
                 filled: true,
+                prefix: CountryCodePicker(
+                  onChanged: _onCountryChange,
+                  showFlag: true,
+                  initialSelection: selectedCountryCode,
+                  showOnlyCountryWhenClosed: false,
+                ),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
                 enabledBorder: OutlineInputBorder(
