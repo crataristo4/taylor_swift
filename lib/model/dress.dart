@@ -186,15 +186,16 @@ class Dress with ChangeNotifier {
         timestamp: ds['timestamp']);
   }
 
-  int getBalance() {
-    return (serviceCharge! - initialPayment!);
+  int getBalance(int? value1, int? value2) {
+    int total = (value1! - value2!);
+    return total;
   }
 
-  String checkPaymentStatus(int serviceCharge, int initialPayment) {
+  String checkPaymentStatus(int? serviceCharge, int? initialPayment) {
     String? status;
     if (initialPayment == 0)
       status = notPaid;
-    else if (initialPayment < serviceCharge)
+    else if (initialPayment! < serviceCharge!)
       status = partPayment;
     else if (serviceCharge == initialPayment)
       status = fullPayment;
