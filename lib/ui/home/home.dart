@@ -1,8 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:taylor_swift/constants/constants.dart';
+import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/ui/add_customer/add_customer.dart';
+import 'package:taylor_swift/ui/widgets/loading.dart';
+import 'package:timeago/timeago.dart' as timeAgo;
+
+String? id = FirebaseAuth.instance.currentUser!.uid;
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
@@ -17,9 +25,11 @@ class _HomePageState extends State<HomePage> {
   String? _selectedItem;
   TextEditingController _searchController = TextEditingController();
   int month = DateTime.now().month;
+  List? dressList;
 
   @override
   void initState() {
+    // dressList = Provider.of<List<Dress>>(context, listen: false);
     getMonth();
     super.initState();
   }
@@ -67,6 +77,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final dressList = Provider.of<List<Dress>>(context);
+    print('?? ${dressList.length}  id $id');
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -76,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           buildTopCard(),
           buildSearchUser(),
-          Expanded(child: buildCustomerList())
+          Expanded(child: buildCustomerList(dressList))
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -170,7 +182,7 @@ class _HomePageState extends State<HomePage> {
           //Bottom Section of Card
           Container(
             margin:
-                EdgeInsets.symmetric(horizontal: twentyFourDp, vertical: tenDp),
+            EdgeInsets.symmetric(horizontal: twentyFourDp, vertical: tenDp),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(eightDp),
@@ -202,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                     //todo replace value in string with total budget from database
                     Text("$kGhanaCedi 453.25",
                         style:
-                            TextStyle(fontSize: twelveDp, color: Colors.white)),
+                        TextStyle(fontSize: twelveDp, color: Colors.white)),
                   ],
                 ),
               ),
@@ -261,7 +273,7 @@ class _HomePageState extends State<HomePage> {
         horizontal: eightDp,
       ),
       child: TextFormField(
-          //search for a service text field
+        //search for a service text field
           keyboardType: TextInputType.text,
           controller: _searchController,
           textAlign: TextAlign.center,
@@ -284,7 +296,7 @@ class _HomePageState extends State<HomePage> {
               fillColor: Colors.white70,
               filled: true,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: tenDp, horizontal: tenDp),
+              EdgeInsets.symmetric(vertical: tenDp, horizontal: tenDp),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFFF5F5F5)),
               ),
@@ -293,15 +305,156 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildCustomerList() {
+  Widget buildCustomerList(List dressList) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return Text("data");
+        // Dress dress =  Dress.fromSnapshot(dressList[index]);
+        return dressList.length == 0
+            ? LoadingShimmer(
+                name: "Dress",
+              )
+            : buildItems(dressList[index]);
       },
-      itemCount: 200,
+      itemCount: dressList.length,
       shrinkWrap: true,
       primary: true,
       physics: ClampingScrollPhysics(),
+    );
+  }
+
+  Widget buildItems(Dress dress) {
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+      elevation: 0,
+      child: Container(
+        padding: EdgeInsets.all(eightDp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("${dress.name}"),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("${dress.type}"),
+                Text("${timeAgo.format(dress.timestamp.toDate())}"),
+              ],
+            ),
+            Center(
+                child: Text(
+              measurement,
+              style: TextStyle(fontWeight: FontWeight.w500),
+            )),
+            Divider(
+              color: Colors.blue,
+              endIndent: oneFiftyDp,
+              indent: oneFiftyDp,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildItem(serviceCharge, '$kGhanaCedi 12', Colors.indigo),
+                buildItem(initialPayment, '$kGhanaCedi 10', Colors.green),
+                buildItem(balance, '$kGhanaCedi 2', Colors.red),
+              ],
+            ),
+            SizedBox(
+              height: tenDp,
+            ),
+            Text(
+              status,
+              style:
+                  TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.bold),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Part payment",
+                  style: TextStyle(
+                    fontSize: twelveDp,
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: FloatingActionButton(
+                backgroundColor: Colors.white,
+                splashColor: Colors.indigo,
+                mini: true,
+                onPressed: () {},
+                child: Icon(
+                  Icons.call,
+                  color: Colors.green,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildLadiesTop(Dress dress) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildItem(length, '${dress.shoulder}', Colors.indigo),
+            buildItem(back, '${dress.bust} ', Colors.green),
+            buildItem(sleeveLength, '${dress.nippleToNipple} ', Colors.red),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildMensTop(Dress dress) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildItem(length, '${dress.topLength}', Colors.indigo),
+            buildItem(back, '${dress.back} ', Colors.green),
+            buildItem(sleeveLength, '${dress.sleeveLength} ', Colors.red),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildMensTrouser(Dress dress) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildItem(length, '${dress.trouserLength}', Colors.indigo),
+            buildItem(back, '${dress.waist} ', Colors.green),
+            buildItem(sleeveLength, '${dress.thigh} ', Colors.red),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildItem(String item1, String item2, Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          item1,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: twelveDp, color: color),
+        ),
+        Text(
+          item2,
+          style: TextStyle(fontSize: fourteenDp),
+        ),
+      ],
     );
   }
 }
