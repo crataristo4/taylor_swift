@@ -2,13 +2,19 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
+import 'package:taylor_swift/enum/enums.dart';
+import 'package:taylor_swift/model/dress.dart';
+import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
 import 'package:taylor_swift/ui/widgets/item_rows.dart';
 
 class MensDress extends StatefulWidget {
-  const MensDress({Key? key}) : super(key: key);
+  final month;
+
+  const MensDress({Key? key, required this.month}) : super(key: key);
 
   @override
   _MensDressState createState() => _MensDressState();
@@ -31,7 +37,10 @@ class _MensDressState extends State<MensDress> {
   TextEditingController kneeController = TextEditingController();
   TextEditingController trouserLengthController = TextEditingController();
   TextEditingController flapController = TextEditingController();
-
+  TextEditingController dtController = TextEditingController();
+  TextEditingController initialPaymentController = TextEditingController();
+  TextEditingController serviceChargeController = TextEditingController();
+  DressProvider _dressProvider = DressProvider();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -201,8 +210,11 @@ class _MensDressState extends State<MensDress> {
                       style: TextStyle(fontSize: 20, color: Colors.purple),
                     )),
                   )),
-              //fifth row .
-              CustomDtPmt(),
+              CustomDtPmt(
+                dateTimeController: dtController,
+                paymentController: initialPaymentController,
+                serviceChargeController: serviceChargeController,
+              ),
 
               Center(
                 child: Container(
@@ -210,7 +222,39 @@ class _MensDressState extends State<MensDress> {
                   child: FloatingActionButton.extended(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('good to goo');
+                        var status = Dress().checkPaymentStatus(
+                            int.parse(serviceChargeController.text),
+                            int.parse(initialPaymentController.text));
+
+                        if (status.contains(error)) {
+                          ShowAction().showSnackbar(context);
+                        } else {
+                          _dressProvider.setMensDressData(
+                              nameController.text,
+                              phoneNumberController.text,
+                              topLengthController.text,
+                              backController.text,
+                              sleeveController.text,
+                              collarController.text,
+                              chestController.text,
+                              aroundArmController.text,
+                              cuffController.text,
+                              waistController.text,
+                              thighsController.text,
+                              barController.text,
+                              seatController.text,
+                              kneeController.text,
+                              flapController.text,
+                              trouserLengthController.text,
+                              widget.month,
+                              int.parse(serviceChargeController.text),
+                              int.parse(initialPaymentController.text),
+                              dtController.text,
+                              status);
+
+                          _dressProvider.createNewDress(
+                              context, DressType.MENS_DRESS);
+                        }
                       }
                     },
                     label: Text(save),
