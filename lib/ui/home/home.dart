@@ -301,7 +301,7 @@ class _HomePageState extends State<HomePage> {
         horizontal: eightDp,
       ),
       child: TextFormField(
-        //search for a service text field
+          //search for a service text field
           keyboardType: TextInputType.text,
           controller: _searchController,
           textAlign: TextAlign.center,
@@ -381,9 +381,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Center(
                 child: Text(
-                  measurement,
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                )),
+              measurement,
+              style: TextStyle(fontWeight: FontWeight.w500),
+            )),
             Divider(
               color: Colors.blue,
               endIndent: oneFiftyDp,
@@ -410,12 +410,12 @@ class _HomePageState extends State<HomePage> {
               height: tenDp,
             ),
             Divider(
-              color: Colors.black45,
-            ),
+              //   color: Colors.black45,
+                ),
             Text(
               status,
               style:
-              TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.bold),
+                  TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.bold),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -523,6 +523,9 @@ class _HomePageState extends State<HomePage> {
     else if (dress.type == trouserLadies) {
       //display ladies trouser
       return buildLadiesTrouser(dress);
+    } else if (dress.type == ld) {
+      //display ladies dress
+      return buildLadiesDress(dress);
     } else if (dress.type == shirtMen) {
       //display mens shirt
       return buildMensTop(dress);
@@ -535,6 +538,54 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Container();
+  }
+
+  //returns a widget of data for only ladies top
+  Widget buildLadiesDress(Dress dress) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildItem(shoulder, '${dress.shoulder}', Colors.indigo),
+              buildItem(bust, '${dress.bust}', Colors.purple),
+              buildItem(
+                  nippleToNipple, '${dress.nippleToNipple} ', Colors.green),
+              buildItem(
+                  shoulderToNipple, '${dress.shoulderToNipple} ', Colors.pink),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildItem(waist, '${dress.waist}', Colors.indigo),
+              buildItem(hip, '${dress.hip}', Colors.red),
+              buildItem(
+                  shoulderToWaist, '${dress.shoulderToWaist}', Colors.green),
+              buildItem(aroundArm, '${dress.aroundArm}', Colors.red),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(eightDp),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildItem(dressLength, '${dress.dressLength}', Colors.indigo),
+              buildItem(sleeveLength, '${dress.sleeveLength} ', Colors.black),
+              buildItem(knee, '${dress.knee}', Colors.blue),
+              buildItem(trouserLength, '${dress.trouserLength}', Colors.red),
+            ],
+          ),
+        ),
+        Divider()
+      ],
+    );
   }
 
   //returns a widget of data for only ladies top
