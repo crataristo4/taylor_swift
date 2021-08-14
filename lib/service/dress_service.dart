@@ -39,16 +39,13 @@ class DressService {
   }
 
   //delete dress item
-  Future<void> deleteMeasurement(String dressId, BuildContext context) {
+  Future<void> deleteMeasurement(String id) {
     return dressService
         .collection(dbShop)
         .doc(uid)
         .collection(dbDress)
-        .doc(dressId)
-        .delete()
-        .whenComplete(() {
-      showDeletingSuccess(context);
-    });
+        .doc(id)
+        .delete();
   }
 
   showSuccess(context) {

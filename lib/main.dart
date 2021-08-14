@@ -66,7 +66,6 @@ class TaylorSwift extends StatelessWidget {
         StreamProvider<List<Dress>>.value(
           value: DressService().fetchDress(),
           initialData: [],
-          //lazy: false,
         ),
 
         //authentication

@@ -76,6 +76,7 @@ class Dress with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'bust': bust ?? '',
       'waist': waist ?? '',
       'hip': hip ?? '',

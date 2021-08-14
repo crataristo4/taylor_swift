@@ -41,7 +41,8 @@ class DressProvider with ChangeNotifier {
   String? _name;
   String? _back;
   String? _month;
-  String? _type, _id;
+  String? _type;
+  String? _id;
   var _uuid = Uuid();
 
   get getName => _name;
@@ -513,5 +514,9 @@ class DressProvider with ChangeNotifier {
     ShowAction().showToast(successful, Colors.black); //show complete msg
     // Navigator.of(context, rootNavigator: true).pop();
     Navigator.of(context).pop();
+  }
+
+  deleteMeasurement(String id) {
+    _dressService.deleteMeasurement(id);
   }
 }
