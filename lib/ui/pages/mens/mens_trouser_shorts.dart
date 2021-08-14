@@ -153,7 +153,7 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                     label: Text(save),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        var status = Dress().checkPaymentStatus(
+                        var status = Dress.checkPaymentStatus(
                             int.parse(serviceChargeController.text),
                             int.parse(initialPaymentController.text));
 

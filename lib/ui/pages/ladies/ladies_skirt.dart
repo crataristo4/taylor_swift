@@ -129,7 +129,7 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         //_notificationTime = dtController.text as DateTime?;
-                        var status = Dress().checkPaymentStatus(
+                        var status = Dress.checkPaymentStatus(
                             int.parse(serviceChargeController.text),
                             int.parse(initialPaymentController.text));
 

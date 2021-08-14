@@ -223,7 +223,7 @@ class _MensDressState extends State<MensDress> {
                   child: FloatingActionButton.extended(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        var status = Dress().checkPaymentStatus(
+                        var status = Dress.checkPaymentStatus(
                             int.parse(serviceChargeController.text),
                             int.parse(initialPaymentController.text));
 

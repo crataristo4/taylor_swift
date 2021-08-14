@@ -142,7 +142,7 @@ class _MensTopState extends State<MensTop> {
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                   child: FloatingActionButton.extended(
                     onPressed: () {
-                      var status = Dress().checkPaymentStatus(
+                      var status = Dress.checkPaymentStatus(
                           int.parse(serviceChargeController.text),
                           int.parse(initialPaymentController.text));
 
