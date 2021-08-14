@@ -5,6 +5,7 @@ import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/ui/home/home.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
@@ -191,6 +192,9 @@ class _LadiesTopState extends State<LadiesTop> {
 
                           _dressProvider.createNewDress(
                               context, DressType.LADIES_TOP);
+
+                          //call static method and schedule
+                          HomePage.saveNotification();
                         }
                       }
                     },

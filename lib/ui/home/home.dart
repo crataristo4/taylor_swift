@@ -10,6 +10,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:taylor_swift/constants/constants.dart';
+import 'package:taylor_swift/helper/notification_info.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/ui/add_customer/add_customer.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
@@ -22,6 +23,22 @@ class HomePage extends StatefulWidget {
   static const routeName = '/home';
   static String? nameControllerString;
   static DateTime notificationTime = DateTime.now();
+
+  //function to save and schedule notification
+  static void saveNotification() {
+    DateTime scheduleAlarmDateTime;
+    if (HomePage.notificationTime.isAfter(DateTime.now()))
+      scheduleAlarmDateTime = HomePage.notificationTime;
+    else
+      scheduleAlarmDateTime = HomePage.notificationTime.add(Duration(days: 1));
+
+    var notificationInfo = NotificationInfo(
+      notifDateTime: scheduleAlarmDateTime,
+      title: 'Time to submit ${HomePage.nameControllerString}\'s cloth',
+    );
+    ShowAction.scheduleNotification(scheduleAlarmDateTime, notificationInfo);
+    print("saved to $scheduleAlarmDateTime  ${HomePage.nameControllerString}");
+  }
 
   const HomePage({Key? key}) : super(key: key);
 
@@ -89,7 +106,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dressList = Provider.of<List<Dress>>(context);
-    print('?? ${dressList.length}  id $id');
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -352,7 +368,7 @@ class _HomePageState extends State<HomePage> {
             Text(
               "${dress.name}",
               style:
-              TextStyle(fontWeight: FontWeight.w500, fontSize: sixteenDp),
+                  TextStyle(fontWeight: FontWeight.w500, fontSize: sixteenDp),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

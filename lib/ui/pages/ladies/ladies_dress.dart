@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
+import 'package:taylor_swift/ui/home/home.dart';
 import 'package:taylor_swift/ui/widgets/custom_dt_payment.dart';
 import 'package:taylor_swift/ui/widgets/custom_inputs.dart';
 import 'package:taylor_swift/ui/widgets/custom_name.dart';
@@ -35,6 +36,8 @@ class _LadiesDressState extends State<LadiesDress> {
   TextEditingController serviceChargeController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  //todo - add notification schedule
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +176,8 @@ class _LadiesDressState extends State<LadiesDress> {
                   child: FloatingActionButton.extended(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('good to goo');
+                        //call static method and schedule
+                        HomePage.saveNotification();
                       }
                     },
                     label: Text(save),
