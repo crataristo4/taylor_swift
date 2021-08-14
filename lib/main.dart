@@ -36,8 +36,8 @@ void main() async {
 
   //location notification
 
-/*  var initializationSettingsAndroid =
-      AndroidInitializationSettings('');
+  var initializationSettingsAndroid =
+      AndroidInitializationSettings('launch_image');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -52,7 +52,7 @@ void main() async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
     }
-  });*/
+  });
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(TaylorSwift()));
