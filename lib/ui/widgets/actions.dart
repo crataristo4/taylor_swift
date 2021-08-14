@@ -2,11 +2,46 @@ import 'dart:ui';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:taylor_swift/constants/constants.dart';
+import 'package:taylor_swift/helper/notification_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../main.dart';
+
 class ShowAction {
+  static void scheduleNotification(
+      scheduledNotificationDateTime, NotificationInfo notificationInfo) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'notification',
+      'notification',
+      'Channel for Notification',
+      importance: Importance.high,
+      icon: 'launch_image', //todo -- change
+      sound: RawResourceAndroidNotificationSound('notif'),
+      largeIcon: DrawableResourceAndroidBitmap('launch_image'),
+    );
+
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails(
+        sound: 'notif.mp3',
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true);
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.schedule(
+      0,
+      notificationInfo.title,
+      "Is due!",
+      scheduledNotificationDateTime,
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true,
+    );
+  }
+
   void showSnackbar(BuildContext context) {
     SnackBar snackBar = SnackBar(content: Text(payGreaterThanCharge));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
