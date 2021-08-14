@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/ui/home/home.dart';
 
 class CustomDtPmt extends StatefulWidget {
   final dateTimeController;
@@ -153,6 +154,8 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
 
                     /*  widget.dateTimeController.text =
                         _dateFormat.format(_dateTime);*/
+
+                    HomePage.notificationTime = _dateTime;
 
                     widget.dateTimeController.text = _dateTime.toString();
                   });
