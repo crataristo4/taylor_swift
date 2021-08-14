@@ -12,6 +12,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/helper/notification_info.dart';
 import 'package:taylor_swift/model/dress.dart';
+import 'package:taylor_swift/provider/dress_provider.dart';
 import 'package:taylor_swift/ui/add_customer/add_customer.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/loading.dart';
@@ -52,11 +53,14 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
   CountdownTimerController? countDownController;
   dynamic endTime;
-  List? dressList;
+
+  // List? dressList;
+  DressProvider _dressProvider = DressProvider();
+  int total = 0;
+  Dress? dress;
 
   @override
   void initState() {
-    // dressList = Provider.of<List<Dress>>(context, listen: false);
     getMonth();
     super.initState();
   }
@@ -107,6 +111,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dressList = Provider.of<List<Dress>>(context);
+    for (int i = 0; i < dressList.length; i++) {
+      dress = dressList[i];
+      total += dress!.initialPayment!;
+    }
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -208,18 +217,20 @@ class _HomePageState extends State<HomePage> {
           ),
 
           //Bottom Section of Card
-          Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: twentyFourDp, vertical: tenDp),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(eightDp),
-                    bottomRight: Radius.circular(eightDp)),
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.blue, Colors.green])),
-            child: Container(
+          total == 0
+              ? Container()
+              : Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: twentyFourDp, vertical: tenDp),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(eightDp),
+                          bottomRight: Radius.circular(eightDp)),
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Colors.blue, Colors.green])),
+                  child: Container(
               decoration: BoxDecoration(
                 color: Color.fromRGBO(0, 0, 0, 0.3),
                 borderRadius: BorderRadius.only(
@@ -232,17 +243,17 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: eightDp),
-                      child: Text("Total Collections",
-                          style: TextStyle(
-                              fontSize: twelveDp,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
+                      child: Text(totalCollections,
+                                style: TextStyle(
+                                    fontSize: twelveDp,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
                     ),
 
                     //todo replace value in string with total budget from database
-                    Text("$kGhanaCedi 453.25",
-                        style:
-                            TextStyle(fontSize: twelveDp, color: Colors.white)),
+                    Text("$kGhanaCedi $total",
+                              style: TextStyle(
+                                  fontSize: twelveDp, color: Colors.white)),
                   ],
                 ),
               ),
@@ -377,7 +388,32 @@ class _HomePageState extends State<HomePage> {
 
                 //delete measurement
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ShowAction.showAlertDialog(
+                        deleteMeasurement,
+                        "$delete ${dress.name}'\s $measurement",
+                        context,
+                        //yes button
+                        ElevatedButton(
+                          onPressed: () {
+                            //delete measurement
+                            _dressProvider.deleteMeasurement(dress.id);
+                          },
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black)),
+                          child:
+                              Text(yes, style: TextStyle(color: Colors.white)),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.red)),
+                          child:
+                              Text(no, style: TextStyle(color: Colors.white)),
+                        ));
+                  },
                   icon: Icon(
                     Icons.delete,
                     color: Colors.red,
@@ -418,7 +454,7 @@ class _HomePageState extends State<HomePage> {
                     Colors.green),
                 buildItem(
                     balance,
-                    '$kGhanaCedi ${Dress().getBalance(dress.serviceCharge, dress.initialPayment)}',
+                    '$kGhanaCedi ${Dress.getBalance(dress.serviceCharge, dress.initialPayment)}',
                     Colors.red),
               ],
             ),
@@ -437,7 +473,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${Dress().checkPaymentStatus(dress.serviceCharge, dress.initialPayment)}",
+                  "${Dress.checkPaymentStatus(dress.serviceCharge, dress.initialPayment)}",
                   style: TextStyle(
                     fontSize: twelveDp,
                   ),
@@ -532,7 +568,7 @@ class _HomePageState extends State<HomePage> {
   Widget itemsList(Dress dress) {
     if (dress.type == skirt)
       //display ladies skirt
-      return buildLadiesSkirt(dress); //todo
+      return buildLadiesSkirt(dress);
     else if (dress.type == shirtLadies)
       //display ladies shirt
       return buildLadiesTop(dress);
