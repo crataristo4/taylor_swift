@@ -173,7 +173,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 builder: (context, snapshot) {
                   return TextFormField(
                       maxLength: 15,
-                      autofocus: true,
                       keyboardType: TextInputType.phone,
                       controller: _controller,
                       onChanged: loginBloc.onPhoneNumberChanged,
@@ -184,7 +183,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ? ""
                             : snapshot.error as String,
                         fillColor: Color(0xFFF5F5F5),
-                        prefix: CountryCodePicker(
+                        prefixIcon: CountryCodePicker(
                           onChanged: _onCountryChange,
                           showFlag: true,
                           initialSelection: selectedCountryCode,
