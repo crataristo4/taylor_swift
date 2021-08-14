@@ -7,6 +7,8 @@ mixin LoginValidator {
       handleData: (phoneNumber, sink) {
     if (phoneNumber.length >= 9 && !phoneNumber.toString().startsWith('0')) {
       sink.add(phoneNumber);
+    } else if (phoneNumber.toString().startsWith('0')) {
+      sink.addError(nonZero);
     } else {
       sink.addError(invalidPhone);
     }
