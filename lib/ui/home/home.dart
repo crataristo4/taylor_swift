@@ -20,6 +20,7 @@ String? id = FirebaseAuth.instance.currentUser!.uid;
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
+  static DateTime notificationTime = DateTime.now();
 
   const HomePage({Key? key}) : super(key: key);
 
@@ -723,7 +724,7 @@ class _HomePageState extends State<HomePage> {
   buildCustomTimer(int time, Color bgColor, String timeType) {
     return Container(
       margin: EdgeInsets.only(bottom: eightDp),
-      width: eightyDp,
+      width: sixtyDp,
       height: fiftyDp,
       decoration: BoxDecoration(
           color: bgColor,
@@ -739,11 +740,11 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text(
               "$time ",
-              style: TextStyle(color: Colors.white, fontSize: sixteenDp),
+              style: TextStyle(color: Colors.white, fontSize: twelveDp),
             ),
             Text(
               timeType,
-              style: TextStyle(color: Colors.white, fontSize: sixteenDp),
+              style: TextStyle(color: Colors.white, fontSize: twelveDp),
             ),
           ],
         ),
