@@ -3,9 +3,7 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/service/dress_service.dart';
-import 'package:taylor_swift/ui/widgets/progress_dialog.dart';
-
-import '../main.dart';
+import 'package:taylor_swift/ui/widgets/actions.dart';
 
 class DressProvider with ChangeNotifier {
   DressService _dressService = DressService();
@@ -107,6 +105,49 @@ class DressProvider with ChangeNotifier {
   get getShoToWaist => _shoulderToWaist;
 
   get getTopLength => _topLength;
+
+  //ladies dress
+  setLadiesDressData(
+    String name,
+    String phoneNumber,
+    shoulder,
+    bust,
+    nipToNip,
+    shoToNip,
+    hip,
+    waist,
+    shoToWaist,
+    knee,
+    dreesLength,
+    sleeveLength,
+    aroundArm,
+    month,
+    serviceCharge,
+    initialPayment,
+    dueDate,
+    trouserLength,
+  ) {
+    _name = name;
+    _phoneNumber = phoneNumber;
+    _shoulder = shoulder;
+    _bust = bust;
+    _nippleToNipple = nipToNip;
+    _shoulderToNipple = shoToNip;
+    _hip = hip;
+    _waist = waist;
+    _shoulderToWaist = shoToWaist;
+    _knee = knee;
+    _dressLength = dreesLength;
+    _sleeveLength = sleeveLength;
+    _aroundArm = aroundArm;
+    _month = month;
+    _serviceCharge = serviceCharge;
+    _initialPayment = initialPayment;
+    _dueDate = dueDate;
+    _trouserLength = trouserLength;
+
+    notifyListeners();
+  }
 
   //ladies skirt
   setLsData(String name, String phoneNumber, waist, hip, knee, skirtLength,
@@ -341,7 +382,27 @@ class DressProvider with ChangeNotifier {
 
         break;
       case DressType.LADIES_DRESS:
-        // TODO: Handle this case.
+        dress = Dress(
+            name: getName,
+            phoneNumber: getNumber,
+            shoulder: getShoulder,
+            bust: getBust,
+            nippleToNipple: getNipToNip,
+            shoulderToNipple: getShoToNip,
+            waist: getWaist,
+            hip: getHip,
+            shoulderToWaist: getShoToWaist,
+            aroundArm: getAroundArm,
+            dressLength: getDressLength,
+            sleeveLength: getSleeveLength,
+            trouserLength: getTrouserLength,
+            knee: getKnee,
+            initialPayment: getInitialPayment,
+            serviceCharge: getServiceCharge,
+            dueDate: getDueDate,
+            timestamp: timestamp,
+            type: ld,
+            month: getMonth);
         break;
       case DressType.LADIES_TOP:
         dress = Dress(
@@ -430,10 +491,10 @@ class DressProvider with ChangeNotifier {
         break;
       case DressType.MENS_TROUSER:
         dress = Dress(
-            name: getName,
-            phoneNumber: getNumber,
-            trouserLength: getTrouserLength,
-            waist: getWaist,
+          name: getName,
+          phoneNumber: getNumber,
+          trouserLength: getTrouserLength,
+          waist: getWaist,
           thigh: getThigh,
           bar: getBar,
           seat: getSeat,
@@ -450,8 +511,13 @@ class DressProvider with ChangeNotifier {
         break;
     }
 
-    Dialogs.showLoadingDialog(context, loadingKey, saving, Colors.white);
+    //Dialogs.showLoadingDialog(context, loadingKey, saving, Colors.white);
 
     _dressService.createNewDress(dress!, context);
+
+    // Future.delayed(Duration(seconds: 5));
+    ShowAction().showToast(successful, Colors.black); //show complete msg
+    // Navigator.of(context, rootNavigator: true).pop();
+    Navigator.of(context).pop();
   }
 }
