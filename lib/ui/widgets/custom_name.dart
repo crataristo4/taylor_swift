@@ -27,6 +27,7 @@ class CustomNameAndNumber extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Column(
         children: [
+          //user name
           TextFormField(
               maxLength: 30,
               maxLines: 1,
@@ -53,6 +54,7 @@ class CustomNameAndNumber extends StatelessWidget {
           SizedBox(
             height: eightDp,
           ),
+          //phone number
           TextFormField(
               maxLength: 12,
               maxLines: 1,
@@ -71,7 +73,7 @@ class CustomNameAndNumber extends StatelessWidget {
                 hintStyle: TextStyle(color: Colors.black),
                 fillColor: Color(0xFFF5F5F5),
                 filled: true,
-                prefix: CountryCodePicker(
+                prefixIcon: CountryCodePicker(
                   onChanged: _onCountryChange,
                   showFlag: true,
                   initialSelection: CustomNameAndNumber.cc,
