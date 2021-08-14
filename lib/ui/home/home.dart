@@ -366,10 +366,26 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "${dress.name}",
-              style:
-                  TextStyle(fontWeight: FontWeight.w500, fontSize: sixteenDp),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${dress.name}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500, fontSize: sixteenDp),
+                ),
+
+                //delete measurement
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  splashColor: Colors.black,
+                  hoverColor: Colors.indigo,
+                )
+              ],
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -505,7 +521,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.green,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
