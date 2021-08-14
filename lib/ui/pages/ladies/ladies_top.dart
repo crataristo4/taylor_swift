@@ -189,7 +189,7 @@ class _LadiesTopState extends State<LadiesTop> {
                               int.parse(initialPaymentController.text),
                               dtController.text,
                               status);
-
+                          HomePage.nameControllerString = nameController.text;
                           _dressProvider.createNewDress(
                               context, DressType.LADIES_TOP);
 

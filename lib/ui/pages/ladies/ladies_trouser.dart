@@ -159,6 +159,8 @@ class _LadiesTrouserState extends State<LadiesTrouser> {
                               dtController.text,
                               status);
 
+                          HomePage.nameControllerString = nameController.text;
+
                           _dressProvider.createNewDress(
                               context, DressType.LADIES_TROUSER);
 

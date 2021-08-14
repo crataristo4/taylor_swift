@@ -176,7 +176,7 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                               dtController.text,
                               status,
                               _selectedItem);
-
+                          HomePage.nameControllerString = nameController.text;
                           _dressProvider.createNewDress(
                               context, DressType.MENS_TROUSER);
 

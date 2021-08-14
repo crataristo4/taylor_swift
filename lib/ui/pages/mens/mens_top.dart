@@ -165,6 +165,8 @@ class _MensTopState extends State<MensTop> {
                             dtController.text,
                             status);
 
+                        HomePage.nameControllerString = nameController.text;
+
                         _dressProvider.createNewDress(
                             context, DressType.MENS_TOP);
 

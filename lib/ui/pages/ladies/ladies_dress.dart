@@ -176,6 +176,7 @@ class _LadiesDressState extends State<LadiesDress> {
                   child: FloatingActionButton.extended(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        HomePage.nameControllerString = nameController.text;
                         //call static method and schedule
                         HomePage.saveNotification();
                       }
