@@ -222,6 +222,7 @@ const enterNumberToVerify = "Enter your phone number to verify";
 const confirmNumber = 'Confirm number';
 const sendCodeTo = 'Send verification code to ';
 const invalidPhone = 'Invalid phone number';
+const nonZero = 'phone number should not begin with zero';
 const invalidCode = 'Invalid code';
 const code = 'Code';
 const category = 'Category';
