@@ -18,6 +18,7 @@ import 'package:taylor_swift/ui/widgets/loading.dart';
 import 'package:timeago/timeago.dart' as timeAgo;
 
 String? id = FirebaseAuth.instance.currentUser!.uid;
+final GlobalKey<State> loadingKey = new GlobalKey<State>();
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
