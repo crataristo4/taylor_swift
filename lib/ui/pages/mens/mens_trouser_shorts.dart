@@ -174,7 +174,6 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                               int.parse(serviceChargeController.text),
                               int.parse(initialPaymentController.text),
                               dtController.text,
-                              status,
                               _selectedItem);
                           HomePage.nameControllerString = nameController.text;
                           _dressProvider.createNewDress(

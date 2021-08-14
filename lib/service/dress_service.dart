@@ -54,8 +54,8 @@ class DressService {
 
   showSuccess(context) async {
     ShowAction().showToast(successful, Colors.black); //show complete msg
-    // Navigator.of(context, rootNavigator: true).pop();
-    // Navigator.of(context).pop();
+    Navigator.of(context, rootNavigator: true).pop();
+    Navigator.of(context).pop();
 
     //  Navigator.of(context).pushNamed(HomePage.routeName, arguments: true);
   }

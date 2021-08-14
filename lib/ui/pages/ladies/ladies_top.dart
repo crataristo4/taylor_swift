@@ -187,8 +187,7 @@ class _LadiesTopState extends State<LadiesTop> {
                               widget.month,
                               int.parse(serviceChargeController.text),
                               int.parse(initialPaymentController.text),
-                              dtController.text,
-                              status);
+                              dtController.text);
                           HomePage.nameControllerString = nameController.text;
                           _dressProvider.createNewDress(
                               context, DressType.LADIES_TOP);

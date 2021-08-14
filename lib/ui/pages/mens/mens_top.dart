@@ -162,8 +162,7 @@ class _MensTopState extends State<MensTop> {
                             widget.month,
                             int.parse(serviceChargeController.text),
                             int.parse(initialPaymentController.text),
-                            dtController.text,
-                            status);
+                            dtController.text);
 
                         HomePage.nameControllerString = nameController.text;
 

@@ -250,8 +250,7 @@ class _MensDressState extends State<MensDress> {
                               widget.month,
                               int.parse(serviceChargeController.text),
                               int.parse(initialPaymentController.text),
-                              dtController.text,
-                              status);
+                              dtController.text);
 
                           _dressProvider.createNewDress(
                               context, DressType.MENS_DRESS);

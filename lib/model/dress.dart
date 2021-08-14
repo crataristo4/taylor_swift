@@ -27,7 +27,7 @@ class Dress with ChangeNotifier {
   String? bar;
   String? seat;
   String? flap;
-  String? paymentStatus;
+ // String? paymentStatus;
   String? dueDate;
   int? serviceCharge;
   int? initialPayment;
@@ -63,7 +63,7 @@ class Dress with ChangeNotifier {
       this.bar,
       this.seat,
       this.flap,
-      this.paymentStatus,
+        //   this.paymentStatus,
       this.dueDate,
       this.initialPayment,
       this.serviceCharge,
@@ -100,7 +100,7 @@ class Dress with ChangeNotifier {
       'bar': bar ?? '',
       'seat': seat ?? '',
       'flap': flap ?? '',
-      'paymentStatus': paymentStatus ?? notPaid,
+      // 'paymentStatus': paymentStatus ?? notPaid,
       'dueDate': dueDate,
       'initialPayment': initialPayment,
       'serviceCharge': serviceCharge,
@@ -138,7 +138,7 @@ class Dress with ChangeNotifier {
         bar: ds['bar'],
         seat: ds['seat'],
         flap: ds['flap'],
-        paymentStatus: ds['paymentStatus'],
+        //  paymentStatus: ds['paymentStatus'],
         dueDate: ds['dueDate'],
         initialPayment: ds['initialPayment'],
         serviceCharge: ds['serviceCharge'],
@@ -175,7 +175,7 @@ class Dress with ChangeNotifier {
         bar: ds['bar'],
         seat: ds['seat'],
         flap: ds['flap'],
-        paymentStatus: ds['paymentStatus'],
+        //  paymentStatus: ds['paymentStatus'],
         dueDate: ds['dueDate'],
         initialPayment: ds['initialPayment'],
         serviceCharge: ds['serviceCharge'],

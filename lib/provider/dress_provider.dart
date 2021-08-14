@@ -3,6 +3,9 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/service/dress_service.dart';
+import 'package:taylor_swift/ui/widgets/progress_dialog.dart';
+
+import '../main.dart';
 
 class DressProvider with ChangeNotifier {
   DressService _dressService = DressService();
@@ -57,7 +60,7 @@ class DressProvider with ChangeNotifier {
 
   get getInitialPayment => _initialPayment;
 
-  get getPaymentStatus => _paymentStatus;
+//  get getPaymentStatus => _paymentStatus;
 
   get getDueDate => _dueDate;
 
@@ -107,7 +110,7 @@ class DressProvider with ChangeNotifier {
 
   //ladies skirt
   setLsData(String name, String phoneNumber, waist, hip, knee, skirtLength,
-      month, serviceCharge, initialPayment, dueDate, status) {
+      month, serviceCharge, initialPayment, dueDate) {
     _name = name;
     _phoneNumber = phoneNumber;
     _waist = waist;
@@ -118,7 +121,7 @@ class DressProvider with ChangeNotifier {
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
     _dueDate = dueDate;
-    _paymentStatus = status;
+    // _paymentStatus = status;
 
     notifyListeners();
   }
@@ -140,7 +143,7 @@ class DressProvider with ChangeNotifier {
     serviceCharge,
     initialPayment,
     dueDate,
-    status,
+      // status,
   ) {
     _name = name;
     _phoneNumber = phoneNumber;
@@ -156,14 +159,14 @@ class DressProvider with ChangeNotifier {
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
     _dueDate = dueDate;
-    _paymentStatus = status;
+    //  _paymentStatus = status;
 
     notifyListeners();
   }
 
   //ladies trouser
   setLtrData(String name, String phoneNumber, trouserLength, waist, hip, knee,
-      ankle, crotch, month, serviceCharge, initialPayment, dueDate, status) {
+      ankle, crotch, month, serviceCharge, initialPayment, dueDate) {
     _name = name;
     _phoneNumber = phoneNumber;
     _trouserLength = trouserLength;
@@ -176,7 +179,7 @@ class DressProvider with ChangeNotifier {
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
     _dueDate = dueDate;
-    _paymentStatus = status;
+    //_paymentStatus = status;
 
     notifyListeners();
   }
@@ -196,7 +199,7 @@ class DressProvider with ChangeNotifier {
     serviceCharge,
     initialPayment,
     dueDate,
-    status,
+      //  status,
   ) {
     _name = name;
     _phoneNumber = phoneNumber;
@@ -211,7 +214,7 @@ class DressProvider with ChangeNotifier {
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
     _dueDate = dueDate;
-    _paymentStatus = status;
+    //_paymentStatus = status;
 
     notifyListeners();
   }
@@ -231,7 +234,7 @@ class DressProvider with ChangeNotifier {
     serviceCharge,
     initialPayment,
     dueDate,
-    status,
+      // status,
     type,
   ) {
     _name = name;
@@ -247,7 +250,7 @@ class DressProvider with ChangeNotifier {
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
     _dueDate = dueDate;
-    _paymentStatus = status;
+    // _paymentStatus = status;
     _type = type;
 
     notifyListeners();
@@ -275,7 +278,7 @@ class DressProvider with ChangeNotifier {
     serviceCharge,
     initialPayment,
     dueDate,
-    status,
+      //   status,
   ) {
     _name = name;
     _phoneNumber = phoneNumber;
@@ -297,7 +300,7 @@ class DressProvider with ChangeNotifier {
     _serviceCharge = serviceCharge;
     _initialPayment = initialPayment;
     _dueDate = dueDate;
-    _paymentStatus = status;
+    // _paymentStatus = status;
 
     notifyListeners();
   }
@@ -329,7 +332,7 @@ class DressProvider with ChangeNotifier {
             knee: getKnee,
             skirtLength: getSkirtLength,
             initialPayment: getInitialPayment,
-            paymentStatus: getPaymentStatus,
+            // paymentStatus: getPaymentStatus,
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
@@ -354,7 +357,7 @@ class DressProvider with ChangeNotifier {
             aroundArm: getAroundArm,
             topLength: getTopLength,
             initialPayment: getInitialPayment,
-            paymentStatus: getPaymentStatus,
+            //  paymentStatus: getPaymentStatus,
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
@@ -372,7 +375,7 @@ class DressProvider with ChangeNotifier {
             knee: getKnee,
             crotch: getCrotch,
             initialPayment: getInitialPayment,
-            paymentStatus: getPaymentStatus,
+            //  paymentStatus: getPaymentStatus,
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
@@ -398,7 +401,7 @@ class DressProvider with ChangeNotifier {
             knee: getKnee,
             flap: getFlap,
             initialPayment: getInitialPayment,
-            paymentStatus: getPaymentStatus,
+            //paymentStatus: getPaymentStatus,
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
@@ -418,7 +421,7 @@ class DressProvider with ChangeNotifier {
             waist: getWaist,
             aroundArm: getAroundArm,
             initialPayment: getInitialPayment,
-            paymentStatus: getPaymentStatus,
+            // paymentStatus: getPaymentStatus,
             serviceCharge: getServiceCharge,
             dueDate: getDueDate,
             timestamp: timestamp,
@@ -437,7 +440,7 @@ class DressProvider with ChangeNotifier {
           knee: getKnee,
           flap: getFlap,
           initialPayment: getInitialPayment,
-          paymentStatus: getPaymentStatus,
+          // paymentStatus: getPaymentStatus,
           serviceCharge: getServiceCharge,
           dueDate: getDueDate,
           timestamp: timestamp,
@@ -447,7 +450,7 @@ class DressProvider with ChangeNotifier {
         break;
     }
 
-    print("values ?? -- $getType ");
+    Dialogs.showLoadingDialog(context, loadingKey, saving, Colors.white);
 
     _dressService.createNewDress(dress!, context);
   }
