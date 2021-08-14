@@ -20,6 +20,7 @@ String? id = FirebaseAuth.instance.currentUser!.uid;
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
+  static String? nameControllerString;
   static DateTime notificationTime = DateTime.now();
 
   const HomePage({Key? key}) : super(key: key);

@@ -153,6 +153,8 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                               dtController.text,
                               status);
 
+                          HomePage.nameControllerString = nameController.text;
+
                           _dressProvider.createNewDress(
                               context, DressType.LADIES_SKIRT);
 
@@ -171,7 +173,7 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
     );
   }
 
-  void scheduleNotification(
+  static void scheduleNotification(
       scheduledNotificationDateTime, NotificationInfo notificationInfo) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'notification',
@@ -202,7 +204,7 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
     );
   }
 
-  void saveNotification() {
+  static void saveNotification() {
     DateTime scheduleAlarmDateTime;
     if (HomePage.notificationTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = HomePage.notificationTime;
@@ -211,10 +213,10 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
 
     var notificationInfo = NotificationInfo(
       notifDateTime: scheduleAlarmDateTime,
-      title: 'Time to submit ${nameController.text}\'s cloth',
+      title: 'Time to submit ${HomePage.nameControllerString}\'s cloth',
     );
     // _notificationHelper.insertNotification(notificationInfo);
     scheduleNotification(scheduleAlarmDateTime, notificationInfo);
-    print("saved to $scheduleAlarmDateTime");
+    print("saved to $scheduleAlarmDateTime  ${HomePage.nameControllerString}");
   }
 }
