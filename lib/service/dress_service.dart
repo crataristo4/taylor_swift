@@ -31,14 +31,15 @@ class DressService {
         .collection(dbShop)
         .doc(uid)
         .collection(dbDress)
-        .add(dress.toMap())
+        .doc(dress.id)
+        .set(dress.toMap())
         .catchError((onError) {
       showFailure(context, onError);
     });
   }
 
   //delete dress item
-  Future<void> deleteDress(String dressId, BuildContext context) {
+  Future<void> deleteMeasurement(String dressId, BuildContext context) {
     return dressService
         .collection(dbShop)
         .doc(uid)

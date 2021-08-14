@@ -4,6 +4,7 @@ import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/service/dress_service.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
+import 'package:uuid/uuid.dart';
 
 class DressProvider with ChangeNotifier {
   DressService _dressService = DressService();
@@ -40,7 +41,8 @@ class DressProvider with ChangeNotifier {
   String? _name;
   String? _back;
   String? _month;
-  String? _type;
+  String? _type, _id;
+  var _uuid = Uuid();
 
   get getName => _name;
 
@@ -346,26 +348,12 @@ class DressProvider with ChangeNotifier {
     notifyListeners();
   }
 
-/*  setDueDate(String? dueDate) {
-    _dueDate = dueDate;
-    notifyListeners();
-  }
-
-  setPayment(int? payment) {
-    _initialPayment = payment;
-
-    notifyListeners();
-  }
-
-  setPaymentStatus(paymentStatus) {
-    _paymentStatus = paymentStatus;
-    notifyListeners();
-  }*/
-
   createNewDress(BuildContext context, DressType dressType) {
+    _id = _uuid.v4();
     switch (dressType) {
       case DressType.LADIES_SKIRT:
         dress = Dress(
+            id: _id,
             name: getName,
             phoneNumber: getNumber,
             waist: getWaist,
@@ -383,6 +371,7 @@ class DressProvider with ChangeNotifier {
         break;
       case DressType.LADIES_DRESS:
         dress = Dress(
+            id: _id,
             name: getName,
             phoneNumber: getNumber,
             shoulder: getShoulder,
@@ -406,6 +395,7 @@ class DressProvider with ChangeNotifier {
         break;
       case DressType.LADIES_TOP:
         dress = Dress(
+            id: _id,
             name: getName,
             phoneNumber: getNumber,
             shoulder: getShoulder,
@@ -427,6 +417,7 @@ class DressProvider with ChangeNotifier {
         break;
       case DressType.LADIES_TROUSER:
         dress = Dress(
+            id: _id,
             name: getName,
             phoneNumber: getNumber,
             trouserLength: getTrouserLength,
@@ -445,6 +436,7 @@ class DressProvider with ChangeNotifier {
         break;
       case DressType.MENS_DRESS:
         dress = Dress(
+            id: _id,
             name: getName,
             phoneNumber: getNumber,
             topLength: getTopLength,
@@ -471,6 +463,7 @@ class DressProvider with ChangeNotifier {
         break;
       case DressType.MENS_TOP:
         dress = Dress(
+            id: _id,
             name: getName,
             phoneNumber: getNumber,
             dressLength: getDressLength,
@@ -491,6 +484,7 @@ class DressProvider with ChangeNotifier {
         break;
       case DressType.MENS_TROUSER:
         dress = Dress(
+          id: _id,
           name: getName,
           phoneNumber: getNumber,
           trouserLength: getTrouserLength,
