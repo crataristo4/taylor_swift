@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 
 class Dress with ChangeNotifier {
+  final id;
   String? bust;
   String? waist;
   String? hip;
@@ -27,20 +28,19 @@ class Dress with ChangeNotifier {
   String? bar;
   String? seat;
   String? flap;
- // String? paymentStatus;
   String? dueDate;
   int? serviceCharge;
   int? initialPayment;
   String? phoneNumber;
   String? name;
   String? back;
-
   String? type;
   String? month;
   dynamic timestamp;
 
   Dress(
-      {this.bust,
+      {required this.id,
+      this.bust,
       this.waist,
       this.hip,
       this.shoulder,
@@ -52,27 +52,27 @@ class Dress with ChangeNotifier {
       this.topLength,
       this.knee,
       this.skirtLength,
-      this.dressLength,
-      this.ankle,
-      this.trouserLength,
-      this.crotch,
-      this.collar,
-      this.chest,
-      this.cuff,
-      this.thigh,
-      this.bar,
-      this.seat,
-      this.flap,
-        //   this.paymentStatus,
+    this.dressLength,
+    this.ankle,
+    this.trouserLength,
+    this.crotch,
+    this.collar,
+    this.chest,
+    this.cuff,
+    this.thigh,
+    this.bar,
+    this.seat,
+    this.flap,
+    //   this.paymentStatus,
       this.dueDate,
-      this.initialPayment,
-      this.serviceCharge,
-      this.phoneNumber,
-      this.name,
-      this.back,
-      this.type,
-      this.month,
-      this.timestamp});
+    this.initialPayment,
+    this.serviceCharge,
+    this.phoneNumber,
+    this.name,
+    this.back,
+    this.type,
+    this.month,
+    this.timestamp});
 
   Map<String, dynamic> toMap() {
     return {
@@ -146,11 +146,13 @@ class Dress with ChangeNotifier {
         name: ds['name'],
         type: ds['type'],
         month: ds['month'],
-        timestamp: ds['timestamp']);
+        timestamp: ds['timestamp'],
+        id: ds['id']);
   }
 
   factory Dress.fromMap(Map<String, dynamic> ds) {
     return Dress(
+        id: ds['id'],
         bust: ds['bust'],
         waist: ds['waist'],
         hip: ds['hip'],
@@ -186,12 +188,12 @@ class Dress with ChangeNotifier {
         timestamp: ds['timestamp']);
   }
 
-  int getBalance(int? value1, int? value2) {
+  static int getBalance(int? value1, int? value2) {
     int total = (value1! - value2!);
     return total;
   }
 
-  String checkPaymentStatus(int? serviceCharge, int? initialPayment) {
+  static String checkPaymentStatus(int? serviceCharge, int? initialPayment) {
     String? status;
     if (initialPayment == 0)
       status = notPaid;
