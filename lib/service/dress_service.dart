@@ -32,9 +32,7 @@ class DressService {
         .doc(uid)
         .collection(dbDress)
         .add(dress.toMap())
-        .whenComplete(() async {
-      showSuccess(context);
-    }).catchError((onError) {
+        .catchError((onError) {
       showFailure(context, onError);
     });
   }
@@ -52,7 +50,8 @@ class DressService {
     });
   }
 
-  showSuccess(context) async {
+  showSuccess(context) {
+    Future.delayed(Duration(seconds: 3));
     ShowAction().showToast(successful, Colors.black); //show complete msg
     Navigator.of(context, rootNavigator: true).pop();
     Navigator.of(context).pop();
