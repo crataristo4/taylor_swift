@@ -78,7 +78,7 @@ class Dress with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'isComplete': isComplete,
+      'isComplete': false,
       'bust': bust ?? '',
       'waist': waist ?? '',
       'hip': hip ?? '',
@@ -103,7 +103,6 @@ class Dress with ChangeNotifier {
       'bar': bar ?? '',
       'seat': seat ?? '',
       'flap': flap ?? '',
-      // 'paymentStatus': paymentStatus ?? notPaid,
       'dueDate': dueDate,
       'initialPayment': initialPayment,
       'serviceCharge': serviceCharge,
