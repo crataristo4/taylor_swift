@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:taylor_swift/constants/constants.dart';
-import 'package:taylor_swift/provider/dress_provider.dart';
 import 'package:taylor_swift/ui/home/home.dart';
 
 class CustomDtPmt extends StatefulWidget {
@@ -24,11 +22,6 @@ class CustomDtPmt extends StatefulWidget {
 
 class _CustomDtPmtState extends State<CustomDtPmt> {
   String? selectedPayment;
-
-  DressProvider _dressProvider = DressProvider();
-
-  //date format
-  DateFormat _dateFormat = DateFormat.yMMMMd('en_US').add_jm();
   DateTime _dateTime = DateTime.now();
 
   //get date
