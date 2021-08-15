@@ -78,8 +78,9 @@ class _HomePageState extends State<HomePage> {
     }
     print("$total ??");
     super.didChangeDependencies();
-  } //get month method
+  }
 
+  //get month method
   getMonth() {
     int month = DateTime.now().month;
     switch (month) {
@@ -424,39 +425,48 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 //delete measurement
-                IconButton(
-                  onPressed: () {
-                    ShowAction.showAlertDialog(
-                        deleteMeasurement,
-                        "$delete ${dress.name}'\s $measurement",
-                        context,
-                        //yes button
-                        ElevatedButton(
-                          onPressed: () {
-                            //delete measurement
-                            _dressProvider.deleteMeasurement(dress.id, context);
-                          },
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.black)),
-                          child:
-                              Text(yes, style: TextStyle(color: Colors.white)),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.red)),
-                          child:
-                              Text(no, style: TextStyle(color: Colors.white)),
-                        ));
-                  },
-                  icon: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  splashColor: Colors.black,
-                  hoverColor: Colors.indigo,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        ShowAction.showAlertDialog(
+                            deleteMeasurement,
+                            "$delete ${dress.name}'\s $measurement",
+                            context,
+                            //yes button
+                            ElevatedButton(
+                              onPressed: () {
+                                //delete measurement
+                                _dressProvider.deleteMeasurement(
+                                    dress.id, context);
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.black)),
+                              child: Text(yes,
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => Navigator.pop(context),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.red)),
+                              child: Text(no,
+                                  style: TextStyle(color: Colors.white)),
+                            ));
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      splashColor: Colors.black,
+                      hoverColor: Colors.indigo,
+                    ),
+                  ],
                 )
               ],
             ),
@@ -547,18 +557,18 @@ class _HomePageState extends State<HomePage> {
                     time.days == null
                         ? Container()
                         : buildCustomTimer(time.days!, Colors.black,
-                            time.days! > 1 ? 'days' : 'day'),
+                            time.days! > 1 ? days : day),
                     time.hours == null
                         ? Container()
                         : buildCustomTimer(time.hours!, Colors.blue,
-                            time.hours! > 1 ? 'hrs' : 'hr'),
+                            time.hours! > 1 ? hrs : hr),
                     time.min == null
                         ? Container()
                         : buildCustomTimer(time.min!, Colors.brown,
-                            time.min! > 1 ? 'mins' : 'min'),
+                            time.min! > 1 ? mins : min),
                     time.sec == null
                         ? Container()
-                        : buildCustomTimer(time.sec!, Colors.red, "sec"),
+                        : buildCustomTimer(time.sec!, Colors.red, sec),
                   ],
                 );
               },
@@ -567,32 +577,51 @@ class _HomePageState extends State<HomePage> {
             //display call button
             Align(
               alignment: Alignment.bottomCenter,
-              child: FloatingActionButton(
-                backgroundColor: Colors.white,
-                splashColor: Colors.indigo,
-                mini: true,
-                onPressed: () {
-                  SnackBar snackBar = SnackBar(
-                      padding: EdgeInsets.all(tenDp),
-                      duration: Duration(seconds: 5),
-                      action: SnackBarAction(
-                        label: yes,
-                        onPressed: () {
-                          ShowAction.makePhoneCall('tel:${dress.phoneNumber}');
-                        },
-                        textColor: Colors.white,
-                      ),
-                      backgroundColor: Colors.indigo,
-                      content: Text(
-                        'Do you want to Call ${dress.name} now ?',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                },
-                child: Icon(
-                  Icons.call,
-                  color: Colors.green,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FloatingActionButton.extended(
+                    backgroundColor: Colors.white,
+                    splashColor: Colors.blue,
+                    onPressed: () {},
+                    label: Text(
+                      setComplete,
+                      style: TextStyle(color: Colors.indigo),
+                    ),
+                    /* child: Icon(
+                      Icons.call,
+                      color: Colors.green,
+                    ),*/
+                  ),
+                  FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    splashColor: Colors.indigo,
+                    mini: true,
+                    onPressed: () {
+                      SnackBar snackBar = SnackBar(
+                          padding: EdgeInsets.all(tenDp),
+                          duration: Duration(seconds: 5),
+                          action: SnackBarAction(
+                            label: yes,
+                            onPressed: () {
+                              ShowAction.makePhoneCall(
+                                  'tel:${dress.phoneNumber}');
+                            },
+                            textColor: Colors.white,
+                          ),
+                          backgroundColor: Colors.indigo,
+                          content: Text(
+                            'Do you want to Call ${dress.name} now ?',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                    child: Icon(
+                      Icons.call,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

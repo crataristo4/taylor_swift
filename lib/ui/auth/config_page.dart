@@ -28,8 +28,6 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
 
   @override
   Widget build(BuildContext context) {
-    //  print("id ?? $uid");
-
     return WillPopScope(
       onWillPop: () async => true,
       child: Container(
