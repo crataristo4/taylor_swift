@@ -37,10 +37,10 @@ class AuthProvider with ChangeNotifier {
         verificationId: verificationId!,
         smsCode: otp,
       );
-      final user = await _firebaseAuth.signInWithCredential(credential);
-      final User? currentUser = _firebaseAuth.currentUser;
+      await _firebaseAuth.signInWithCredential(credential);
+      /*  final User? currentUser = _firebaseAuth.currentUser;
 
-      if (currentUser!.uid != "") {}
+      if (currentUser!.uid != "") {}*/
     } catch (e) {
       throw e;
     }

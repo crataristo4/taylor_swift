@@ -3,6 +3,7 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/service/dress_service.dart';
+import 'package:taylor_swift/ui/home/home.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:uuid/uuid.dart';
 
@@ -513,10 +514,14 @@ class DressProvider with ChangeNotifier {
     // Future.delayed(Duration(seconds: 5));
     ShowAction().showToast(successful, Colors.black); //show complete msg
     // Navigator.of(context, rootNavigator: true).pop();
-    Navigator.of(context).pop();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
   }
 
-  deleteMeasurement(String id) {
+  deleteMeasurement(String id, BuildContext ctx) {
     _dressService.deleteMeasurement(id);
+    ShowAction().showToast(successful, Colors.black); //show complete msg
+    Navigator.of(ctx).pop();
+    // Navigator.of(ctx).pushNamedAndRemoveUntil(HomePage.routeName,(route)=> false);
   }
 }

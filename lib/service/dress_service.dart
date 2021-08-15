@@ -1,19 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/model/dress.dart';
-import 'package:taylor_swift/ui/auth/config_page.dart';
-import 'package:taylor_swift/ui/home/home.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
 
 class DressService {
   final dressService = FirebaseFirestore.instance;
+  FirebaseAuth mAuth = FirebaseAuth.instance;
+  String? uid;
 
   //get dress list
   Stream<List<Dress>> fetchDress() {
+    if (mAuth.currentUser != null) {
+      uid = mAuth.currentUser!.uid;
+      print('user id $uid');
+    }
     return dressService
         .collection(dbShop)
-        .doc(id)
+        .doc(uid)
         .collection(dbDress)
         .orderBy("timestamp", descending: true)
         .snapshots()
@@ -27,6 +32,9 @@ class DressService {
 
   //create new dress item
   Future<void> createNewDress(Dress dress, BuildContext context) {
+    if (mAuth.currentUser != null) {
+      uid = mAuth.currentUser!.uid;
+    }
     return dressService
         .collection(dbShop)
         .doc(uid)
@@ -40,6 +48,9 @@ class DressService {
 
   //delete dress item
   Future<void> deleteMeasurement(String id) {
+    if (mAuth.currentUser != null) {
+      uid = mAuth.currentUser!.uid;
+    }
     return dressService
         .collection(dbShop)
         .doc(uid)

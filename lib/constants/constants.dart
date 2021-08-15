@@ -242,6 +242,7 @@ const sendingCode = 'Please wait sending code...';
 const loggingYouOut = 'logging you out ...';
 const unableToConnect = 'Unable to connect';
 const saving = 'Saving Details';
+const addNew = 'Add new customer measurement';
 const plsScheduleDate = 'Please schedule a day ahead for your order';
 const sixteenDp = 16.0;
 const eightDp = 8.0;

@@ -63,16 +63,17 @@ class TaylorSwift extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //dress
+        ChangeNotifierProvider.value(value: DressProvider()),
+
         StreamProvider<List<Dress>>.value(
           value: DressService().fetchDress(),
           initialData: [],
+          updateShouldNotify: (previous, current) => true,
         ),
 
         //authentication
         ChangeNotifierProvider.value(value: AuthProvider()),
-
-        //dress
-        ChangeNotifierProvider.value(value: DressProvider()),
 
         ChangeNotifierProvider<MenuInfo>(
             create: (context) => MenuInfo(DressType.LADIES_DRESS)),

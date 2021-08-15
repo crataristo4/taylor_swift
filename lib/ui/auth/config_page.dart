@@ -22,13 +22,13 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
   void initState() {
     var user = Provider.of<User?>(context, listen: false);
     isLoggedIn = user != null;
-    uid = user!.uid;
+    //uid = user!.uid;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("id ?? $uid");
+    //  print("id ?? $uid");
 
     return WillPopScope(
       onWillPop: () async => true,
@@ -37,9 +37,7 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
             top: false,
             bottom: false,
             child: Scaffold(
-                body: isLoggedIn!
-                    ? HomePage() //AdminPage(selectedIndex: 0,) //change to users --todo
-                    : RegistrationPage())),
+                body: isLoggedIn! ? HomePage() : RegistrationPage())),
       ),
     );
   }

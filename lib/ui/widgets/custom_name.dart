@@ -62,7 +62,7 @@ class CustomNameAndNumber extends StatelessWidget {
               maxLengthEnforcement: MaxLengthEnforcement.enforced,
               controller: phoneNumberController,
               validator: (value) {
-                return value!.trim().length < 10
+                return value!.trim().length < 9
                     ? "phone number required"
                     : null;
               },

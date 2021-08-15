@@ -53,11 +53,12 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
   CountdownTimerController? countDownController;
   dynamic endTime;
-
-  // List? dressList;
   DressProvider _dressProvider = DressProvider();
   int total = 0;
   Dress? dress;
+  List<Dress>? users;
+  String searchInput = '';
+  bool isSearch = false;
 
   @override
   void initState() {
@@ -111,9 +112,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dressList = Provider.of<List<Dress>>(context);
-    for (int i = 0; i < dressList.length; i++) {
-      dress = dressList[i];
-      total += dress!.initialPayment!;
+    if (searchInput.isNotEmpty) {
+      final userList = dressList.where((Dress dress) {
+        return dress.name!.toLowerCase().contains(searchInput.toLowerCase());
+      }).toList();
+
+      setState(() {
+        users = userList;
+        isSearch = true;
+      });
+    } else if (searchInput.isEmpty) {
+      isSearch = false;
+      for (int i = 0; i < dressList.length; i++) {
+        dress = dressList[i];
+        total += dress!.initialPayment!;
+      }
+      print("$total ??");
     }
 
     return Scaffold(
@@ -125,12 +139,15 @@ class _HomePageState extends State<HomePage> {
         children: [
           buildTopCard(),
           buildSearchUser(),
-          Expanded(child: buildCustomerList(dressList))
+          isSearch
+              ? Expanded(child: buildCustomerList(users!))
+              : Expanded(child: buildCustomerList(dressList))
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.of(context)
-            .pushNamed(AddCustomer.routeName, arguments: _selectedItem),
+        onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+            AddCustomer.routeName, (route) => false,
+            arguments: _selectedItem),
         label: Text(add),
         icon: Icon(Icons.person),
       ),
@@ -231,34 +248,32 @@ class _HomePageState extends State<HomePage> {
                           end: Alignment.bottomRight,
                           colors: [Colors.blue, Colors.green])),
                   child: Container(
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(0, 0, 0, 0.3),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(eightDp),
-                    bottomRight: Radius.circular(eightDp)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(sixteenDp),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: eightDp),
-                      child: Text(totalCollections,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 0, 0, 0.3),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(eightDp),
+                          bottomRight: Radius.circular(eightDp)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(sixteenDp),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: eightDp),
+                            child: Text(totalCollections,
                                 style: TextStyle(
                                     fontSize: twelveDp,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
-                    ),
-
-                    //todo replace value in string with total budget from database
-                    Text("$kGhanaCedi $total",
+                          ),
+                          Text("$kGhanaCedi $total",
                               style: TextStyle(
                                   fontSize: twelveDp, color: Colors.white)),
-                  ],
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -298,9 +313,10 @@ class _HomePageState extends State<HomePage> {
           );
         }).toList(),
         onChanged: (String? value) {
-          setState(() {
+          _selectedItem = value;
+          /*  setState(() {
             _selectedItem = value;
-          });
+          });*/
         },
       ),
     );
@@ -316,6 +332,11 @@ class _HomePageState extends State<HomePage> {
           keyboardType: TextInputType.text,
           controller: _searchController,
           textAlign: TextAlign.center,
+          onChanged: (value) {
+            setState(() {
+              searchInput = value.toLowerCase();
+            });
+          },
           decoration: InputDecoration(
               hintStyle: TextStyle(fontSize: sixteenDp),
               suffix: Container(
@@ -397,7 +418,7 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {
                             //delete measurement
-                            _dressProvider.deleteMeasurement(dress.id);
+                            _dressProvider.deleteMeasurement(dress.id, context);
                           },
                           style: ButtonStyle(
                               backgroundColor:
