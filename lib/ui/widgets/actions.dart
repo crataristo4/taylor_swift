@@ -42,8 +42,12 @@ class ShowAction {
     );
   }
 
-  void showSnackbar(BuildContext context) {
-    SnackBar snackBar = SnackBar(content: Text(payGreaterThanCharge));
+  void showSnackbar(BuildContext context, String message) {
+    SnackBar snackBar = SnackBar(
+      content: Text(message),
+      padding: EdgeInsets.all(eightDp),
+      backgroundColor: Theme.of(context).primaryColor,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -92,7 +96,8 @@ class ShowAction {
     );
   }
 
-  static void showDetails(String title, String content, BuildContext context, Widget widgetA) {
+  static void showDetails(
+      String title, String content, BuildContext context, Widget widgetA) {
     var alertDialog = AlertDialog(
       title: Text(title),
       content: Text(content),
