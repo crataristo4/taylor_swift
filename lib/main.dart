@@ -81,7 +81,7 @@ class TaylorSwift extends StatelessWidget {
         StreamProvider<List<Dress>>.value(
           value: dressList,
           initialData: [],
-          updateShouldNotify: (previous, current) => true,
+         // updateShouldNotify: (previous, current) => true,
           lazy: false,
         ),
       ],
