@@ -509,7 +509,7 @@ class _HomePageState extends State<HomePage> {
               height: tenDp,
             ),
             Divider(
-              //   color: Colors.black45,
+                //   color: Colors.black45,
                 ),
             Text(
               status,
@@ -535,98 +535,133 @@ class _HomePageState extends State<HomePage> {
               widgetBuilder: (_, CurrentRemainingTime? time) {
                 if (time == null) {
                   //  end(id);
-                  return Center(
-                    child: Text(
-                      'Due date elapsed',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: twentyFourDp),
-                    ),
+                  return Column(
+                    children: [
+                      Center(
+                        child: Text(
+                          'Due date elapsed',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: twentyFourDp),
+                        ),
+                      ),
+                      //display set complete and call button
+                      buildFloatingBtn(time, dress),
+                    ],
                   );
                 }
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                return Column(
                   children: [
-                    Text(
-                      'Finish By',
-                      style: TextStyle(
-                          fontSize: tenDp,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.red),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Finish By',
+                          style: TextStyle(
+                              fontSize: tenDp,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.red),
+                        ),
+                        time.days == null
+                            ? Container()
+                            : buildCustomTimer(time.days!, Colors.black,
+                                time.days! > 1 ? days : day),
+                        time.hours == null
+                            ? Container()
+                            : buildCustomTimer(time.hours!, Colors.blue,
+                                time.hours! > 1 ? hrs : hr),
+                        time.min == null
+                            ? Container()
+                            : buildCustomTimer(time.min!, Colors.brown,
+                                time.min! > 1 ? mins : min),
+                        time.sec == null
+                            ? Container()
+                            : buildCustomTimer(time.sec!, Colors.red, sec),
+                      ],
                     ),
-                    time.days == null
-                        ? Container()
-                        : buildCustomTimer(time.days!, Colors.black,
-                            time.days! > 1 ? days : day),
-                    time.hours == null
-                        ? Container()
-                        : buildCustomTimer(time.hours!, Colors.blue,
-                            time.hours! > 1 ? hrs : hr),
-                    time.min == null
-                        ? Container()
-                        : buildCustomTimer(time.min!, Colors.brown,
-                            time.min! > 1 ? mins : min),
-                    time.sec == null
-                        ? Container()
-                        : buildCustomTimer(time.sec!, Colors.red, sec),
+                    //display set complete and call button
+                    buildFloatingBtn(time, dress),
                   ],
                 );
               },
             ),
-
-            //display call button
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FloatingActionButton.extended(
-                    backgroundColor: Colors.white,
-                    splashColor: Colors.blue,
-                    onPressed: () {},
-                    label: Text(
-                      setComplete,
-                      style: TextStyle(color: Colors.indigo),
-                    ),
-                    /* child: Icon(
-                      Icons.call,
-                      color: Colors.green,
-                    ),*/
-                  ),
-                  FloatingActionButton(
-                    backgroundColor: Colors.white,
-                    splashColor: Colors.indigo,
-                    mini: true,
-                    onPressed: () {
-                      SnackBar snackBar = SnackBar(
-                          padding: EdgeInsets.all(tenDp),
-                          duration: Duration(seconds: 5),
-                          action: SnackBarAction(
-                            label: yes,
-                            onPressed: () {
-                              ShowAction.makePhoneCall(
-                                  'tel:${dress.phoneNumber}');
-                            },
-                            textColor: Colors.white,
-                          ),
-                          backgroundColor: Colors.indigo,
-                          content: Text(
-                            'Do you want to Call ${dress.name} now ?',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    child: Icon(
-                      Icons.call,
-                      color: Colors.green,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildFloatingBtn(CurrentRemainingTime? time, Dress dress) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        FloatingActionButton.extended(
+          backgroundColor: Colors.white,
+          splashColor: Colors.blue,
+          onPressed: () {
+            //check if time scheduled is not elapsed and prompt user
+            if (time != null) {
+              ShowAction.showAlertDialog(
+                "Alert",
+                "Time set is not due.Do you still want to continue?",
+                context,
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.green)),
+                  child: Text(yes, style: TextStyle(color: Colors.white)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  child: Text(no, style: TextStyle(color: Colors.white)),
+                ),
+              );
+            } else {
+              print("time compllete");
+            }
+          },
+          label: Text(
+            setComplete,
+            style: TextStyle(color: Colors.indigo),
+          ),
+          /* child: Icon(
+                    Icons.call,
+                    color: Colors.green,
+                    ),*/
+        ),
+        FloatingActionButton(
+          backgroundColor: Colors.white,
+          splashColor: Colors.indigo,
+          mini: true,
+          onPressed: () {
+            SnackBar snackBar = SnackBar(
+                padding: EdgeInsets.all(tenDp),
+                duration: Duration(seconds: 5),
+                action: SnackBarAction(
+                  label: yes,
+                  onPressed: () {
+                    ShowAction.makePhoneCall('tel:${dress.phoneNumber}');
+                  },
+                  textColor: Colors.white,
+                ),
+                backgroundColor: Colors.indigo,
+                content: Text(
+                  'Do you want to Call ${dress.name} now ?',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          },
+          child: Icon(
+            Icons.call,
+            color: Colors.green,
+          ),
+        ),
+      ],
     );
   }
 
