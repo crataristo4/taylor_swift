@@ -72,11 +72,16 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() {
     final dressList = Provider.of<List<Dress>>(context, listen: false);
 
-    for (int i = 0; i < dressList.length; i++) {
-      dress = dressList[i];
-      total += dress!.initialPayment!;
+    try {
+      for (int i = 0; i < dressList.length; i++) {
+        dress = dressList[i];
+        total += dress!.initialPayment!;
+      }
+      print("$total ??");
+    } catch (e) {
+      debugPrint(e.toString());
     }
-    print("$total ??");
+
     super.didChangeDependencies();
   }
 
@@ -427,10 +432,12 @@ class _HomePageState extends State<HomePage> {
                 //delete measurement
                 Row(
                   children: [
-                    Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    ),
+                    dress.isComplete!
+                        ? Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                          )
+                        : Container(),
                     IconButton(
                       onPressed: () {
                         ShowAction.showAlertDialog(
@@ -622,7 +629,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             } else {
-              print("time compllete");
+              //update work complete
+              _dressProvider.updateWorkComplete(dress.id, context);
             }
           },
           label: Text(
