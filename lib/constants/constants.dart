@@ -214,6 +214,9 @@ const edit = 'Edit';
 const yesSet = 'Yes set fee';
 const yes = 'Yes';
 const no = 'No';
+const alert = 'Alert';
+const alertDes =
+    "Time set is not due.Do you still want to continue and set as complete ?";
 const rate = 'Rate';
 const totalCollections = "Total Collections";
 const ratingUser = "rating user";
@@ -244,6 +247,7 @@ const unableToConnect = 'Unable to connect';
 const saving = 'Saving Details';
 const addNew = 'Add new customer measurement';
 const setComplete = 'Set as complete';
+const completed = 'Completed';
 const days = 'days';
 const day = 'day';
 const hr = 'hr';
