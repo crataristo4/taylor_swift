@@ -518,10 +518,14 @@ class DressProvider with ChangeNotifier {
         .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
   }
 
+  updateWorkComplete(String id, BuildContext ctx) {
+    _dressService.updateWorkComplete(id);
+    ShowAction().showToast(successful, Colors.black); //show complete msg
+  }
+
   deleteMeasurement(String id, BuildContext ctx) {
     _dressService.deleteMeasurement(id);
     ShowAction().showToast(successful, Colors.black); //show complete msg
     Navigator.of(ctx).pop();
-    // Navigator.of(ctx).pushNamedAndRemoveUntil(HomePage.routeName,(route)=> false);
   }
 }
