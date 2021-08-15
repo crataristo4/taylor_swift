@@ -72,6 +72,19 @@ class DressService {
         .update({'isComplete': true});
   }
 
+  // FORCE update dress complete
+  Future<void> forceUpdateWorkComplete(String id, String time) {
+    if (mAuth.currentUser != null) {
+      uid = mAuth.currentUser!.uid;
+    }
+    return dressService
+        .collection(dbShop)
+        .doc(uid)
+        .collection(dbDress)
+        .doc(id)
+        .update({'isComplete': true, 'dueDate': time});
+  }
+
   showSuccess(context) {
     Future.delayed(Duration(seconds: 3));
     ShowAction().showToast(successful, Colors.black); //show complete msg

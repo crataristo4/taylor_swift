@@ -523,6 +523,12 @@ class DressProvider with ChangeNotifier {
     ShowAction().showToast(successful, Colors.black); //show complete msg
   }
 
+  forceUpdateWorkComplete(String id, String time, BuildContext ctx) {
+    _dressService.forceUpdateWorkComplete(id, time);
+    ShowAction().showToast(successful, Colors.black);
+    Navigator.of(ctx).pop();
+  }
+
   deleteMeasurement(String id, BuildContext ctx) {
     _dressService.deleteMeasurement(id);
     ShowAction().showToast(successful, Colors.black); //show complete msg
