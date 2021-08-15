@@ -61,17 +61,9 @@ void main() async {
 class TaylorSwift extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final dressList = DressService().fetchDress();
     return MultiProvider(
       providers: [
-        //dress
-        ChangeNotifierProvider.value(value: DressProvider()),
-
-        StreamProvider<List<Dress>>.value(
-          value: DressService().fetchDress(),
-          initialData: [],
-          updateShouldNotify: (previous, current) => true,
-        ),
-
         //authentication
         ChangeNotifierProvider.value(value: AuthProvider()),
 
@@ -82,6 +74,16 @@ class TaylorSwift extends StatelessWidget {
           value: FirebaseAuth.instance.authStateChanges(),
           initialData: FirebaseAuth.instance.currentUser,
         ),
+
+        //dress
+        ChangeNotifierProvider.value(value: DressProvider()),
+
+        StreamProvider<List<Dress>>.value(
+          value: dressList,
+          initialData: [],
+          updateShouldNotify: (previous, current) => true,
+          lazy: false,
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -90,7 +92,7 @@ class TaylorSwift extends StatelessWidget {
         ),
         initialRoute: onboardingPrefs == 0 || onboardingPrefs == null
             ? OnboardingScreen
-                .routeName //shows when app data is cleared or newly installed
+            .routeName //shows when app data is cleared or newly installed
             : ConfigurationPage.routeName,
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
