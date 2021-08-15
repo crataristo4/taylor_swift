@@ -196,11 +196,19 @@ class Dress with ChangeNotifier {
         timestamp: ds['timestamp']);
   }
 
+  //get balance method
   static int getBalance(int? value1, int? value2) {
     int total = (value1! - value2!);
     return total;
   }
 
+  //method to calculate work progress and show in indicator
+  static double getWorkProgress(int? value1, int? value2) {
+    double total = (value2! / value1!);
+    return total;
+  }
+
+  //method to check the payment status i.e Part payment , paid , not paid
   static String checkPaymentStatus(int? serviceCharge, int? initialPayment) {
     String? status;
     if (initialPayment == 0)
