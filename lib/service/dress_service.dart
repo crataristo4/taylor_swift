@@ -59,6 +59,19 @@ class DressService {
         .delete();
   }
 
+  //update dress complete
+  Future<void> updateWorkComplete(String id) {
+    if (mAuth.currentUser != null) {
+      uid = mAuth.currentUser!.uid;
+    }
+    return dressService
+        .collection(dbShop)
+        .doc(uid)
+        .collection(dbDress)
+        .doc(id)
+        .update({'isComplete': true});
+  }
+
   showSuccess(context) {
     Future.delayed(Duration(seconds: 3));
     ShowAction().showToast(successful, Colors.black); //show complete msg
