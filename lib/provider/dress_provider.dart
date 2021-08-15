@@ -34,7 +34,6 @@ class DressProvider with ChangeNotifier {
   String? _bar;
   String? _seat;
   String? _flap;
-  String? _paymentStatus;
   String? _dueDate;
   int? _initialPayment;
   int? _serviceCharge;
