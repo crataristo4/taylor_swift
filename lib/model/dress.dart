@@ -20,7 +20,7 @@ class Dress with ChangeNotifier {
   String? ankle;
   String? trouserLength;
   String? crotch;
-
+  bool? isComplete;
   String? collar;
   String? chest;
   String? cuff;
@@ -40,6 +40,7 @@ class Dress with ChangeNotifier {
 
   Dress(
       {required this.id,
+      this.isComplete,
       this.bust,
       this.waist,
       this.hip,
@@ -52,31 +53,32 @@ class Dress with ChangeNotifier {
       this.topLength,
       this.knee,
       this.skirtLength,
-    this.dressLength,
-    this.ankle,
-    this.trouserLength,
-    this.crotch,
-    this.collar,
-    this.chest,
-    this.cuff,
-    this.thigh,
-    this.bar,
-    this.seat,
-    this.flap,
-    //   this.paymentStatus,
+      this.dressLength,
+      this.ankle,
+      this.trouserLength,
+      this.crotch,
+      this.collar,
+      this.chest,
+      this.cuff,
+      this.thigh,
+      this.bar,
+      this.seat,
+      this.flap,
+      //   this.paymentStatus,
       this.dueDate,
-    this.initialPayment,
-    this.serviceCharge,
-    this.phoneNumber,
-    this.name,
-    this.back,
-    this.type,
-    this.month,
-    this.timestamp});
+      this.initialPayment,
+      this.serviceCharge,
+      this.phoneNumber,
+      this.name,
+      this.back,
+      this.type,
+      this.month,
+      this.timestamp});
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'isComplete': isComplete,
       'bust': bust ?? '',
       'waist': waist ?? '',
       'hip': hip ?? '',
@@ -113,9 +115,14 @@ class Dress with ChangeNotifier {
     };
   }
 
+  Map<String, dynamic> isWorkComplete() {
+    return {"isComplete": true};
+  }
+
   factory Dress.fromSnapshot(DocumentSnapshot ds) {
     return Dress(
         bust: ds['bust'],
+        isComplete: ds['isComplete'],
         waist: ds['waist'],
         hip: ds['hip'],
         back: ds['back'],
@@ -154,6 +161,7 @@ class Dress with ChangeNotifier {
   factory Dress.fromMap(Map<String, dynamic> ds) {
     return Dress(
         id: ds['id'],
+        isComplete: ds['isComplete'],
         bust: ds['bust'],
         waist: ds['waist'],
         hip: ds['hip'],
@@ -178,7 +186,6 @@ class Dress with ChangeNotifier {
         bar: ds['bar'],
         seat: ds['seat'],
         flap: ds['flap'],
-        //  paymentStatus: ds['paymentStatus'],
         dueDate: ds['dueDate'],
         initialPayment: ds['initialPayment'],
         serviceCharge: ds['serviceCharge'],
