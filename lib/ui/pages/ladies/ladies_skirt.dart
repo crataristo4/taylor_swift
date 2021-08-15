@@ -134,7 +134,8 @@ class _LadiesSkirtState extends State<LadiesSkirt> {
                             int.parse(initialPaymentController.text));
 
                         if (status.contains(error)) {
-                          ShowAction().showSnackbar(context);
+                          ShowAction()
+                              .showSnackbar(context, payGreaterThanCharge);
                         } else {
                           _dressProvider.setLsData(
                               nameController.text,

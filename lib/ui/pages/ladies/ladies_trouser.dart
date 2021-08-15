@@ -142,7 +142,8 @@ class _LadiesTrouserState extends State<LadiesTrouser> {
                             int.parse(initialPaymentController.text));
 
                         if (status.contains(error)) {
-                          ShowAction().showSnackbar(context);
+                          ShowAction()
+                              .showSnackbar(context, payGreaterThanCharge);
                         } else {
                           _dressProvider.setLtrData(
                               nameController.text,

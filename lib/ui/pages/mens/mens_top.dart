@@ -147,7 +147,8 @@ class _MensTopState extends State<MensTop> {
                           int.parse(initialPaymentController.text));
 
                       if (status.contains(error)) {
-                        ShowAction().showSnackbar(context);
+                        ShowAction()
+                            .showSnackbar(context, payGreaterThanCharge);
                       } else {
                         _dressProvider.setMensTopData(
                             nameController.text,

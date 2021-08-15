@@ -158,7 +158,8 @@ class _MensTrouserOrShortsState extends State<MensTrouserOrShorts> {
                             int.parse(initialPaymentController.text));
 
                         if (status.contains(error)) {
-                          ShowAction().showSnackbar(context);
+                          ShowAction()
+                              .showSnackbar(context, payGreaterThanCharge);
                         } else {
                           _dressProvider.setMensTrouserData(
                               nameController.text,

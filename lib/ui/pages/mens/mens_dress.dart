@@ -228,7 +228,8 @@ class _MensDressState extends State<MensDress> {
                             int.parse(initialPaymentController.text));
 
                         if (status.contains(error)) {
-                          ShowAction().showSnackbar(context);
+                          ShowAction()
+                              .showSnackbar(context, payGreaterThanCharge);
                         } else {
                           _dressProvider.setMensDressData(
                               nameController.text,
