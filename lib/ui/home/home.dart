@@ -57,6 +57,8 @@ class _HomePageState extends State<HomePage> {
   int total = 0;
   Dress? dress;
   List<Dress>? users;
+
+  // List<Dress>? _dressList;
   String searchInput = '';
   bool isSearch = false;
 
@@ -66,7 +68,18 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  //get month method
+  @override
+  void didChangeDependencies() {
+    final dressList = Provider.of<List<Dress>>(context, listen: false);
+
+    for (int i = 0; i < dressList.length; i++) {
+      dress = dressList[i];
+      total += dress!.initialPayment!;
+    }
+    print("$total ??");
+    super.didChangeDependencies();
+  } //get month method
+
   getMonth() {
     int month = DateTime.now().month;
     switch (month) {
@@ -112,22 +125,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dressList = Provider.of<List<Dress>>(context);
-    if (searchInput.isNotEmpty) {
+
+    /* for (int i = 0; i < dressList.length; i++) {
+      dress = dressList[i];
+      total += dress!.initialPayment!;
+      print("$total ??");
+    }*/
+    if (searchInput.isEmpty) {
+      isSearch = false;
+      // _dressList = dressList;
+    } else if (searchInput.trim().isNotEmpty && dressList.isNotEmpty) {
       final userList = dressList.where((Dress dress) {
         return dress.name!.toLowerCase().contains(searchInput.toLowerCase());
       }).toList();
-
-      setState(() {
-        users = userList;
-        isSearch = true;
-      });
-    } else if (searchInput.isEmpty) {
-      isSearch = false;
-      for (int i = 0; i < dressList.length; i++) {
-        dress = dressList[i];
-        total += dress!.initialPayment!;
-      }
-      print("$total ??");
+      users = userList;
+      isSearch = true;
     }
 
     return Scaffold(
@@ -366,19 +378,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildCustomerList(List dressList) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        // Dress dress =  Dress.fromSnapshot(dressList[index]);
-        return dressList.length == 0
-            ? LoadingShimmer(
-                name: "Dress",
-              )
-            : buildItems(dressList[index]);
+    return Builder(
+      builder: (BuildContext context) {
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            // Dress dress =  Dress.fromSnapshot(dressList[index]);
+            return dressList.length == 0
+                ? LoadingShimmer(
+                    name: "Dress",
+                  )
+                : buildItems(dressList[index]);
+          },
+          itemCount: dressList.length,
+          shrinkWrap: true,
+          primary: true,
+          physics: ClampingScrollPhysics(),
+        );
       },
-      itemCount: dressList.length,
-      shrinkWrap: true,
-      primary: true,
-      physics: ClampingScrollPhysics(),
     );
   }
 
