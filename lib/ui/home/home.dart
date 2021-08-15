@@ -10,6 +10,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:taylor_swift/constants/constants.dart';
+import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/helper/notification_info.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
@@ -54,7 +55,9 @@ class _HomePageState extends State<HomePage> {
   CountdownTimerController? countDownController;
   dynamic endTime;
   DressProvider _dressProvider = DressProvider();
-  int total = 0;
+  int totalCollection = 0;
+  int amountReceived = 0;
+  double workProgress = 0;
   Dress? dress;
   List<Dress>? users;
 
@@ -70,14 +73,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void didChangeDependencies() {
+    //this method was placed here to solve the bug issue on values incrementing when user performs search
     final dressList = Provider.of<List<Dress>>(context, listen: false);
 
     try {
       for (int i = 0; i < dressList.length; i++) {
         dress = dressList[i];
-        total += dress!.initialPayment!;
+        //sum of total service charge collected
+        totalCollection += dress!.serviceCharge!;
+        //total of amount received
+        amountReceived += dress!.initialPayment!;
       }
-      print("$total ??");
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -131,22 +137,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dressList = Provider.of<List<Dress>>(context);
+    //filter work completed
+    final completedList =
+        dressList.where((element) => element.isComplete == true);
 
-    /* for (int i = 0; i < dressList.length; i++) {
-      dress = dressList[i];
-      total += dress!.initialPayment!;
-      print("$total ??");
-    }*/
     if (searchInput.isEmpty) {
+      //set as false to enable load all measurements store
       isSearch = false;
-      // _dressList = dressList;
     } else if (searchInput.trim().isNotEmpty && dressList.isNotEmpty) {
+      //1. user is searching
+      //2. filter list
       final userList = dressList.where((Dress dress) {
         return dress.name!.toLowerCase().contains(searchInput.toLowerCase());
       }).toList();
+      //assign list to global variable to be used else where
       users = userList;
+      //set as true to show filtered list
       isSearch = true;
     }
+
+    //assign work progress value to variable
+    workProgress =
+        Dress.getWorkProgress(dressList.length, completedList.length);
 
     return Scaffold(
       appBar: AppBar(
@@ -155,7 +167,197 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          buildTopCard(),
+          Container(
+            margin: EdgeInsets.all(eightDp),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(eightDp)),
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF6448FE), Colors.green])),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //Top Section of Card
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(sixteenDp),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(totalWorks,
+                                    style: TextStyle(
+                                        fontSize: fourteenDp,
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold)),
+
+                                SizedBox(
+                                  height: eightDp,
+                                ),
+                                //Date range of budget
+                                Text("${dressList.length}",
+                                    style: TextStyle(
+                                        fontSize: fourteenDp,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(sixteenDp),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(completedWorks,
+                                    style: TextStyle(
+                                        fontSize: fourteenDp,
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: eightDp,
+                                ),
+                                Text("${completedList.length}",
+                                    style: TextStyle(
+                                        fontSize: fourteenDp,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          )
+                          //  buildSelectedMonth(),
+                        ],
+                      ),
+                      Divider(
+                        thickness: 2,
+                        endIndent: eightDp,
+                        indent: eightDp,
+                        color: Colors.white.withOpacity(0.2),
+                      ),
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Text(progress,
+                      style:
+                          TextStyle(fontSize: twelveDp, color: Colors.white)),
+                ),
+
+                //progress indicator
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: twentyFourDp, vertical: eightDp),
+                  child: LinearPercentIndicator(
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    backgroundColor: Colors.grey[200],
+                    animation: true,
+                    animationDuration: 3000,
+                    lineHeight: 20.0,
+                    percent: workProgress,
+                    progressColor: Colors.green,
+                  ),
+                ),
+
+                totalCollection == 0
+                    ? Container()
+                    : Container(
+                        margin: EdgeInsets.symmetric(horizontal: twentyFourDp),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(eightDp),
+                                topRight: Radius.circular(thirtyDp)),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: GradientColors.sky)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(0, 0, 0, 0.3),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(eightDp),
+                                topRight: Radius.circular(thirtyDp)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(sixteenDp),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: eightDp),
+                                  child: Text(totalAmount,
+                                      style: TextStyle(
+                                          fontSize: twelveDp,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                Text("$kGhanaCedi $totalCollection",
+                                    style: TextStyle(
+                                        fontSize: twelveDp,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                //Bottom Section for amount received
+                amountReceived == 0
+                    ? Container()
+                    : Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: twentyFourDp,
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(eightDp),
+                                bottomRight: Radius.circular(eightDp)),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: GradientColors.fireX)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(0, 0, 0, 0.3),
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(eightDp),
+                                bottomRight: Radius.circular(eightDp)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(sixteenDp),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: eightDp),
+                                  child: Text(amountReceive,
+                                      style: TextStyle(
+                                          fontSize: twelveDp,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                Text("$kGhanaCedi $amountReceived",
+                                    style: TextStyle(
+                                        fontSize: twelveDp,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                SizedBox(
+                  height: tenDp,
+                )
+              ],
+            ),
+          ),
+          // buildTopCard(dressLength.length),
           buildSearchUser(),
           isSearch
               ? Expanded(child: buildCustomerList(users!))
@@ -175,7 +377,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   //shows the topmost card
-  Widget buildTopCard() {
+  Widget buildTopCard(int length) {
     return Container(
       margin: EdgeInsets.all(eightDp),
       decoration: BoxDecoration(
@@ -183,7 +385,7 @@ class _HomePageState extends State<HomePage> {
           gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Theme.of(context).primaryColor, Colors.green])),
+              colors: [Color(0xFF6448FE), Colors.green])),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
@@ -204,7 +406,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Targets Achieved",
+                          Text("Total works",
                               style: TextStyle(
                                   fontSize: fourteenDp,
                                   color: Colors.white70,
@@ -214,13 +416,32 @@ class _HomePageState extends State<HomePage> {
                             height: eightDp,
                           ),
                           //Date range of budget
-                          Text("20",
+                          Text("$length",
                               style: TextStyle(
                                   fontSize: fourteenDp, color: Colors.white)),
                         ],
                       ),
                     ),
-                    buildSelectedMonth(),
+                    Padding(
+                      padding: const EdgeInsets.all(sixteenDp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Completed works",
+                              style: TextStyle(
+                                  fontSize: fourteenDp,
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            height: eightDp,
+                          ),
+                          Text("$length",
+                              style: TextStyle(
+                                  fontSize: fourteenDp, color: Colors.white)),
+                        ],
+                      ),
+                    )
+                    //  buildSelectedMonth(),
                   ],
                 ),
                 Divider(
@@ -237,6 +458,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: twelveDp, color: Colors.white)),
           ),
 
+          //progress indicator
           Container(
             margin: EdgeInsets.symmetric(
                 horizontal: twentyFourDp, vertical: eightDp),
@@ -251,12 +473,52 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          //Bottom Section of Card
-          total == 0
+          totalCollection == 0
+              ? Container()
+              : Container(
+                  margin: EdgeInsets.symmetric(horizontal: twentyFourDp),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(eightDp),
+                          topRight: Radius.circular(thirtyDp)),
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: GradientColors.sky)),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 0, 0, 0.3),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(eightDp),
+                          topRight: Radius.circular(thirtyDp)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(sixteenDp),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: eightDp),
+                            child: Text(totalAmount,
+                                style: TextStyle(
+                                    fontSize: twelveDp,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          Text("$kGhanaCedi $totalCollection",
+                              style: TextStyle(
+                                  fontSize: twelveDp, color: Colors.white)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+          //Bottom Section for amount received
+          amountReceived == 0
               ? Container()
               : Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: twentyFourDp, vertical: tenDp),
+                    horizontal: twentyFourDp,
+                  ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(eightDp),
@@ -264,7 +526,7 @@ class _HomePageState extends State<HomePage> {
                       gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [Colors.blue, Colors.green])),
+                          colors: GradientColors.fireX)),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(0, 0, 0, 0.3),
@@ -278,13 +540,13 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: eightDp),
-                            child: Text(totalCollections,
+                            child: Text(amountReceive,
                                 style: TextStyle(
                                     fontSize: twelveDp,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
                           ),
-                          Text("$kGhanaCedi $total",
+                          Text("$kGhanaCedi $amountReceived",
                               style: TextStyle(
                                   fontSize: twelveDp, color: Colors.white)),
                         ],
@@ -292,6 +554,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+
+          SizedBox(
+            height: tenDp,
+          )
         ],
       ),
     );
@@ -603,45 +869,69 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        FloatingActionButton.extended(
-          backgroundColor: Colors.white,
-          splashColor: Colors.blue,
-          onPressed: () {
-            //check if time scheduled is not elapsed and prompt user
-            if (time != null) {
-              ShowAction.showAlertDialog(
-                "Alert",
-                "Time set is not due.Do you still want to continue?",
-                context,
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green)),
-                  child: Text(yes, style: TextStyle(color: Colors.white)),
+        dress.isComplete!
+            ? FloatingActionButton.extended(
+                backgroundColor: Colors.white,
+                splashColor: Colors.blue,
+                onPressed: () {
+//show user has completed work
+                  ShowAction().showSnackbar(
+                      context, "${dress.name}'\s work is completed");
+                },
+                label: Text(
+                  completed,
+                  style: TextStyle(
+                      color: Colors.green, fontWeight: FontWeight.bold),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)),
-                  child: Text(no, style: TextStyle(color: Colors.white)),
+                icon: Icon(
+                  Icons.check,
+                  color: Colors.green,
                 ),
-              );
-            } else {
-              //update work complete
-              _dressProvider.updateWorkComplete(dress.id, context);
-            }
-          },
-          label: Text(
-            setComplete,
-            style: TextStyle(color: Colors.indigo),
-          ),
-          /* child: Icon(
-                    Icons.call,
-                    color: Colors.green,
-                    ),*/
-        ),
+              )
+            : FloatingActionButton.extended(
+                backgroundColor: Colors.white,
+                splashColor: Colors.blue,
+                onPressed: () {
+                  //check if time scheduled is not elapsed and prompt user
+                  if (time != null) {
+                    ShowAction.showAlertDialog(
+                      alert,
+                      alertDes,
+                      context,
+                      ElevatedButton(
+                        onPressed: () {
+                          //set or update timer to current time and set is complete as true
+
+                          String timeNow = DateTime.now().toString();
+
+                          _dressProvider.forceUpdateWorkComplete(
+                              dress.id, timeNow, context);
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.green)),
+                        child: Text(yes, style: TextStyle(color: Colors.white)),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.red)),
+                        child: Text(no, style: TextStyle(color: Colors.white)),
+                      ),
+                    );
+                  } else {
+                    //update work complete
+                    _dressProvider.updateWorkComplete(dress.id, context);
+                  }
+                },
+                label: Text(
+                  setComplete,
+                  style: TextStyle(color: Colors.indigo),
+                ),
+              ),
         FloatingActionButton(
           backgroundColor: Colors.white,
           splashColor: Colors.indigo,
