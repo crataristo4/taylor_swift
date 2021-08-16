@@ -73,7 +73,8 @@ class DressService {
   }
 
   // FORCE update dress complete
-  Future<void> forceUpdateWorkComplete(String id, String time) {
+  Future<void> forceUpdateWorkComplete(
+      String id, String time, int serviceCharge) {
     if (mAuth.currentUser != null) {
       uid = mAuth.currentUser!.uid;
     }
@@ -82,7 +83,11 @@ class DressService {
         .doc(uid)
         .collection(dbDress)
         .doc(id)
-        .update({'isComplete': true, 'dueDate': time});
+        .update({
+      'isComplete': true,
+      'dueDate': time,
+      'initialPayment': serviceCharge
+    });
   }
 
   showSuccess(context) {
