@@ -186,14 +186,16 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(sixteenDp),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: sixteenDp, vertical: eightDp),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              //  mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(totalWorks,
                                     style: TextStyle(
@@ -211,11 +213,8 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.white)),
                               ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(sixteenDp),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(completedWorks,
                                     style: TextStyle(
@@ -230,13 +229,13 @@ class _HomePageState extends State<HomePage> {
                                         fontSize: fourteenDp,
                                         color: Colors.white)),
                               ],
-                            ),
-                          )
-                          //  buildSelectedMonth(),
-                        ],
+                            )
+                            //  buildSelectedMonth(),
+                          ],
+                        ),
                       ),
                       Divider(
-                        thickness: 2,
+                        thickness: 1,
                         endIndent: eightDp,
                         indent: eightDp,
                         color: Colors.white.withOpacity(0.2),
@@ -655,7 +654,7 @@ class _HomePageState extends State<HomePage> {
         return ListView.builder(
           itemBuilder: (context, index) {
             // Dress dress =  Dress.fromSnapshot(dressList[index]);
-            return dressList.length == 0
+            return dressList == null
                 ? LoadingShimmer(
                     name: "Dress",
                   )
