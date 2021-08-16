@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
   DressProvider _dressProvider = DressProvider();
   int totalCollection = 0;
   int amountReceived = 0;
-  double workProgress = 0;
+  double workProgress = 0.0;
   Dress? dress;
   List<Dress>? users;
 
@@ -254,10 +254,13 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.symmetric(
                       horizontal: twentyFourDp, vertical: eightDp),
                   child: LinearPercentIndicator(
+                    // animateFromLastPercent: true,
+                    // restartAnimation: false,
                     width: MediaQuery.of(context).size.width / 1.2,
                     backgroundColor: Colors.grey[200],
+                    curve: Curves.slowMiddle,
                     animation: true,
-                    animationDuration: 3000,
+                    animationDuration: 5000,
                     lineHeight: 20.0,
                     percent: workProgress,
                     progressColor: Colors.green,
@@ -364,8 +367,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-            AddCustomer.routeName, (route) => false,
+        heroTag: null,
+        onPressed: () => Navigator.of(context).restorablePushNamed(
+            AddCustomer.routeName,
             arguments: _selectedItem),
         label: Text(add),
         icon: Icon(Icons.person),
@@ -465,6 +469,7 @@ class _HomePageState extends State<HomePage> {
               width: MediaQuery.of(context).size.width / 1.2,
               backgroundColor: Colors.grey[200],
               animation: true,
+              curve: Curves.bounceOut,
               animationDuration: 3000,
               lineHeight: 20.0,
               percent: 0.5,
@@ -654,7 +659,7 @@ class _HomePageState extends State<HomePage> {
         return ListView.builder(
           itemBuilder: (context, index) {
             // Dress dress =  Dress.fromSnapshot(dressList[index]);
-            return dressList == null
+            return dressList.length == 0
                 ? LoadingShimmer(
                     name: "Dress",
                   )
@@ -769,8 +774,8 @@ class _HomePageState extends State<HomePage> {
               children: [
                 buildItem(serviceCharge, '$kGhanaCedi ${dress.serviceCharge}',
                     Colors.indigo),
-                buildItem(initialPayment, '$kGhanaCedi ${dress.initialPayment}',
-                    Colors.green),
+                buildItem(hasPaid, '$kGhanaCedi ${dress.initialPayment}',
+                    Colors.blue),
                 buildItem(
                     balance,
                     '$kGhanaCedi ${Dress.getBalance(dress.serviceCharge, dress.initialPayment)}',
@@ -870,6 +875,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         dress.isComplete!
             ? FloatingActionButton.extended(
+          heroTag: null,
                 backgroundColor: Colors.white,
                 splashColor: Colors.blue,
                 onPressed: () {
@@ -881,13 +887,14 @@ class _HomePageState extends State<HomePage> {
                   completed,
                   style: TextStyle(
                       color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-                icon: Icon(
-                  Icons.check,
-                  color: Colors.green,
-                ),
+          ),
+          icon: Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
               )
             : FloatingActionButton.extended(
+          heroTag: null,
                 backgroundColor: Colors.white,
                 splashColor: Colors.blue,
                 onPressed: () {
@@ -899,39 +906,40 @@ class _HomePageState extends State<HomePage> {
                       context,
                       ElevatedButton(
                         onPressed: () {
-                          //set or update timer to current time and set is complete as true
+                    //set or update timer to current time and set is complete as true
 
-                          String timeNow = DateTime.now().toString();
+                    String timeNow = DateTime.now().toString();
 
                           _dressProvider.forceUpdateWorkComplete(
-                              dress.id, timeNow, context);
+                              dress.id, timeNow, dress.serviceCharge!, context);
                         },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.green)),
-                        child: Text(yes, style: TextStyle(color: Colors.white)),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.red)),
-                        child: Text(no, style: TextStyle(color: Colors.white)),
-                      ),
-                    );
-                  } else {
-                    //update work complete
-                    _dressProvider.updateWorkComplete(dress.id, context);
-                  }
-                },
-                label: Text(
-                  setComplete,
-                  style: TextStyle(color: Colors.indigo),
+                  style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all(Colors.green)),
+                  child: Text(yes, style: TextStyle(color: Colors.white)),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all(Colors.red)),
+                  child: Text(no, style: TextStyle(color: Colors.white)),
+                ),
+              );
+            } else {
+              //update work complete
+              _dressProvider.updateWorkComplete(dress.id, context);
+            }
+          },
+          label: Text(
+            setComplete,
+            style: TextStyle(color: Colors.indigo),
+          ),
               ),
         FloatingActionButton(
+          heroTag: null,
           backgroundColor: Colors.white,
           splashColor: Colors.indigo,
           mini: true,
@@ -1119,7 +1127,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             buildItem(collar, '${dress.collar}', Colors.indigo),
-            buildItem(back, '${dress.chest} ', Colors.green),
+            buildItem(chest, '${dress.chest} ', Colors.green),
             buildItem(aroundArm, '${dress.aroundArm} ', Colors.red),
           ],
         ),
