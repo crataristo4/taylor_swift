@@ -187,7 +187,7 @@ class DressProvider with ChangeNotifier {
     serviceCharge,
     initialPayment,
     dueDate,
-      // status,
+    // status,
   ) {
     _name = name;
     _phoneNumber = phoneNumber;
@@ -506,15 +506,35 @@ class DressProvider with ChangeNotifier {
         break;
     }
 
-    //Dialogs.showLoadingDialog(context, loadingKey, saving, Colors.white);
+    //not a good practice but dialog shows up here to avoid boiler plate codes in classes
+    ShowAction.showAlertDialog(
+        alert,
+        alertMsg,
+        context,
+        ElevatedButton(
+          onPressed: () async {
+            Navigator.pop(context);
+            _dressService.createNewDress(dress!, context);
 
-    _dressService.createNewDress(dress!, context);
-
-    // Future.delayed(Duration(seconds: 5));
-    ShowAction().showToast(successful, Colors.black); //show complete msg
-    // Navigator.of(context, rootNavigator: true).pop();
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+            // Future.delayed(Duration(seconds: 5));
+            ShowAction()
+                .showToast(successful, Colors.black); //show complete msg
+            // Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
+          },
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red)),
+          child: Text(yes, style: TextStyle(color: Colors.white)),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            Navigator.pop(context);
+          },
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red)),
+          child: Text(no, style: TextStyle(color: Colors.white)),
+        ));
   }
 
   updateWorkComplete(String id, BuildContext ctx) {

@@ -215,6 +215,7 @@ const no = 'No';
 const ok = 'OK';
 const alert = 'Alert';
 const quickNotice = 'Quick Notice';
+const alertMsg = 'Are you sure are measurements are intact ?';
 const alertContent =
     '1.Please be sure to verify all measurements before you save.\n\n2.Not all requirements may suit you so please put ZERO (0) in areas which you do not need.\n\n3.To keep track of your progress,set work as complete.\n\n4.Mark payment as complete when your customer is done paying';
 const progress = "PROGRESS";
