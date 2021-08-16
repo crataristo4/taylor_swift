@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/enum/enums.dart';
@@ -12,6 +13,7 @@ import 'package:taylor_swift/ui/pages/ladies/ladies_trouser.dart';
 import 'package:taylor_swift/ui/pages/mens/mens_dress.dart';
 import 'package:taylor_swift/ui/pages/mens/mens_top.dart';
 import 'package:taylor_swift/ui/pages/mens/mens_trouser_shorts.dart';
+import 'package:taylor_swift/ui/widgets/actions.dart';
 
 class AddCustomer extends StatefulWidget {
   static const routeName = '/addCustomer';
@@ -25,6 +27,38 @@ class AddCustomer extends StatefulWidget {
 }
 
 class _AddCustomerState extends State<AddCustomer> {
+  bool? isAlertShown;
+
+  @override
+  void initState() {
+    showMessage();
+
+    super.initState();
+  }
+
+  //shows an alert dialog with a notice
+  showMessage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isAlertShown = prefs.getBool("isAlertShown");
+    await prefs.setBool("isAlertShown", true);
+
+    if (isAlertShown! == false) {
+      ShowAction.showAlertDialog(
+          quickNotice,
+          alertContent,
+          context,
+          Container(),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.pop(context);
+            },
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red)),
+            child: Text(ok, style: TextStyle(color: Colors.white)),
+          ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -98,7 +132,7 @@ class _AddCustomerState extends State<AddCustomer> {
                       return MensDress(
                         month: widget.selectedMonth,
                       );
-                    /*  case DressType.MENS_SHORTS:
+                  /*  case DressType.MENS_SHORTS:
                       return MensShorts();*/
                     case DressType.MENS_TOP:
                       return MensTop(
@@ -139,9 +173,9 @@ class _AddCustomerState extends State<AddCustomer> {
         return FlatButton(
           shape: RoundedRectangleBorder(
               borderRadius:
-                  BorderRadius.only(topRight: Radius.circular(thirtyTwoDp))),
+              BorderRadius.only(topRight: Radius.circular(thirtyTwoDp))),
           padding:
-              const EdgeInsets.symmetric(vertical: sixteenDp, horizontal: 0),
+          const EdgeInsets.symmetric(vertical: sixteenDp, horizontal: 0),
           color: currentMenuInfo!.dressType == value!.dressType
               ? CustomColors.menuBackgroundColor
               : Colors.transparent,
