@@ -131,27 +131,31 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
                 controller: widget.dateTimeController,
                 readOnly: true,
                 onTap: () async {
-                  final selectedDate = await _selectDate(context);
-                  if (selectedDate == null) return;
+                  try {
+                    final selectedDate = await _selectDate(context);
+                    if (selectedDate == null) return;
 
-                  final selectedTime = await _selectedTime(context);
-                  if (selectedTime == null) return;
+                    final selectedTime = await _selectedTime(context);
+                    if (selectedTime == null) return;
 
-                  setState(() {
-                    _dateTime = DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedTime.hour,
-                        selectedTime.minute);
+                    setState(() {
+                      _dateTime = DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedTime.hour,
+                          selectedTime.minute);
 
-                    /*  widget.dateTimeController.text =
+                      /*  widget.dateTimeController.text =
                         _dateFormat.format(_dateTime);*/
 
-                    HomePage.notificationTime = _dateTime;
+                      HomePage.notificationTime = _dateTime;
 
-                    widget.dateTimeController.text = _dateTime.toString();
-                  });
+                      widget.dateTimeController.text = _dateTime.toString();
+                    });
+                  } catch (e) {
+                    print(e.toString());
+                  }
                 },
                 validator: (value) {
                   return value!.trim().length < 3 ? dueDateRequired : null;

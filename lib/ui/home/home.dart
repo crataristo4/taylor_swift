@@ -356,7 +356,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          dressList.length == 0 ? Container() : buildSearchUser(),
+          dressList.length < 5 ? Container() : buildSearchUser(),
           isSearch
               ? Expanded(child: buildCustomerList(users!))
               : Expanded(child: buildCustomerList(dressList))
@@ -771,6 +771,10 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: tenDp,
             ),
+            Divider(
+              color: Colors.grey,
+              thickness: 0.6,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -788,8 +792,13 @@ class _HomePageState extends State<HomePage> {
               height: tenDp,
             ),
             Divider(
-                //   color: Colors.black45,
-                ),
+              color: Colors.grey,
+              thickness: 0.8,
+            ),
+
+            SizedBox(
+              height: tenDp,
+            ),
             Text(
               status,
               style:
