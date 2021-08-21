@@ -10,7 +10,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:taylor_swift/constants/constants.dart';
-import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/helper/notification_info.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
@@ -177,54 +176,57 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: sixteenDp, vertical: eightDp),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              //  mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(totalWorks,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            //  mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: sixteenDp, vertical: eightDp),
+                                child: Text(totalWorks,
                                     style: TextStyle(
                                         fontSize: fourteenDp,
                                         color: Colors.white70,
                                         fontWeight: FontWeight.bold)),
-
-                                SizedBox(
-                                  height: eightDp,
-                                ),
-                                //Date range of budget
-                                Text("${dressList.length}",
-                                    style: TextStyle(
-                                        fontSize: fourteenDp,
-                                        color: Colors.white)),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(completedWorks,
+                              ),
+                              SizedBox(
+                                height: eightDp,
+                              ),
+                              Text("${dressList.length}",
+                                  style: TextStyle(
+                                      fontSize: fourteenDp,
+                                      color: Colors.white)),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: sixteenDp, vertical: eightDp),
+                                child: Text(completedWorks,
                                     style: TextStyle(
                                         fontSize: fourteenDp,
                                         color: Colors.white70,
                                         fontWeight: FontWeight.bold)),
-                                SizedBox(
-                                  height: eightDp,
-                                ),
-                                Text("${completedList.length}",
-                                    style: TextStyle(
-                                        fontSize: fourteenDp,
-                                        color: Colors.white)),
-                              ],
-                            )
-                            //  buildSelectedMonth(),
-                          ],
-                        ),
+                              ),
+                              SizedBox(
+                                height: eightDp,
+                              ),
+                              Text("${completedList.length}",
+                                  style: TextStyle(
+                                      fontSize: fourteenDp,
+                                      color: Colors.white)),
+                            ],
+                          )
+                          //  buildSelectedMonth(),
+                        ],
                       ),
                       Divider(
                         thickness: 1,
@@ -242,24 +244,22 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 //progress indicator
-                Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: twentyFourDp, vertical: eightDp),
-                  child: LinearPercentIndicator(
-                    // animateFromLastPercent: true,
-                    // restartAnimation: false,
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    backgroundColor: Colors.grey[200],
-                    curve: Curves.slowMiddle,
-                    animation: true,
-                    animationDuration: 5000,
-                    lineHeight: 20.0,
-                    percent: workProgress,
-                    progressColor: Colors.green,
-                  ),
+                LinearPercentIndicator(
+                  // animateFromLastPercent: true,
+                  // restartAnimation: false,
+                  padding: EdgeInsets.symmetric(
+                      vertical: tenDp, horizontal: thirtyDp),
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  backgroundColor: Colors.grey[200],
+                  curve: Curves.slowMiddle,
+                  animation: true,
+                  animationDuration: 5000,
+                  lineHeight: 20.0,
+                  percent: workProgress,
+                  progressColor: Colors.green,
                 ),
 
-                totalCollection == 0
+                /*       totalCollection == 0
                     ? Container()
                     : Container(
                         margin: EdgeInsets.symmetric(horizontal: twentyFourDp),
@@ -343,10 +343,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                      ),
+                      ),*/
 
                 SizedBox(
-                  height: tenDp,
+                  height: twentyDp,
                 )
               ],
             ),
@@ -628,21 +628,27 @@ class _HomePageState extends State<HomePage> {
                 width: thirtySixDp,
                 height: thirtySixDp,
                 decoration: BoxDecoration(
-                  color: Colors.indigo,
+                  //  color: Colors.indigo,
                   borderRadius: BorderRadius.circular(eightDp),
                   border: Border.all(width: 0.5, color: Colors.white54),
                 ),
               ),
               hintText: searchCustomer,
               fillColor: Colors.white70,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.blue, width: 1),
+                borderRadius: BorderRadius.circular(eightDp),
+              ),
               filled: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: tenDp, horizontal: tenDp),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFF5F5F5)),
+                borderRadius: BorderRadius.circular(eightDp),
+                borderSide: BorderSide(color: Colors.grey, width: 0.9),
               ),
               border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFF5F5F5))))),
+                  borderRadius: BorderRadius.circular(eightDp),
+                  borderSide: BorderSide(color: Colors.grey, width: 0.9)))),
     );
   }
 
@@ -880,11 +886,11 @@ class _HomePageState extends State<HomePage> {
                   completed,
                   style: TextStyle(
                       color: Colors.green, fontWeight: FontWeight.bold),
-          ),
-          icon: Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
+                ),
+                icon: Icon(
+                  Icons.check,
+                  color: Colors.green,
+                ),
               )
             : FloatingActionButton.extended(
           heroTag: null,
@@ -899,37 +905,37 @@ class _HomePageState extends State<HomePage> {
                       context,
                       ElevatedButton(
                         onPressed: () {
-                    //set or update timer to current time and set is complete as true
+                          //set or update timer to current time and set is complete as true
 
-                    String timeNow = DateTime.now().toString();
+                          String timeNow = DateTime.now().toString();
 
                           _dressProvider.forceUpdateWorkComplete(
                               dress.id, timeNow, dress.serviceCharge!, context);
                         },
-                  style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all(Colors.green)),
-                  child: Text(yes, style: TextStyle(color: Colors.white)),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.green)),
+                        child: Text(yes, style: TextStyle(color: Colors.white)),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.red)),
+                        child: Text(no, style: TextStyle(color: Colors.white)),
+                      ),
+                    );
+                  } else {
+                    //update work complete
+                    _dressProvider.updateWorkComplete(dress.id, context);
+                  }
+                },
+                label: Text(
+                  setComplete,
+                  style: TextStyle(color: Colors.indigo),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all(Colors.red)),
-                  child: Text(no, style: TextStyle(color: Colors.white)),
-                ),
-              );
-            } else {
-              //update work complete
-              _dressProvider.updateWorkComplete(dress.id, context);
-            }
-          },
-          label: Text(
-            setComplete,
-            style: TextStyle(color: Colors.indigo),
-          ),
               ),
         FloatingActionButton(
           heroTag: null,
