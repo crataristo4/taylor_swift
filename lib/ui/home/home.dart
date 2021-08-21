@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -13,6 +16,7 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/helper/notification_info.dart';
 import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
+import 'package:taylor_swift/service/admob_service.dart';
 import 'package:taylor_swift/ui/add_customer/add_customer.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/loading.dart';
@@ -60,6 +64,8 @@ class _HomePageState extends State<HomePage> {
   Dress? dress;
   List<Dress>? users;
 
+  AdmobService _admobService = AdmobService(); //Ads
+
   // List<Dress>? _dressList;
   String searchInput = '';
   bool isSearch = false;
@@ -68,6 +74,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     getMonth();
     super.initState();
+  }
+
+  _HomePageState() {
+    Timer(
+        Duration(
+          seconds: 10,
+        ), () {
+      _admobService.showInterstitialAd();
+    });
   }
 
   //get month method
@@ -118,9 +133,7 @@ class _HomePageState extends State<HomePage> {
     final dressList = Provider.of<List<Dress>>(context);
     //filter work completed
     final completedList =
-        dressList.where((element) => element.isComplete == true);
-
-    print("?? ${dressList.length}");
+    dressList.where((element) => element.isComplete == true);
 
     /*   try {
       for (int i = 0; i < dressList.length; i++) {
@@ -244,7 +257,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.only(bottom: eightDp),
                     child: Text(progress,
                         style:
-                            TextStyle(fontSize: twelveDp, color: Colors.white)),
+                        TextStyle(fontSize: twelveDp, color: Colors.white)),
                   ),
                 ),
 
@@ -612,7 +625,7 @@ class _HomePageState extends State<HomePage> {
         horizontal: eightDp,
       ),
       child: TextFormField(
-          //search for a service text field
+        //search for a service text field
           keyboardType: TextInputType.text,
           controller: _searchController,
           textAlign: TextAlign.center,
@@ -644,7 +657,7 @@ class _HomePageState extends State<HomePage> {
               ),
               filled: true,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: tenDp, horizontal: tenDp),
+              EdgeInsets.symmetric(vertical: tenDp, horizontal: tenDp),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(eightDp),
                 borderSide: BorderSide(color: Colors.grey, width: 0.9),
@@ -658,7 +671,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildCustomerList(List dressList) {
     return Builder(
       builder: (BuildContext context) {
-        return ListView.builder(
+        return ListView.separated(
           itemBuilder: (context, index) {
             // Dress dress =  Dress.fromSnapshot(dressList[index]);
             return dressList.length == 0
@@ -671,6 +684,17 @@ class _HomePageState extends State<HomePage> {
           shrinkWrap: true,
           primary: true,
           physics: ClampingScrollPhysics(),
+          separatorBuilder: (BuildContext context, int index) {
+            return index % 3 == 0
+                ? Container(
+                    height: sixtyDp,
+                    child: AdWidget(
+                      ad: AdmobService.createBannerSmall()..load(),
+                      key: UniqueKey(),
+                    ),
+                  )
+                : Container();
+          },
         );
       },
     );
@@ -706,9 +730,9 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     dress.isComplete!
                         ? Icon(
-                            Icons.check_circle,
-                            color: Colors.green,
-                          )
+                      Icons.check_circle,
+                      color: Colors.green,
+                    )
                         : Container(),
                     IconButton(
                       onPressed: () {
@@ -725,7 +749,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all(Colors.black)),
+                                  MaterialStateProperty.all(Colors.black)),
                               child: Text(yes,
                                   style: TextStyle(color: Colors.white)),
                             ),
@@ -733,7 +757,7 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () => Navigator.pop(context),
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all(Colors.red)),
+                                  MaterialStateProperty.all(Colors.red)),
                               child: Text(no,
                                   style: TextStyle(color: Colors.white)),
                             ));
@@ -759,9 +783,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Center(
                 child: Text(
-              measurement,
-              style: TextStyle(fontWeight: FontWeight.w500),
-            )),
+                  measurement,
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                )),
             Divider(
               color: Colors.blue,
               endIndent: oneFiftyDp,
@@ -802,7 +826,7 @@ class _HomePageState extends State<HomePage> {
             Text(
               status,
               style:
-                  TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.bold),
+              TextStyle(fontSize: fourteenDp, fontWeight: FontWeight.bold),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -854,15 +878,15 @@ class _HomePageState extends State<HomePage> {
                         time.days == null
                             ? Container()
                             : buildCustomTimer(time.days!, Colors.black,
-                                time.days! > 1 ? days : day),
+                            time.days! > 1 ? days : day),
                         time.hours == null
                             ? Container()
                             : buildCustomTimer(time.hours!, Colors.blue,
-                                time.hours! > 1 ? hrs : hr),
+                            time.hours! > 1 ? hrs : hr),
                         time.min == null
                             ? Container()
                             : buildCustomTimer(time.min!, Colors.brown,
-                                time.min! > 1 ? mins : min),
+                            time.min! > 1 ? mins : min),
                         time.sec == null
                             ? Container()
                             : buildCustomTimer(time.sec!, Colors.red, sec),
@@ -887,68 +911,68 @@ class _HomePageState extends State<HomePage> {
         dress.isComplete!
             ? FloatingActionButton.extended(
           heroTag: null,
-                backgroundColor: Colors.white,
-                splashColor: Colors.blue,
-                onPressed: () {
+          backgroundColor: Colors.white,
+          splashColor: Colors.blue,
+          onPressed: () {
 //show user has completed work
-                  ShowAction().showSnackbar(
-                      context, "${dress.name}'\s work is completed");
-                },
-                label: Text(
-                  completed,
-                  style: TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-                icon: Icon(
-                  Icons.check,
-                  color: Colors.green,
-                ),
-              )
+            ShowAction().showSnackbar(
+                context, "${dress.name}'\s work is completed");
+          },
+          label: Text(
+            completed,
+            style: TextStyle(
+                color: Colors.green, fontWeight: FontWeight.bold),
+          ),
+          icon: Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        )
             : FloatingActionButton.extended(
           heroTag: null,
-                backgroundColor: Colors.white,
-                splashColor: Colors.blue,
-                onPressed: () {
-                  //check if time scheduled is not elapsed and prompt user
-                  if (time != null) {
-                    ShowAction.showAlertDialog(
-                      alert,
-                      alertDes,
-                      context,
-                      ElevatedButton(
-                        onPressed: () {
-                          //set or update timer to current time and set is complete as true
+          backgroundColor: Colors.white,
+          splashColor: Colors.blue,
+          onPressed: () {
+            //check if time scheduled is not elapsed and prompt user
+            if (time != null) {
+              ShowAction.showAlertDialog(
+                alert,
+                alertDes,
+                context,
+                ElevatedButton(
+                  onPressed: () {
+                    //set or update timer to current time and set is complete as true
 
-                          String timeNow = DateTime.now().toString();
+                    String timeNow = DateTime.now().toString();
 
-                          _dressProvider.forceUpdateWorkComplete(
-                              dress.id, timeNow, dress.serviceCharge!, context);
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.green)),
-                        child: Text(yes, style: TextStyle(color: Colors.white)),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.red)),
-                        child: Text(no, style: TextStyle(color: Colors.white)),
-                      ),
-                    );
-                  } else {
-                    //update work complete
-                    _dressProvider.updateWorkComplete(dress.id, context);
-                  }
-                },
-                label: Text(
-                  setComplete,
-                  style: TextStyle(color: Colors.indigo),
+                    _dressProvider.forceUpdateWorkComplete(
+                        dress.id, timeNow, dress.serviceCharge!, context);
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all(Colors.green)),
+                  child: Text(yes, style: TextStyle(color: Colors.white)),
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all(Colors.red)),
+                  child: Text(no, style: TextStyle(color: Colors.white)),
+                ),
+              );
+            } else {
+              //update work complete
+              _dressProvider.updateWorkComplete(dress.id, context);
+            }
+          },
+          label: Text(
+            setComplete,
+            style: TextStyle(color: Colors.indigo),
+          ),
+        ),
         FloatingActionButton(
           heroTag: null,
           backgroundColor: Colors.white,
