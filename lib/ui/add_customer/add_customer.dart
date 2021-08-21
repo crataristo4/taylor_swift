@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,6 +7,7 @@ import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/constants/theme_data.dart';
 import 'package:taylor_swift/enum/enums.dart';
 import 'package:taylor_swift/model/menu_info.dart';
+import 'package:taylor_swift/service/admob_service.dart';
 import 'package:taylor_swift/ui/pages/ladies/ladies_dress.dart';
 import 'package:taylor_swift/ui/pages/ladies/ladies_skirt.dart';
 import 'package:taylor_swift/ui/pages/ladies/ladies_top.dart';
@@ -27,12 +30,22 @@ class AddCustomer extends StatefulWidget {
 
 class _AddCustomerState extends State<AddCustomer> {
   bool? isAlertShown;
+  AdmobService _admobService = AdmobService(); //Ads
 
   @override
   void initState() {
     showMessage();
-
+    _admobService.createInterstitialAd();
     super.initState();
+  }
+
+  _AddCustomerState() {
+    Timer(
+        Duration(
+          seconds: 40,
+        ), () {
+      _admobService.showInterstitialAd();
+    });
   }
 
   //shows an alert dialog with a notice
@@ -125,7 +138,7 @@ class _AddCustomerState extends State<AddCustomer> {
                     return MensDress(
                       month: widget.selectedMonth,
                     );
-                  /*  case DressType.MENS_SHORTS:
+                /*  case DressType.MENS_SHORTS:
                     return MensShorts();*/
                   case DressType.MENS_TOP:
                     return MensTop(

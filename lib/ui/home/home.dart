@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getMonth();
+    _admobService.createInterstitialAd();
     super.initState();
   }
 
