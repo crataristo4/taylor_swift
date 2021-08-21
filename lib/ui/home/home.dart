@@ -71,26 +71,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    //this method was placed here to solve the bug issue on values incrementing when user performs search
-    final dressList = Provider.of<List<Dress>>(context, listen: false);
-
-    try {
-      for (int i = 0; i < dressList.length; i++) {
-        dress = dressList[i];
-        //sum of total service charge collected
-        totalCollection += dress!.serviceCharge!;
-        //total of amount received
-        amountReceived += dress!.initialPayment!;
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    super.didChangeDependencies();
-  }
-
   //get month method
   getMonth() {
     int month = DateTime.now().month;
@@ -141,6 +121,18 @@ class _HomePageState extends State<HomePage> {
     final completedList =
         dressList.where((element) => element.isComplete == true);
 
+    /*   try {
+      for (int i = 0; i < dressList.length; i++) {
+        dress = dressList[i];
+        //sum of total service charge collected
+        totalCollection += dress!.serviceCharge!;
+        //total of amount received
+        amountReceived += dress!.initialPayment!;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+*/
     if (searchInput.isEmpty) {
       //set as false to enable load all measurements store
       isSearch = false;
@@ -477,7 +469,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          totalCollection == 0
+          //todo future updates
+          /* totalCollection == 0
               ? Container()
               : Container(
                   margin: EdgeInsets.symmetric(horizontal: twentyFourDp),
@@ -557,7 +550,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
 
           SizedBox(
             height: tenDp,

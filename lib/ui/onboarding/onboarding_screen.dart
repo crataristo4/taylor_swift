@@ -95,7 +95,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             ),
                             TypewriterAnimatedText(manageWorks),
                             TypewriterAnimatedText(trackProgress),
-                            TypewriterAnimatedText(allMeasurementInInches),
+                          //  TypewriterAnimatedText(allMeasurementInInches),
                             TypewriterAnimatedText(getNotified),
                           ],
                         ),
