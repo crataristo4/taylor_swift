@@ -142,36 +142,38 @@ class _MensTopState extends State<MensTop> {
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                   child: FloatingActionButton.extended(
                     onPressed: () {
-                      var status = Dress.checkPaymentStatus(
-                          int.parse(serviceChargeController.text),
-                          int.parse(initialPaymentController.text));
-
-                      if (status.contains(error)) {
-                        ShowAction()
-                            .showSnackbar(context, payGreaterThanCharge);
-                      } else {
-                        _dressProvider.setMensTopData(
-                            nameController.text,
-                            "${CustomNameAndNumber.cc}${phoneNumberController.text}",
-                            lengthController.text,
-                            backController.text,
-                            sleeveController.text,
-                            collarController.text,
-                            chestController.text,
-                            aroundArmController.text,
-                            cuffController.text,
-                            widget.month,
+                      if (_formKey.currentState!.validate()) {
+                        var status = Dress.checkPaymentStatus(
                             int.parse(serviceChargeController.text),
-                            int.parse(initialPaymentController.text),
-                            dtController.text);
+                            int.parse(initialPaymentController.text));
 
-                        HomePage.nameControllerString = nameController.text;
+                        if (status.contains(error)) {
+                          ShowAction()
+                              .showSnackbar(context, payGreaterThanCharge);
+                        } else {
+                          _dressProvider.setMensTopData(
+                              nameController.text,
+                              "${CustomNameAndNumber.cc}${phoneNumberController.text}",
+                              lengthController.text,
+                              backController.text,
+                              sleeveController.text,
+                              collarController.text,
+                              chestController.text,
+                              aroundArmController.text,
+                              cuffController.text,
+                              widget.month,
+                              int.parse(serviceChargeController.text),
+                              int.parse(initialPaymentController.text),
+                              dtController.text);
 
-                        _dressProvider.createNewDress(
-                            context, DressType.MENS_TOP);
+                          HomePage.nameControllerString = nameController.text;
 
-                        //call static method and schedule
-                        HomePage.saveNotification();
+                          _dressProvider.createNewDress(
+                              context, DressType.MENS_TOP);
+
+                          //call static method and schedule
+                          HomePage.saveNotification();
+                        }
                       }
                     },
                     label: Text(save),

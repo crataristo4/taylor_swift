@@ -37,7 +37,7 @@ class CustomerInputs extends StatelessWidget {
               Container(
                 width: eightyDp,
                 child: TextFormField(
-                    maxLength: 10,
+                   // maxLength: 10,
                     maxLines: 1,
                     keyboardType: TextInputType.text,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -49,14 +49,16 @@ class CustomerInputs extends StatelessWidget {
                       labelText: 'Size',
                       labelStyle: TextStyle(color: Colors.black),
                       hintStyle: TextStyle(color: Colors.black),
-                      fillColor: Color(0xFFF5F5F5),
+                      fillColor: Colors.white70,
                       filled: true,
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: tenDp),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                          borderSide:
+                              BorderSide(color: Colors.grey, width: 0.2)),
                       border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF5F5F5))),
+                          borderSide:
+                              BorderSide(color: Colors.grey, width: 0.5)),
                     )),
               ),
               /* Column(
@@ -68,12 +70,15 @@ class CustomerInputs extends StatelessWidget {
               )*/
             ],
           ),
-          Text(
-            name,
-            style: TextStyle(
-                color: textColor,
-                fontSize: twelveDp,
-                fontWeight: FontWeight.w500),
+          Padding(
+            padding: const EdgeInsets.only(top: sixDp),
+            child: Text(
+              name,
+              style: TextStyle(
+                  color: textColor,
+                  fontSize: twelveDp,
+                  fontWeight: FontWeight.w500),
+            ),
           )
         ],
       ),

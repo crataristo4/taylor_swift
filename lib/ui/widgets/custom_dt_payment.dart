@@ -45,12 +45,12 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: eightDp, horizontal: eightDp),
+      margin: EdgeInsets.symmetric(vertical: sixteenDp, horizontal: sixteenDp),
       child: Column(
         children: [
           Container(
             padding: EdgeInsets.all(4),
-            margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+            //  margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
             child: TextFormField(
                 maxLength: 10,
                 maxLines: 1,
@@ -76,12 +76,9 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
                       borderSide: BorderSide(color: Color(0xFFF5F5F5))),
                 )),
           ),
-          SizedBox(
-            height: twentyDp,
-          ),
           Container(
             padding: EdgeInsets.all(4),
-            margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+            //  margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
             child: TextFormField(
                 maxLength: 10,
                 maxLines: 1,
@@ -115,16 +112,9 @@ class _CustomDtPmtState extends State<CustomDtPmt> {
                       borderSide: BorderSide(color: Color(0xFFF5F5F5))),
                 )),
           ),
-          SizedBox(
-            height: twentyDp,
-          ),
-          /*  buildPaymentMode(),
-          SizedBox(
-            height: eightDp,
-          ),*/
           Container(
             padding: EdgeInsets.all(4),
-            margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
+            // margin: EdgeInsets.symmetric(horizontal: tenDp, vertical: tenDp),
             child: TextFormField(
                 maxLines: 1,
                 keyboardType: TextInputType.number,
