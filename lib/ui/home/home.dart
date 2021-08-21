@@ -120,6 +120,8 @@ class _HomePageState extends State<HomePage> {
     final completedList =
         dressList.where((element) => element.isComplete == true);
 
+    print("?? ${dressList.length}");
+
     /*   try {
       for (int i = 0; i < dressList.length; i++) {
         dress = dressList[i];
@@ -238,9 +240,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Center(
-                  child: Text(progress,
-                      style:
-                          TextStyle(fontSize: twelveDp, color: Colors.white)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: eightDp),
+                    child: Text(progress,
+                        style:
+                            TextStyle(fontSize: twelveDp, color: Colors.white)),
+                  ),
                 ),
 
                 //progress indicator
@@ -255,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                   animation: true,
                   animationDuration: 5000,
                   lineHeight: 20.0,
-                  percent: workProgress,
+                  percent: dressList.length == 0 ? 0.0 : workProgress,
                   progressColor: Colors.green,
                 ),
 
@@ -351,8 +356,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          // buildTopCard(dressLength.length),
-          buildSearchUser(),
+          dressList.length == 0 ? Container() : buildSearchUser(),
           isSearch
               ? Expanded(child: buildCustomerList(users!))
               : Expanded(child: buildCustomerList(dressList))
@@ -410,7 +414,6 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             height: eightDp,
                           ),
-                          //Date range of budget
                           Text("$length",
                               style: TextStyle(
                                   fontSize: fourteenDp, color: Colors.white)),

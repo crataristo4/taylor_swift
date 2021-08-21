@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,14 +25,23 @@ class VerificationPage extends StatefulWidget {
 class _VerificationPageState extends State<VerificationPage> {
   final snackBarKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  bool isShowing = false;
 
   //Control the input text field.
   TextEditingController _controller = TextEditingController();
 
-  //............................................................//
-  //Resend
+  @override
+  void initState() {
+    Timer.periodic(Duration(minutes: 1), (timer) {
+      setState(() {
+        isShowing = true;
+      });
+      timer.cancel();
+      //  admobService.showInterstitialAd();
+    });
+    super.initState();
+  } //method to verify phone number
 
-  //method to verify phone number
   resendCode(BuildContext context) async {
     ShowAction.showAlertDialog(
         confirmNumber,
@@ -54,7 +65,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   .verifyPhone(widget.phoneNumber)
                   .then((value) async {
                 Dialogs.showLoadingDialog(
-                    //show dialog and delay
+                  //show dialog and delay
                     context,
                     loadingKey,
                     sendingCode,
@@ -103,24 +114,27 @@ class _VerificationPageState extends State<VerificationPage> {
     return Scaffold(
       appBar: AppBar(
           actions: [
-            SizedBox(
-              height: fortyEightDp,
-              child: Container(
-                margin: EdgeInsets.only(right: eightDp, top: eightDp),
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        backgroundColor: Colors.pink,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(eightDp),
-                            side: BorderSide(width: 1, color: Colors.white))),
-                    onPressed: () => resendCode(context),
-                    child: Text(
-                      resend,
-                      style: TextStyle(fontSize: fourteenDp),
-                    )),
-              ),
-            )
+            isShowing
+                ? SizedBox(
+                    height: fortyEightDp,
+                    child: Container(
+                      margin: EdgeInsets.only(right: eightDp, top: eightDp),
+                      child: TextButton(
+                          style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              backgroundColor: Colors.pink,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(eightDp),
+                                  side: BorderSide(
+                                      width: 1, color: Colors.white))),
+                          onPressed: () => resendCode(context),
+                          child: Text(
+                            resend,
+                            style: TextStyle(fontSize: fourteenDp),
+                          )),
+                    ),
+                  )
+                : Container()
           ],
           elevation: 0,
           leading: InkWell(
@@ -174,23 +188,23 @@ class _VerificationPageState extends State<VerificationPage> {
                         margin: EdgeInsets.symmetric(horizontal: eightDp),
                         child: Center(
                             child: DefaultTextStyle(
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: twentyDp,
-                              fontFamily: 'Agne',
-                              color: Colors.black),
-                          child: AnimatedTextKit(
-                            pause: Duration(seconds: 3),
-                            totalRepeatCount: 1,
-                            animatedTexts: [
-                              TypewriterAnimatedText(
-                                almostDone,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: twentyDp,
+                                  fontFamily: 'Agne',
+                                  color: Colors.black),
+                              child: AnimatedTextKit(
+                                pause: Duration(seconds: 3),
+                                totalRepeatCount: 1,
+                                animatedTexts: [
+                                  TypewriterAnimatedText(
+                                    almostDone,
+                                  ),
+                                  TypewriterAnimatedText(verifyRobot),
+                                  TypewriterAnimatedText(enterPIN),
+                                ],
                               ),
-                              TypewriterAnimatedText(verifyRobot),
-                              TypewriterAnimatedText(enterPIN),
-                            ],
-                          ),
-                        )),
+                            )),
                       ),
                       /*   Text(
                         enterVerificationCode,
@@ -235,7 +249,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                     verifyOTP(context);
                                 },
                                 maxLengthEnforcement:
-                                    MaxLengthEnforcement.enforced,
+                                MaxLengthEnforcement.enforced,
                                 decoration: InputDecoration(
                                   suffix: Icon(
                                     Icons.dialpad_rounded,
@@ -248,10 +262,10 @@ class _VerificationPageState extends State<VerificationPage> {
                                       vertical: 0, horizontal: tenDp),
                                   enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Color(0xFFF5F5F5))),
+                                      BorderSide(color: Color(0xFFF5F5F5))),
                                   border: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Color(0xFFF5F5F5))),
+                                      BorderSide(color: Color(0xFFF5F5F5))),
                                 )),
                           ),
                         ),
@@ -271,19 +285,18 @@ class _VerificationPageState extends State<VerificationPage> {
                                 primary: Colors.white,
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
-                                        BorderRadius.circular(eightDp))),
+                                    BorderRadius.circular(eightDp))),
                             onPressed: () => _formKey.currentState!
-                                    .validate() // first check if the code length is six
+                                .validate() // first check if the code length is six
                                 ? verifyOTP(context) // then perform action
                                 : ShowAction() // else show error message
-                                    .showToast(invalidOTP, Colors.red),
+                                .showToast(invalidOTP, Colors.red),
                             child: Text(
                               confirmOTP,
                               style: TextStyle(fontSize: fourteenDp),
                             )),
                       ),
                       SizedBox(height: eightDp),
-                      //Resend code button
                     ],
                   ),
                 ],
