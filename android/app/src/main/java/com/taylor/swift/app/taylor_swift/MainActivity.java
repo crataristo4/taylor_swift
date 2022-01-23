@@ -1,4 +1,4 @@
-package com.taylor.swift.app;
+package app.ts.gh;
 
 import io.flutter.embedding.android.FlutterActivity;
 
