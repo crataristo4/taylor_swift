@@ -1,110 +1,41 @@
 {
   "project_info": {
-    "project_number": "136890749992",
-    "project_id": "taylorswiftapp-ghana",
-    "storage_bucket": "taylorswiftapp-ghana.appspot.com"
+    "project_number": "435462334344",
+    "project_id": "taylor-swift-27b23",
+    "storage_bucket": "taylor-swift-27b23.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:136890749992:android:5f1403edf7f74ebfec911d",
+        "mobilesdk_app_id": "1:435462334344:android:1df962564ee570b2a67c3d",
         "android_client_info": {
-          "package_name": "app.ts.gh"
+          "package_name": "app.tys.gh"
         }
       },
       "oauth_client": [
         {
-          "client_id": "136890749992-1d7l94nep577fvf8bskno4ik5kfrhj9k.apps.googleusercontent.com",
+          "client_id": "435462334344-6mde62dkei0vb60s3crlhkrjv675j7i3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "app.ts.gh",
-            "certificate_hash": "da7561b20f26adaa23112ff0f75e340ff9f217a1"
+            "package_name": "app.tys.gh",
+            "certificate_hash": "63589ab130ce370f7e91395ba286c15e93b38a94"
           }
         },
         {
-          "client_id": "136890749992-6v75gih362aiiqn8skirljf3undonl65.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.ts.gh",
-            "certificate_hash": "55188dcb7744675bdc9258018ba1c1b983473904"
-          }
-        },
-        {
-          "client_id": "136890749992-vhrrn4fq83olq3kjm8j6hdtjcmjfm180.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.ts.gh",
-            "certificate_hash": "7850612002fc3130754e5b4436fe61a9ff9de45a"
-          }
-        },
-        {
-          "client_id": "136890749992-fre2umjsv1s31s9s9mppls6eha2qvaup.apps.googleusercontent.com",
+          "client_id": "435462334344-gurup9ve2188239ovdnvft5qgkh15lnp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDkdN7pBBL1BzVXg3_u7jiP6LxsglFcJcs"
+          "current_key": "AIzaSyDvgC7wNnMQ2143eqqLeo3IqavfNI1LVws"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "136890749992-fre2umjsv1s31s9s9mppls6eha2qvaup.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:136890749992:android:8b076c08a4e3149dec911d",
-        "android_client_info": {
-          "package_name": "com.taylor.swift.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "136890749992-0vrkrga65av6qgrek48qmms2j05a0gpo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.taylor.swift.app",
-            "certificate_hash": "55188dcb7744675bdc9258018ba1c1b983473904"
-          }
-        },
-        {
-          "client_id": "136890749992-abg95f37nbn9rkn8uccfrk1uu1qeb4n1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.taylor.swift.app",
-            "certificate_hash": "da7561b20f26adaa23112ff0f75e340ff9f217a1"
-          }
-        },
-        {
-          "client_id": "136890749992-j6qnnv4g2bl5cp15geosre19ov3sdu2r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.taylor.swift.app",
-            "certificate_hash": "7850612002fc3130754e5b4436fe61a9ff9de45a"
-          }
-        },
-        {
-          "client_id": "136890749992-fre2umjsv1s31s9s9mppls6eha2qvaup.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDkdN7pBBL1BzVXg3_u7jiP6LxsglFcJcs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "136890749992-fre2umjsv1s31s9s9mppls6eha2qvaup.apps.googleusercontent.com",
+              "client_id": "435462334344-gurup9ve2188239ovdnvft5qgkh15lnp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
