@@ -8,9 +8,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:taylor_swift/constants/constants.dart';
 import 'package:taylor_swift/helper/notification_info.dart';
@@ -18,6 +18,7 @@ import 'package:taylor_swift/model/dress.dart';
 import 'package:taylor_swift/provider/dress_provider.dart';
 import 'package:taylor_swift/service/admob_service.dart';
 import 'package:taylor_swift/ui/add_customer/add_customer.dart';
+import 'package:taylor_swift/ui/auth/login_page.dart';
 import 'package:taylor_swift/ui/widgets/actions.dart';
 import 'package:taylor_swift/ui/widgets/loading.dart';
 import 'package:timeago/timeago.dart' as timeAgo;
@@ -63,8 +64,8 @@ class _HomePageState extends State<HomePage> {
   double workProgress = 0.0;
   Dress? dress;
   List<Dress>? users;
-
-  AdmobService _admobService = AdmobService(); //Ads
+  //TODO AD
+  // AdmobService _admobService = AdmobService(); //Ads
 
   // List<Dress>? _dressList;
   String searchInput = '';
@@ -73,18 +74,19 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getMonth();
-    _admobService.createInterstitialAd();
+    //TODO AD
+    // _admobService.createInterstitialAd();
     super.initState();
   }
-
-  _HomePageState() {
-    Timer(
-        Duration(
-          seconds: 10,
-        ), () {
-      _admobService.showInterstitialAd();
-    });
-  }
+  //TODO AD
+  // _HomePageState() {
+  //   Timer(
+  //       Duration(
+  //         seconds: 10,
+  //       ), () {
+  //     _admobService.showInterstitialAd();
+  //   });
+  // }
 
   //get month method
   getMonth() {
@@ -376,13 +378,26 @@ class _HomePageState extends State<HomePage> {
               : Expanded(child: buildCustomerList(dressList))
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: null,
-        onPressed: () => Navigator.of(context).restorablePushNamed(
-            AddCustomer.routeName,
-            arguments: _selectedItem),
-        label: Text(add),
-        icon: Icon(Icons.person),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: FloatingActionButton(
+              onPressed: ()=> logOut(),
+              backgroundColor: Colors.red,
+              child: Icon(Icons.logout_outlined),
+            ),
+          ),
+          FloatingActionButton.extended(
+            heroTag: null,
+            onPressed: () => Navigator.of(context).restorablePushNamed(
+                AddCustomer.routeName,
+                arguments: _selectedItem),
+            label: Text(add),
+            icon: Icon(Icons.person),
+          ),
+        ],
       ),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
@@ -686,15 +701,18 @@ class _HomePageState extends State<HomePage> {
           primary: true,
           physics: ClampingScrollPhysics(),
           separatorBuilder: (BuildContext context, int index) {
-            return index % 3 == 0
-                ? Container(
-                    height: sixtyDp,
-                    child: AdWidget(
-                      ad: AdmobService.createBannerSmall()..load(),
-                      key: UniqueKey(),
-                    ),
-                  )
-                : Container();
+            return
+              //TODO AD
+              // index % 3 == 0
+              //   ? Container(
+              //       height: sixtyDp,
+              //       child: AdWidget(
+              //         ad: AdmobService.createBannerSmall()..load(),
+              //         key: UniqueKey(),
+              //       ),
+              //     )
+              //   :
+              Container();
           },
         );
       },
@@ -1317,5 +1335,11 @@ class _HomePageState extends State<HomePage> {
 
   end(String promoId) {
     print('Ended');
+  }
+
+  logOut() {
+    FirebaseAuth.instance.signOut();
+    SharedPreferences.getInstance().then((value) => value.clear());
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginPage(),), (route) => false);
   }
 }

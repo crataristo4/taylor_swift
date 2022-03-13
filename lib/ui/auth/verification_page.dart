@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +16,9 @@ import 'config_page.dart';
 
 class VerificationPage extends StatefulWidget {
   static const routeName = '/verification';
-  final phoneNumber;
+  final phoneNumber,pass,email;
 
-  const VerificationPage({Key? key, this.phoneNumber}) : super(key: key);
+  const VerificationPage({Key? key, this.phoneNumber, this.pass, this.email}) : super(key: key);
 
   @override
   _VerificationPageState createState() => _VerificationPageState();
@@ -25,20 +27,20 @@ class VerificationPage extends StatefulWidget {
 class _VerificationPageState extends State<VerificationPage> {
   final snackBarKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-  bool isShowing = false;
+  bool isShowing = true;
 
   //Control the input text field.
   TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
-    Timer.periodic(Duration(minutes: 1), (timer) {
-      setState(() {
-        isShowing = true;
-      });
-      timer.cancel();
-      //  admobService.showInterstitialAd();
-    });
+    // Timer.periodic(Duration(minutes: 1), (timer) {
+    //   setState(() {
+    //     isShowing = true;
+    //   });
+    //   timer.cancel();
+    //   //  admobService.showInterstitialAd();
+    // });
     super.initState();
   } //method to verify phone number
 
@@ -93,8 +95,17 @@ class _VerificationPageState extends State<VerificationPage> {
       Provider.of<AuthProvider>(context, listen: false)
           .verifyOTP(_controller.text.toString())
           .then((_) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            ConfigurationPage.routeName, (route) => false);
+            FirebaseAuth.instance.createUserWithEmailAndPassword(email: widget.email, password: widget.pass).then((value) => null);
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc()
+                .set({'phone':widget.phoneNumber,'password':widget.pass,'email':widget.email})
+                .then((value) {
+                  debugPrint('test   ${widget.phoneNumber} , ${widget.pass}, ${widget.email}');
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  ConfigurationPage.routeName, (route) => false);
+            });
+
       }).catchError((e) {
         String errorMsg = cantAuthenticate;
         if (e.toString().contains("ERROR_SESSION_EXPIRED")) {

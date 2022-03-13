@@ -20,11 +20,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     with SingleTickerProviderStateMixin {
   bool isShowing = false;
 
-  AdmobService admobService = AdmobService();
+  //TODO AD
+  // AdmobService admobService = AdmobService();
 
   @override
   void initState() {
-    admobService.createInterstitialAd();
+    //TODO AD
+    // admobService.createInterstitialAd();
     Timer.periodic(Duration(seconds: 20), (timer) {
       setState(() {
         isShowing = true;

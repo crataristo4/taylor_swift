@@ -30,23 +30,26 @@ class AddCustomer extends StatefulWidget {
 
 class _AddCustomerState extends State<AddCustomer> {
   bool? isAlertShown;
-  AdmobService _admobService = AdmobService(); //Ads
+  //TODO AD
+  // AdmobService _admobService = AdmobService(); //Ads
 
   @override
   void initState() {
     showMessage();
-    _admobService.createInterstitialAd();
+    //TODO AD
+    // _admobService.createInterstitialAd();
     super.initState();
   }
 
-  _AddCustomerState() {
-    Timer(
-        Duration(
-          seconds: 40,
-        ), () {
-      _admobService.showInterstitialAd();
-    });
-  }
+  //TODO AD
+  // _AddCustomerState() {
+  //   Timer(
+  //       Duration(
+  //         seconds: 40,
+  //       ), () {
+  //     _admobService.showInterstitialAd();
+  //   });
+  // }
 
   //shows an alert dialog with a notice
   showMessage() async {

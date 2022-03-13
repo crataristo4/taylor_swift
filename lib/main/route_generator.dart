@@ -29,10 +29,12 @@ class RouteGenerator {
 
       //verify users phone number
       case VerificationPage.routeName:
-        final data = settings.arguments as String;
+        final data = settings.arguments as List;
         return MaterialPageRoute(
             builder: (_) => VerificationPage(
-                  phoneNumber: data,
+                  phoneNumber: data[0].toString(),
+              pass: data[1].toString(),
+              email: data[2].toString(),
                 ));
 
       //add customer with measurements

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taylor_swift/constants/constants.dart';
 
 mixin LoginValidator {
@@ -13,4 +14,15 @@ mixin LoginValidator {
       sink.addError(invalidPhone);
     }
   });
+  var validatePass = StreamTransformer<String, String>.fromHandlers(
+      handleData: (password, sink) async {
+    if (password.length >= 4) {
+      sink.add(password);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("pass", password);
+    } else {
+      sink.addError(invalidPassword);
+    }
+  });
+
 }

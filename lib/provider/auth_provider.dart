@@ -7,6 +7,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> verifyPhone(String mobile) async {
     var mobileToSend = mobile;
+    print('test phone  $mobile');
     final PhoneCodeSent smsOTPSent = (String verId, [int? forceCodeResend]) {
       this.verificationId = verId;
     };
@@ -37,6 +38,7 @@ class AuthProvider with ChangeNotifier {
         verificationId: verificationId!,
         smsCode: otp,
       );
+
       await _firebaseAuth.signInWithCredential(credential);
       /*  final User? currentUser = _firebaseAuth.currentUser;
 
